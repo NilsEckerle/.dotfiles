@@ -1,0 +1,386 @@
+# welcome to my really cool i3wm config file :)
+
+# AUTOSTART
+
+### monitor layout
+# exec --no-startup-id ~/.screenlayout/monitors.sh
+# Wallpaper
+exec --no-startup-id nitrogen --restore
+
+exec_always --no-startup-id dunst 
+
+# Set GPU Fan Speed
+# exec_always --no-startup-id doas nvidia-settings --display :1.0 -a "[gpu:0]/GPUFanControlState=1" -a "[fan:0]/GPUTargetFanSpeed=20"
+
+exec_always --no-startup-id setxkbmap -layout de
+
+exec --no-startup-id conky 
+#exec --no-startup-id conky -c ~/.config/conky/conky-todo.conf
+
+### NetworkManager applet
+exec --no-startup-id nm-applet
+
+### volume icon
+exec --no-startup-id volumeicon 
+
+### udiskie
+exec --no-startup-id udiskie -t &
+
+### redshift
+exec --no-startup-id redshift-gtk
+
+### set layout to german
+exec --no-startup-id "setxkbmap -layout de"
+
+### bluetooth
+exec_always --no-startup-id blueman-applet 
+
+# VISUALS
+font pango:Fira Code 9
+
+## BAR
+bar {
+	status_command i3blocks
+	position top
+	i3bar_command i3bar
+	### put applets on primary / tray output
+	#tray_output primary
+	
+	colors {
+		background #282828
+		statusline #ebdbb2
+		separator  #ebdbb2
+							#			   border  backgr  text
+		focused_workspace  #ebdbb2 #ebdbb2 #282828
+		active_workspace   #282828 #282828 #ebdbb2
+		inactive_workspace #282828 #282828 #ebdbb2
+		urgent_workspace   #282828 #282828 #ebdbb2
+		binding_mode       #282828 #282828 #ebdbb2
+	}
+}
+
+## Windows
+# class								 border  backgr. text    indicator child_border
+client.focused						#282828 #ebdbb2 #282828 #ebdbb2   #282828
+client.focused_inactive		#282828 #282828 #ebdbb2 #ebdbb2   #282828
+client.unfocused					#282828 #282828 #ebdbb2 #282828   #282828
+client.urgent							#2f343a #900000 #ffffff #ebdbb2   #288282
+client.placeholder				#000000 #0c0c0c #ffffff #000000   #282828
+client.focused_tab_title	#282828	#282828	#ebdbb2 #ebdbb2 #282828
+client.background					#282828
+
+
+#---------------------------------------------------------------------
+
+# FUCNTIONS, VARIABLES AND RULES
+set $mod Mod4
+set $refresh_i3status killall -SIGUSR1 i3status
+
+### Monitors
+# set $mB "VGA-0"
+# set $mA "DVI-D-0"
+### Workspace Names
+#### Mon A
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+workspace 1 output $mA 
+workspace 2 output $mA 
+workspace 3 output $mA 
+workspace 4 output $mA 
+workspace 5 output $mA 
+workspace 6 output $mA 
+workspace 7 output $mA 
+workspace 8 output $mA 
+workspace 9 output $mA 
+workspace 10 output $mA
+workspace 11 output $mB 
+workspace 12 output $mB
+workspace 13 output $mB
+workspace 14 output $mB
+workspace 15 output $mB
+workspace 16 output $mB
+workspace 17 output $mB
+workspace 18 output $mB
+workspace 19 output $mB
+workspace 20 output $mB
+
+#### Mon B
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
+
+## Window Rules
+for_window [window_role="^floating$"] floating enable
+for_window [window_role="pop-up"]                       floating enable
+for_window [window_role="bubble"]                       floating enable 
+for_window [window_role="task_dialog"]                  floating enable
+for_window [window_role="Preferences"]                  floating enable
+for_window [window_type="dialog"]                       floating enable 
+#for_window [window_type="menu"]                         floating enable
+#
+#smart_borders on
+#
+# i3 gaps stuff
+#for_window [class="^.*"] border pixel 1 
+#gaps inner 0 
+#gaps outer 0
+#for_window [class="Firefox"] border pixel 0
+
+
+#---------------------------------------------------------------------
+
+
+# BINDINGS
+
+## WM Stuff
+### kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+plus split h
+
+# split in vertical orientation
+bindsym $mod+numbersign split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+d focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+### MONITOR A
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+### MONITOR B
+# switch to workspace
+bindsym $mod+F1 workspace number $ws11
+bindsym $mod+F2 workspace number $ws12
+bindsym $mod+F3 workspace number $ws13
+bindsym $mod+F4 workspace number $ws14
+bindsym $mod+F5 workspace number $ws15
+bindsym $mod+F6 workspace number $ws16
+bindsym $mod+F7 workspace number $ws17
+bindsym $mod+F8 workspace number $ws18
+bindsym $mod+F9 workspace number $ws19
+bindsym $mod+F10 workspace number $ws20
+
+
+# move focused container to workspace
+bindsym $mod+Shift+F1 move container to workspace number $ws11
+bindsym $mod+Shift+F2 move container to workspace number $ws12
+bindsym $mod+Shift+F3 move container to workspace number $ws13
+bindsym $mod+Shift+F4 move container to workspace number $ws14
+bindsym $mod+Shift+F5 move container to workspace number $ws15
+bindsym $mod+Shift+F6 move container to workspace number $ws16
+bindsym $mod+Shift+F7 move container to workspace number $ws17
+bindsym $mod+Shift+F8 move container to workspace number $ws18
+bindsym $mod+Shift+F9 move container to workspace number $ws19
+bindsym $mod+Shift+F10 move container to workspace number $ws20
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# cycle through workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev 
+
+# emacs
+bindsym $mod+x "exec emacsclient -c -a 'emacs'"
+
+## MODES
+
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window's width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+## Shutdown and Stuff
+
+# Add a small delay to prevent suspend races
+# https://bugs.launchpad.net/ubuntu/+source/unity-2d/+bug/830348
+set $Locker ~/scripts/lockscreen.sh && sleep 1
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Escape mode "$mode_system"
+
+# i3 gaps binds
+#bindsym $mod+z				gaps outer current plus 1
+#bindsym $mod+Shift+z	gaps outer current minus 1
+#bindsym $mod+t				gaps inner current plus 1
+#bindsym $mod+Shift+t	gaps inner current minus 1
+
+# screenshot
+
+bindsym --release $mod+s exec --no-startup-id "scrot -l 'style=dash,width=1,color=white' -f -s ~/Pictures/screenshots/%Y:%m:%d:%H:%M:%S.png -e 'xclip -selection clipboard -t image/png -i $f'"
+
+## AUDIO
+
+### pactl  
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+### playerctl
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+### mpc control
+bindsym $mod+p exec --no-startup-id mpc play
+bindsym $mod+Shift+p exec --no-startup-id mpc pause
+bindsym $mod+o exec --no-startup-id mpc next
+bindsym $mod+Shift+o exec --no-startup-id mpc prev
+
+
+## Program Bindings
+
+### thunar file manager
+bindsym $mod+b exec --no-startup-id thunar
+
+
+### terminal
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
+
+#bindsym $mod+Return exec --no-startup-id kitty
+
+
+### rofi
+bindsym $mod+space exec --no-startup-id "rofi -modi 'combi,drun,run,window,ssh' -combi-modi 'drun,run,ssh' -show-icons -font 'Fira Code Retina 9' -sidebar-mode -show combi"
+## rofi file browser (starts in Documents)
+# bindsym $mod+x exec --no-startup-id "rofi -modi file-browser-extended -show file-browser-extended -file-browser-cmd 'exo-open' -file-browser-depth 7 -file-browser-dir '~/Documents' -show-icons -font 'Fira Code Retina 9'"
+### rofi file browser (starts in run/media)
+# bindsym $mod+u exec --no-startup-id "rofi -modi file-browser-extended -show file-browser-extended -file-browser-cmd 'exo-open' -file-browser-depth 7 -file-browser-dir '/run/media/' -show-icons -font 'Fira Code Retina 9'"
+### screenlock
+bindsym $mod+n exec --no-startup-id -- dm-tool lock
+
+
+### rofi todo script
+
+# bindsym $mod+q exec --no-startup-id rofi -modi TODO:~/scripts/rofi-todo.sh -show TODO
+
+### rofi search script
+
+# bindsym $mod+g exec --no-startup-id ~/scripts/rofi_search.sh
+
+
+# emacs daemon
+exec emacs --daemon &
+
+#---------------------------------------------------------------------
