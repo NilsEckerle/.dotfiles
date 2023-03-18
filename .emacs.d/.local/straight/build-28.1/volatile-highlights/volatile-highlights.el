@@ -1,0 +1,1 @@
+/home/n/.emacs.d/.local/straight/repos/volatile-highlights.el/volatile-highlights.el
