@@ -37,30 +37,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-;; relative line numbers
-(global-display-line-numbers-mode)
-;; Make line numbers relative
-(setq display-line-numbers-type 'relative)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-
-;; Org Headding
-(setq modus-themes-headings '(
-			      (1 . (rainbow 1.6))
-			      (2 . (rainbow 1.4))
-			      (3 . (rainbow bold 1.3))
-			      (t . (semilight 1.2)))
-      )
-;;Important
-(setq modus-themes-scale-headings t)
-
-;; Org Code Block
-(setq modus-themes-org-blocks 'tinted-background)
-
-
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -93,3 +69,31 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+
+;; relative line numbers
+(global-display-line-numbers-mode)
+;; Make line numbers relative
+(setq display-line-numbers-type 'relative)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+;; Org Headding
+(setq modus-themes-headings '(
+			      (1 . (rainbow underline bold 2))
+                              (2 . (rainbow bold 1.9))
+                              (2 . (rainbow 1.8))
+                              (2 . (rainbow 1.6))
+                              (2 . (rainbow 1.4))
+			      (3 . (rainbow bold 1.3))
+			      (t . (semilight 1.2)))
+      )
+
+;; Org Code Block
+(setq modus-themes-org-blocks 'tinted-background)
+
+;;Important
+(setq modus-themes-scale-headings t)
