@@ -2,23 +2,42 @@
 
 * Install dotfiles
 ** Manual Install
-*** i3
+*** prerequires
+**** install programs
+For the easiest handling just log in with as root ~sudo su~. alternative you can put ~sudo~ in front of the comands witch need root privilege's.
+***** add the newest emacs repo to apt
+#+begin_src shell
+add-apt-repository ppa:kelleyk/emacs
+apt update
+#+end_src
+***** install nessesery programs
+#+begin_src shell
+apt install git i3 i3blocks conky i3lock zsh emacs28
+#+end_src
+***** install doom emacs
+#+begin_src shell
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+#+end_src
+
+*** move config
+**** i3
 #+begin_src shell
 rm ~/.config/i3/config
 cp ~/dotfiles/i3/config ~/.config/i3/config
 #+end_src
-*** i3blocks
+**** i3blocks
 #+begin_src shell
 rm /etc/i3blocks.conf
 cp ~/dotfiles/i3blocks/i3blocks.conf /etc/i3blocks.conf
 #+end_src
-*** zshrc
+**** zshrc
 #+begin_src shell
 rm ~/.zshrc
 cp ~/dotfiles/zsh/.zshrc ~/.zshrc
 #+end_src
-*** emacs
-**** doom emacs
+**** emacs
+***** doom emacs
 #+begin_src shell
 rm ~/.config/doom/config.el
 rm ~/.config/doom/init.el
