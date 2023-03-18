@@ -1,0 +1,29 @@
+# dotfiles
+
+* Install dotfiles
+** Manual Install
+*** i3
+#+begin_src shell
+rm ~/.config/i3/config
+cp ~/dotfiles/i3/config ~/.config/i3/config
+#+end_src
+*** i3blocks
+#+begin_src shell
+rm /etc/i3blocks.conf
+cp ~/dotfiles/i3blocks/i3blocks.conf /etc/i3blocks.conf
+#+end_src
+*** zshrc
+#+begin_src shell
+rm ~/.zshrc
+cp ~/dotfiles/zsh/.zshrc ~/.zshrc
+#+end_src
+*** emacs
+**** doom emacs
+#+begin_src shell
+rm ~/.config/doom/config.el
+rm ~/.config/doom/init.el
+rm ~/.config/doom/packages.el
+cp ~/dotfiles/emacs/doom/config.el ~/.config/doom/config.el
+cp ~/dotfiles/emacs/doom/init.el ~/.config/doom/init.el
+cp ~/dotfiles/emacs/doom/packages.el ~/.config/doom/packages.el
+#+end_src
