@@ -1,0 +1,1 @@
+/home/n/.emacs.d/.local/straight/repos/magit/lisp/magit-section-pkg.el
