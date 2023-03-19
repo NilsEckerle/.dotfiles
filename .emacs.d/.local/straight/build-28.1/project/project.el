@@ -1,1 +1,0 @@
-/home/n/.emacs.d/.local/straight/repos/project/project.el
