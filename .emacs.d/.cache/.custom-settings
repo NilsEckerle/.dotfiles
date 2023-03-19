@@ -1,0 +1,6 @@
+;; -*- mode: emacs-lisp -*-
+;; This file is where Emacs writes custom variables.
+;; Spacemacs will copy its content to your dotfile automatically in the
+;; function `dotspacemacs/emacs-custom-settings'.
+;; Do not alter this file, use Emacs customize interface instead.
+

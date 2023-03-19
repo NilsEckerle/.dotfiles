@@ -1,1 +1,0 @@
-/home/n/.emacs.d/.local/straight/repos/evil-markdown/evil-markdown.el
