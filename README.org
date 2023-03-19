@@ -11,7 +11,7 @@ sudo apt update
 #+end_src
 ***** install nessesery programs
 #+begin_src shell
-sudo apt install git i3 i3blocks conky i3lock zsh emacs28 rofi
+sudo apt install git i3 i3blocks conky i3lock zsh emacs28 rofi ripgrep fd-find
 #+end_src
 ***** install doom emacs
 #+begin_src shell
