@@ -1,14 +1,20 @@
+#+TITLE: .emacs configuration
+#+AUTHOR: N1lsE
 #+PROPERTY: header-args :tangle .emacs
-.emacs configuration
+#+auto_tangle: t
 
 * Inhaltsverzeichnis :TOC_9:
 - [[#configuration][Configuration]]
   - [[#visual][Visual]]
+    - [[#menüleiste][menüleiste]]
+    - [[#toolbar][Toolbar]]
     - [[#theme][Theme]]
   - [[#melpa-package-manager][Melpa (package manager)]]
     - [[#melpa][melpa]]
     - [[#melpa-stable][melpa-stable]]
+    - [[#use-package][use-package]]
     - [[#installed-pakage-stuff][installed pakage stuff]]
+    - [[#org-auto-tangle][org-auto-tangle]]
   - [[#small-packages][small packages]]
     - [[#auto-complete][auto-complete]]
     - [[#org-table-of-contents-toc-toc-org-org-toc][org Table of contents (toc, toc-org, org-toc)]]
@@ -19,6 +25,16 @@
 
 * Configuration
 ** Visual
+*** menüleiste
+disable menubar
+#+begin_src lisp
+(menu-bar-mode -1)
+#+end_src
+*** Toolbar
+disable toolbar 
+#+begin_src lisp
+(tool-bar-mode -1)
+#+end_src
 *** Theme
 #+BEGIN_SRC lisp
 (add-to-list 'custom-theme-load-path ".emacs.d/themes/")
@@ -46,6 +62,13 @@ enables melpa-stable package manager
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 ;; (package-initialize)
 #+END_SRC
+*** use-package
+stellt sicher, dass use-package installiert ist
+#+begin_src lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+end_src
 *** installed pakage stuff
 #+begin_src lisp
 (custom-set-variables
@@ -53,11 +76,21 @@ enables melpa-stable package manager
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(zenburn))
  '(custom-safe-themes
    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" "8b6506330d63e7bc5fb940e7c177a010842ecdda6e1d1941ac5a81b13191020e" "1cae4424345f7fe5225724301ef1a793e610ae5a4e23c023076dc334a9eb940a" default))
  '(package-selected-packages
    '(toc-org org-rainbow-tags doom-themes auto-complete org-auto-tangle)))
+#+end_src
+*** org-auto-tangle
+install und configuration
+#+begin_src lisp
+  (use-package org-auto-tangle
+    :defer t
+    :hook (org-mode . org-auto-tangle-mode)
+    :after org
+    :config
+    (setq org-auto-tangle-default t))
+
 #+end_src
 ** small packages
 *** auto-complete
