@@ -1,0 +1,2 @@
+;;; Generated package description from org-rainbow-tags.el  -*- no-byte-compile: t -*-
+(define-package "org-rainbow-tags" "20221114.1307" "Colorize org tags automatically" '((emacs "28.1")) :commit "6001ec9345bea4e60b2178940ef197c055d5a5d8" :authors '(("Furkan Karataş" . "furkan.karatas02@gmail.com")) :maintainer '("Furkan Karataş" . "furkan.karatas02@gmail.com") :keywords '("faces" "outlines") :url "https://github.com/KaratasFurkan/org-rainbow-tags")
