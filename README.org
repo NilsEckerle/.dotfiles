@@ -1,6 +1,6 @@
 # dotfiles
 
-* Install dotfiles
+* Install dotfiles on linux mint xfce
 ** Manual Install
 *** prerequires
 **** install programs
@@ -26,7 +26,7 @@ we use symlinks to deploy the config files. as the user just paste the folowing 
   mkdir -p .config/i3blocks
   ln -s -f ~/.dotfiles/i3blocks/config ~/.config/i3blocks/config
 
-  ln -s -f ~/.dotfiles/.emacs.d ~/.emacs.d
+  ln -s -f ~/.dotfiles/emacs/.emacs ~/.emacs
 
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #+end_src
