@@ -1,0 +1,119 @@
+#+TITLE: .emacs configuration
+#+AUTHOR: N1lsE
+#+PROPERTY: header-args :tangle .emacs
+#+auto_tangle: t
+
+* Inhaltsverzeichnis :TOC_9:
+- [[#configuration][Configuration]]
+  - [[#enable-melpa-package-manager][enable melpa package manager]]
+  - [[#custom-set-variables][custom-set-variables]]
+  - [[#use-package][use-package]]
+    - [[#org-auto-tangle][org-auto-tangle]]
+    - [[#org-roam][org-roam]]
+    - [[#toc-org-mode][toc-org-mode]]
+    - [[#dashboard][dashboard]]
+  - [[#dashboard-1][dashboard]]
+    - [[#center-content][center ntent]]
+  - [[#org-mode][org-mode]]
+    - [[#toc-org-mode-enable][toc-org-mode enable]]
+    - [[#org-indent-mode-enable][org-indent-mode enable]]
+  - [[#menubar-toolbar--relative-linenumbers][menubar, toolbar & relative linenumbers]]
+  - [[#load-theme][load-theme]]
+
+* Configuration
+** enable melpa package manager
+#+begin_src elisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
+
+  (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+end_src
+** custom-set-variables
+automaticle added from emacs
+#+begin_src elisp
+   (custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(custom-safe-themes
+    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" "8b6506330d63e7bc5fb940e7c177a010842ecdda6e1d1941ac5a81b13191020e" "1cae4424345f7fe5225724301ef1a793e610ae5a4e23c023076dc334a9eb940a" default))
+  '(package-selected-packages
+    '(emacsql-sqlite-module emacsql-sqlite-builtin sqlite org-roam sqlite3 emacsql-mysql emacsql-sqlite toc-org org-rainbow-tags doom-themes auto-complete org-auto-tangle)))
+#+end_src
+** use-package
+*** org-auto-tangle
+#+begin_src elisp
+  (use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :after org
+  :config
+  (setq org-auto-tangle-default t))
+#+end_src
+*** org-roam
+#+begin_src elisp
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory "~/Wissen")
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup))
+#+end_src
+*** toc-org-mode
+#+begin_src elisp
+  (use-package toc-org
+    :ensure t)
+ #+end_src
+*** dashboard
+open dashboard on emacs startup
+#+begin_src elisp
+  (require 'dashboard)
+  (setq dashboard-banner-logo-title "Welcome back, Nils!")
+  (dashboard-setup-startup-hook)
+#+end_src
+
+open dashboard on emacsclient startup
+#+begin_src elisp
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+#+end_src
+** dashboard
+*** center content
+#+begin_src elisp
+  (setq dashboard-center-content t)
+#+end_src
+** org-mode
+*** toc-org-mode enable
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'toc-org-mode)
+#+end_src
+*** org-indent-mode enable
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+** menubar, toolbar & relative linenumbers 
+#+begin_src elisp
+  (menu-bar-mode -1)
+
+  (tool-bar-mode -1)
+
+  ;; relative line numbers
+  (global-display-line-numbers-mode)
+
+  ;; Make line numbers relative
+  (setq display-line-numbers-type 'relative)
+#+end_src
+** load-theme
+#+begin_src elisp
+  (add-to-list 'custom-theme-load-path ".emacs.d/themes/")
+
+  (load-theme 'doom-opera t)
+#+end_src
+
