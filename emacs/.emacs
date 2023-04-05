@@ -17,6 +17,23 @@
 '(package-selected-packages
   '(emacsql-sqlite-module emacsql-sqlite-builtin sqlite org-roam sqlite3 emacsql-mysql emacsql-sqlite toc-org org-rainbow-tags doom-themes auto-complete org-auto-tangle)))
 
+(use-package helm
+  :ensure t
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files))
+  :config
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t)
+  (setq helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t)
+  )
+
+(use-package auto-complete
+  :ensure t
+  :config
+  (ac-config-default))
+
 (use-package org-auto-tangle
 :defer t
 :hook (org-mode . org-auto-tangle-mode)
@@ -25,14 +42,14 @@
 (setq org-auto-tangle-default t))
 
 (use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory "~/Wissen")
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
+:ensure t
+:custom
+(org-roam-directory "~/Wissen")
+:bind (("C-c n l" . org-roam-buffer-toggle)
+       ("C-c n f" . org-roam-node-find)
+       ("C-c n i" . org-roam-node-insert))
+:config
+(org-roam-setup))
 
 (use-package toc-org
   :ensure t)
@@ -58,6 +75,8 @@
 
 ;; Make line numbers relative
 (setq display-line-numbers-type 'relative)
+
+(add-hook 'text-mode-hook 'visual-line-mode)
 
 (add-to-list 'custom-theme-load-path ".emacs.d/themes/")
 

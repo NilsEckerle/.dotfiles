@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".emacs.org"
+(("org-capture-last-stored"
+ (filename . "~/Wissen/20230404200930-dnd_dungeons_and_dragons.org")
+ (front-context-string . "\nDungeons & Drag")
+ (rear-context-string . "ons-and-Dragons\n")
+ (position . 102))
+(".emacs.org"
  (filename . "~/.dotfiles/emacs/.emacs.org")
  (front-context-string . "#+TITLE: .emacs ")
  (rear-context-string)
