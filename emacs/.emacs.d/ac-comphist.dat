@@ -1,24 +1,4 @@
-((("relative" .
-   [0 0 0 0 0 1 0 0])
-  ("projects" .
-   [0 0 0 0 1 0 0 0])
-  ("bookmarks" .
-   [0 0 0 0 0 0 0 1 0])
-  ("recents" .
-   [0 0 0 0 0 0 1])
-  ("dashboard-items" .
-   [0 0 0 0 1 0 0 0 0 0 0 0 0 0 0])
-  ("*dashboard*" .
-   [0 0 0 1 0 1 0 0 0 0 0])
-  ("dashboard-mode" .
-   [1 0 0 0 0 0 0 0 0 0 0 0 1 0])
-  ("dashboard" .
-   [1 0 0 0 0 0 0 0 1])
-  ("add-to-list" .
-   [0 0 0 0 0 0 0 0 0 1 0])
-  ("dashboard-1" .
-   [0 0 0 0 3 0 2 0 0 0 1])
-  ("outline-1" .
+((("outline-1" .
    [1 0 0 0 0 0 0 0 0])
   (":inherit" .
    [0 0 0 0 0 0 0 1])
@@ -29,11 +9,11 @@
   ("indent" .
    [1 0 0 0 0 0])
   ("add-hook" .
-   [0 0 0 0 1 0 1 4])
+   [0 0 0 0 1 0 1 5])
   ("org-mode" .
    [3 0 0 0 0 0 0 0])
   ("setq" .
-   [7 0 0 1])
+   [2 0 0 0])
   ("org-indent-mode" .
    [1 0 0 0 0 0 0 0 0 0 0 0 0 1 1])
   ("with-eval-after-load" .
@@ -79,10 +59,4 @@
   ("'org-mode-hook" .
    [0 0 0 1 0 0 0 0 0 0 0 0 0 0])
   ("auto-complete" .
-   [0 0 0 0 1 0 0 0 0 0 0 0 0])
-  ("dashboard-setup-startup-hook" .
-   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
-  ("'dashboard" .
-   [0 0 0 0 0 3 0 0 0 0])
-  ("+PROPERTY" .
-   [0 0 0 0 1 0 0 0 0])))
+   [0 0 0 0 1 0 0 0 0 0 0 0 0])))
