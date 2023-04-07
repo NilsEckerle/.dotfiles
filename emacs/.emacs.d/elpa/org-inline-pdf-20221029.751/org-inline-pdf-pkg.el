@@ -1,0 +1,2 @@
+;;; Generated package description from org-inline-pdf.el  -*- no-byte-compile: t -*-
+(define-package "org-inline-pdf" "20221029.751" "Inline PDF previewing for Org" '((emacs "25.1") (org "9.4")) :commit "513c0badffcc65d618d43543abd72077e144fd22" :authors '(("Shigeaki Nishina")) :maintainer '("Shigeaki Nishina") :keywords '("org" "outlines" "hypermedia") :url "https://github.com/shg/org-inline-pdf.el")
