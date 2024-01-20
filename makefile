@@ -1,3 +1,6 @@
+zsh:
+	ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
+
 vim:
 	ln -s -f ~/.dotfiles/vimrc ~/.vimrc
 	ln -s -f ~/.dotfiles/vim ~/.vim
