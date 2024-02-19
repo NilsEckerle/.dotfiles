@@ -1,7 +1,5 @@
 alias ll='ls -la'
 alias c='clear'
-alias startemacs='emacs --daemon &'
-alias emacs='emacsclient -c -a "emacs"'
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -117,3 +115,5 @@ source $ZSH/oh-my-zsh.sh
 #  source "$RANDOM_THEME"
 #  echo "[oh-my-zsh] Random theme '$RANDOM_THEME' loaded..."
 
+# zoxide
+eval "$(zoxide init --cmd cd zsh)"
