@@ -22,7 +22,7 @@ fi
 source $ZSH/oh-my-zsh.sh
 plugins=(git)
 ZSH_THEME="nilse-theme"
-PROMPT="%m|%n %~ > "
+PROMPT="%F{1}%m%f%B|%b%F{6}%n%f %B%F{45}%~%f%b%F{1} > %f"
 
 # ----- zoxide ----- #
 ######################
