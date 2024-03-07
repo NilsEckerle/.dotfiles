@@ -28,3 +28,14 @@ PROMPT="%F{1}%m%f%B|%b%F{6}%n%f %B%F{45}%~%f%b%F{1} > %f"
 ######################
 eval "$(zoxide init --cmd cd zsh)"
 
+# ----- Homebrew ----- #
+########################
+if [[ $(uname) == "Linux" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# ----- ssh-agent ----- #
+#########################
+eval `ssh-agent`
+eval `ssh-add ~/.ssh/github`
+
