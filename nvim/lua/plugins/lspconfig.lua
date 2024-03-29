@@ -6,6 +6,7 @@ return {
     opts = {
       servers = {
         tailwindcss = {},
+        sourcekit = {},
       },
     },
   },
