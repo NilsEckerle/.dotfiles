@@ -33,11 +33,14 @@ eval "$(zoxide init --cmd cd zsh)"
 ########################################
 GAME_PORTING_TOOL_KIT_ENABLED=true
 GAME_PORTING_TOOL_KIT_ENABLED=false
-if [[ $(uname) == "Darwin" ]] && \
-   [[ $GAME_PORTING_TOOL_KIT_ENABLED == true ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
+if [[ $(uname) == "Darwin" ]]; then
+  if  [[ $GAME_PORTING_TOOL_KIT_ENABLED == true ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  else
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
 else
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/home/linuxbrew//.linuxbrew/bin/brew shellenv)"
 fi
 
 
