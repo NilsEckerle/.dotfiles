@@ -75,7 +75,6 @@ return {
       "yaml",
       "rust",
       "swift",
-      "swiftui",
     },
     incremental_selection = {
       enable = true,
