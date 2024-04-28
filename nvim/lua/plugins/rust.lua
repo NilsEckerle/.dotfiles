@@ -38,6 +38,7 @@ return {
           vim.keymap.set("n", "<leader>dr", function()
             vim.cmd.RustLsp("debuggables")
           end, { desc = "Rust Debuggables", buffer = bufnr })
+          LazyVim.toggle.inlay_hints()
         end,
         default_settings = {
           -- rust-analyzer language server configuration
@@ -91,7 +92,7 @@ return {
         },
       },
       setup = {
-        rust_analyzer = function()
+        rust_analyzer = function(client, bufnr)
           return true
         end,
       },

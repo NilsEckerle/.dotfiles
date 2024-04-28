@@ -2,9 +2,8 @@
 #####################
 alias ll='ls -la'
 alias c='clear'
-alias vim='nvim'
-alias vi='nvim'
-alias v='nvim'
+alias v='nvim .'
+alias n='nvim .'
 
 # ----- $PATH ----- #
 #####################
@@ -42,5 +41,7 @@ if [[ $(uname) == "Darwin" ]]; then
 else
   eval "$(/home/linuxbrew//.linuxbrew/bin/brew shellenv)"
 fi
+
+export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
 
 
