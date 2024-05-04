@@ -7,3 +7,6 @@ vim:
 
 neovim:
 	ln -s -f ~/.dotfiles/nvim ~/.config/nvim
+
+tmux:
+	ln -s -f ~/.dotfiles/.tmux.conf ~/.tmux.conf
