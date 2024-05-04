@@ -43,5 +43,5 @@ else
 fi
 
 export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
-
+export PATH="$PATH:/usr/share/dotnet"
 
