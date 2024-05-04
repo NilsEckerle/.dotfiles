@@ -10,3 +10,4 @@ neovim:
 
 tmux:
 	ln -s -f ~/.dotfiles/.tmux.conf ~/.tmux.conf
+	ln -s -f ~/.dotfiles/tmux ~/.tmux
