@@ -2,8 +2,13 @@
 #####################
 alias ll='ls -la'
 alias c='clear'
-alias v='nvim .'
-alias n='nvim .'
+alias v='nvim'
+alias v.='nvim .'
+alias n='nvim'
+alias n.='nvim . '
+alias nvim.='nvim . '
+alias help='selected_command=$(tldr -l -1 | fzf --preview "tldr {1}" --preview-window=right,70%); tldr -t ocean "$selected_command"'
+alias github='eval `ssh-agent`; ssh-add ~/.ssh/github'
 
 # ----- $PATH ----- #
 #####################
@@ -42,6 +47,17 @@ else
   eval "$(/home/linuxbrew//.linuxbrew/bin/brew shellenv)"
 fi
 
+
+
 export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
 export PATH="$PATH:/usr/share/dotnet"
 
+# ----- tmux ----- #
+######################
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
+
+eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=139111; export SSH_AGENT_PID;
