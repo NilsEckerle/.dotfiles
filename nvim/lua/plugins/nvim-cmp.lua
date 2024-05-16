@@ -91,7 +91,8 @@ return {
         end
       end)
     end,
-  }, -- {
+  },
+  -- {
   --   "hrsh7th/nvim-cmp",
   --   lazy = false,
   --   priority = 100,
