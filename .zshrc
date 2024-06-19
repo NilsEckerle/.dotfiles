@@ -61,3 +61,5 @@ fi
 
 eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
 SSH_AGENT_PID=139111; export SSH_AGENT_PID;
+alias brewx86="arch -x86_64 /usr/local/bin/brew"
+alias act="source .venv/bin/activate"
