@@ -18,7 +18,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
   # add sdl2 to $Path
-  export PATH="/opt/homebrew/opt/sdl2:$PATH"
   export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
 fi
 
@@ -47,6 +46,7 @@ else
   eval "$(/home/linuxbrew//.linuxbrew/bin/brew shellenv)"
 fi
 
+echo "brew version running: `which brew`, `brew --version`"
 
 
 export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
@@ -59,7 +59,8 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
-eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
-SSH_AGENT_PID=139111; export SSH_AGENT_PID;
-alias brewx86="arch -x86_64 /usr/local/bin/brew"
-alias act="source .venv/bin/activate"
+# eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
+# SSH_AGENT_PID=139111; export SSH_AGENT_PID;
+alias switch_brew_x86="arch -x86_64 /usr/local/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
+alias switch_brew_arm="arch -arm64  /opt/homebrew/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
+# alias act="source .venv/bin/activate"
