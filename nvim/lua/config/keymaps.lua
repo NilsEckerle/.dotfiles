@@ -28,6 +28,10 @@ map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
+-- Move Page
+map("n", "<C-u>", "<C-u>zz", { desc = "Move Up half page" })
+map("n", "<C-d>", "<C-d>zz", { desc = "Move Down half page" })
+
 -- buffers
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
@@ -55,6 +59,10 @@ map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result
 map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
 map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+
+-- Move Next and center
+map("n", "n", "nzzzv", { desc = "Move Next in search" })
+map("n", "N", "Nzzzv", { desc = "Move Previous in search" })
 
 -- Add undo break-points
 map("i", ",", ",<c-g>u")
