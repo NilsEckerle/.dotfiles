@@ -1,2 +1,3 @@
 vim/undodir/
 tmux/plugins/tpm/
+nvim/*.json
