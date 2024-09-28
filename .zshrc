@@ -44,7 +44,7 @@ if [[ $(uname) == "Darwin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
 else
-  eval "$(/home/linuxbrew//.linuxbrew/bin/brew shellenv)"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 echo "brew version running: `which brew`, `brew --version`"
