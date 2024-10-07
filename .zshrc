@@ -38,13 +38,16 @@ eval "$(zoxide init --cmd cd zsh)"
 GAME_PORTING_TOOL_KIT_ENABLED=true
 GAME_PORTING_TOOL_KIT_ENABLED=false
 if [[ $(uname) == "Darwin" ]]; then
+  # MACOS CONFIG
   if  [[ $GAME_PORTING_TOOL_KIT_ENABLED == true ]]; then
     eval "$(/usr/local/bin/brew shellenv)"
   else
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
 else
+  # LINUX CONFIG
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  eval "setxkbmap -option caps:swapescape"
 fi
 
 echo "brew version running: `which brew`, `brew --version`"
