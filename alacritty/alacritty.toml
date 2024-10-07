@@ -1,0 +1,12 @@
+# import files
+# import = ["~/.config/alacritty/filename", ...]
+
+live_config_reload = true
+
+[window]
+padding = { x = 4, y = 4 }
+dynamic_padding = false
+opacity = 0.9
+blur = true
+startup_mode = "Maximized"
+decorations_theme_variant = "dark"
