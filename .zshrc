@@ -47,7 +47,6 @@ if [[ $(uname) == "Darwin" ]]; then
 else
   # LINUX CONFIG
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  eval "setxkbmap -option caps:swapescape"
 fi
 
 echo "brew version running: `which brew`, `brew --version`"
