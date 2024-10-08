@@ -1,6 +1,15 @@
 return {
   -- add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
+  {
+    "ellisonleao/gruvbox.nvim",
+  },
+
+  {
+    "tribela/transparent.nvim",
+    event = "VimEnter",
+    config = true,
+    auto = true,
+  },
 
   -- Configure LazyVim to load gruvbox
   {
