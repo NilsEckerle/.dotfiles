@@ -49,7 +49,6 @@ else
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-echo "brew version running: `which brew`, `brew --version`"
 
 
 export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
@@ -61,6 +60,13 @@ if [ -z "$TMUX" ]
 then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
+
+# Welcoming info
+echo ""
+echo "brew version running: `which brew`, `brew --version`"
+nerdfetch
+echo ""
+
 
 # eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
 # SSH_AGENT_PID=139111; export SSH_AGENT_PID;
