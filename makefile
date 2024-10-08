@@ -34,3 +34,6 @@ switch_caps_to_esc:
 
 i3:
 	ln -s -f ~/.dotfiles/i3 ~/.config/
+
+wallpaper:
+	ln -s -f ~/.dotfiles/wallpaper/ ~/
