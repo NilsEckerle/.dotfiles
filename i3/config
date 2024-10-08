@@ -187,12 +187,12 @@ bar {
 } #end of bar section
 
 # colour of border, background, text, indicator, and child_border
-client.focused #d12f2c #263640 #93a1a1 #696ebf #2587cc1
-client.focused_inactive #263640 #b08500 #93a1a1 #263640 #263640
-client.unfocused #263640 #b08500 #93a1a1 #263640 #263640
-client.urgent #263640 #b08500 #93a1a1 #263640 #263640
-client.placeholder #263640 #b08500 #93a1a1 #263640 #263640
-client.background #263640
+# client.focused #d12f2c #263640 #93a1a1 #696ebf #2587cc1
+# client.focused_inactive #263640 #b08500 #93a1a1 #263640 #263640
+# client.unfocused #263640 #b08500 #93a1a1 #263640 #263640
+# client.urgent #263640 #b08500 #93a1a1 #263640 #263640
+# client.placeholder #263640 #b08500 #93a1a1 #263640 #263640
+# client.background #263640
 #start of window title bars & borders section
 
 # green gruvbox
@@ -220,3 +220,6 @@ hide_edge_borders smart
 gaps inner 12
 smart_gaps on
 
+# background
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id compton
