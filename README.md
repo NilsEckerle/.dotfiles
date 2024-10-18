@@ -1,4 +1,4 @@
-![my Terminal setup .png]{./readme_images/terminal_setup.png}
+![my Terminal setup .png]{readme_images/terminal_setup.png}
 
 ## Installation
 
