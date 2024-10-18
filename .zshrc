@@ -10,6 +10,9 @@ alias nvim.='nvim . '
 alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-window=right,70%); tldr -C "$selected_command"'
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'
 alias github='eval `ssh-agent`; ssh-add ~/.ssh/github'
+alias pdf='tdf'
+alias y='yazi'
+alias yh='yazi ~/'
 
 # ----- $PATH ----- #
 #####################
