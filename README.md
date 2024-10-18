@@ -1,3 +1,5 @@
+![my Terminal setup .png]{./readme_images/terminal_setup.png}
+
 ## Installation
 
 ### Clone the Repository
