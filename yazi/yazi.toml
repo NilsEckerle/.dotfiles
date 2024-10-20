@@ -64,8 +64,9 @@ rules = [
   # PDF
   { name = "*.pdf", use = [
     "open_pdf",
+    "open_pdf_in_preview",
     "open_pdf_wsl",
-    "edit",
+    "open",
     "reveal",
   ] },
   # Folder
