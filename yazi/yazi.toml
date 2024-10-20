@@ -3,26 +3,33 @@ show_hidden = false
 
 [opener]
 edit = [
-	{ run = 'nvim "$@"', block = true, for = "unix" },
-	{ run = "nvim %*",   block = true, for = "windows" },
+  { run = 'nvim "$@"', block = true, for = "unix" },
+  { run = "nvim %*", block = true, for = "windows" },
 ]
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = '"C:\Program Files\mpv.exe" %*', orphan = true, for = "windows" }
+  { run = 'mpv "$@"', orphan = true, for = "unix" },
+  { run = '"C:\Program Files\mpv.exe" %*', orphan = true, for = "windows" },
 ]
-open = [
-	{ run = 'xdg-open "$@"', desc = "Open" },
-]
+open = [{ run = 'xdg-open "$@"', desc = "Open" }]
 open_pdf_in_preview = [
-  { run = 'open -a preview "$@"', desc= "in preview"}
+  { run = 'open -a preview "$@"', desc = "in preview", for = "unix" },
 ]
-open_pdf_in_tdf = [
-  { run = 'tdf "$@"',block=true, desc= "terminal pdf"}
+open_pdf_wsl = [
+  { run = 'wslview "$@"', desc = "in pdf viewer", orphan = true, for = "unix" },
 ]
+open_pdf_in_tdf = [{ run = 'tdf "$@"', block = true, desc = "terminal pdf" }]
 
 [open]
 rules = [
-	{ name = "*.pdf", use = ["open_pdf_in_tdf", "open_pdf_in_preview"] },
-	{ name = "*.*", use = ["edit"] },
+  { name = "*.pdf", use = [
+    "open_pdf_in_tdf",
+    "open_pdf_in_preview",
+    "open_pdf_wsl",
+  ] },
+  { name = "*.*", use = [
+    "edit",
+  ] },
+  { name = "*", use = [
+    "edit",
+  ] },
 ]
-
