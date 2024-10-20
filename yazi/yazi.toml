@@ -54,11 +54,20 @@ play = [
 open_pdf = [
   { run = 'tdf "$@"', block = true, desc = "terminal pdf", for = "unix" },
   { run = 'open -a preview "$@"', desc = "open macos preview", for = "macos" },
-  { run = 'wslview "$@"', desc = "open wls", orphan = true, for = "unix" },
+]
+open_pdf_wsl = [
+  { run = 'wslview "$@"', desc = "open pdf wls", orphan = true, for = "unix" },
 ]
 
 [open]
 rules = [
+  # PDF
+  { name = "*.pdf", use = [
+    "open_pdf",
+    "open_pdf_wsl",
+    "edit",
+    "reveal",
+  ] },
   # Folder
   { name = "*/", use = [
     "edit",
@@ -107,11 +116,5 @@ rules = [
   { name = "*", use = [
     "open",
     "reveal",
-  ] },
-  # PDF
-  { name = "*.pdf", use = [
-    "open_pdf_in_tdf",
-    "open_pdf_in_preview",
-    "open_pdf_wsl",
   ] },
 ]
