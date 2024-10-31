@@ -61,6 +61,12 @@ open_pdf_wsl = [
 
 [open]
 rules = [
+  # latex
+  { name = "*.tex", use = [
+    "edit",
+    "open",
+    "reveal",
+  ] },
   # PDF
   { name = "*.pdf", use = [
     "open_pdf",
