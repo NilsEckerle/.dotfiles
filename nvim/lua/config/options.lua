@@ -112,3 +112,13 @@ vim.o.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+-- Enable line wrapping and colorcolumn
+opt.colorcolumn = "70"
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "text", "tex" }, -- Add other file types if needed
+  callback = function()
+    vim.wo.wrap = true
+    opt.colorcolumn = "90"
+  end,
+})
