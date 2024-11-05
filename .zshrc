@@ -1,18 +1,26 @@
 # ----- alias ----- #
 #####################
+# overall
 alias ll='ls -la'
 alias c='clear'
+alias pdf='tdf'
+alias y='yazi'
+alias yh='yazi ~/'
+# git
+alias lg='lazygit'
+alias github='eval `ssh-agent`; ssh-add ~/.ssh/github'
+# nvim
 alias v='nvim'
 alias v.='nvim .'
 alias n='nvim'
 alias n.='nvim . '
 alias nvim.='nvim . '
+# help
 alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-window=right,70%); tldr -C "$selected_command"'
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'
-alias github='eval `ssh-agent`; ssh-add ~/.ssh/github'
-alias pdf='tdf'
-alias y='yazi'
-alias yh='yazi ~/'
+# Python
+alias py_env_create="python3 -m venv env"
+alias py_start_env="source env/bin/activate"
 
 # ----- $PATH ----- #
 #####################
@@ -34,7 +42,17 @@ PROMPT="%F{1}%m%f%B|%b%F{6}%n%f %B%F{45}%~%f%b%F{1} > %f"
 
 # ----- zoxide ----- #
 ######################
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init --cmd z zsh)"
+
+# - Fix Yazi Zoxide - #
+#######################
+function cd() {
+  if [[ "$1" == "--" ]]; then
+    builtin cd "$@"
+  else
+    z "$@" || builtin cd "$@"
+  fi
+}
 
 # ----- MacOS GamePortingToolKit ----- #
 ########################################
@@ -64,6 +82,8 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
+
+
 # Welcoming info
 echo ""
 echo "brew version running: `which brew`, `brew --version`"
@@ -75,4 +95,4 @@ echo ""
 # SSH_AGENT_PID=139111; export SSH_AGENT_PID;
 alias switch_brew_x86="arch -x86_64 /usr/local/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
 alias switch_brew_arm="arch -arm64  /opt/homebrew/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
-# alias act="source .venv/bin/activate"
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH
