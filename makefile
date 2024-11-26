@@ -2,6 +2,10 @@ all: important
 
 important: zsh vim i3 wallpaper 
 
+scripts:
+	@echo "setting up scripts..."
+	ln -s -f ~/.dotfiles/scripts/ ~/
+	
 zsh:
 	@echo "setting up zsh..."
 	ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
