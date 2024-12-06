@@ -1,21 +1,3 @@
 return {
-  -- add gruvbox
-  {
-    "ellisonleao/gruvbox.nvim",
-  },
-
-  {
-    "tribela/transparent.nvim",
-    event = "VimEnter",
-    config = true,
-    auto = true,
-  },
-
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "gruvbox",
-    },
-  },
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = function() vim.cmd.colorscheme "gruvbox" end, opt = ... },
 }
