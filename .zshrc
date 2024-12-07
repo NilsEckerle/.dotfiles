@@ -93,3 +93,4 @@ echo ""
 # SSH_AGENT_PID=139111; export SSH_AGENT_PID;
 # alias switch_brew_x86="arch -x86_64 /usr/local/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
 # alias switch_brew_arm="arch -arm64  /opt/homebrew/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
+export EDITOR=nvim
