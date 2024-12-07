@@ -62,4 +62,49 @@ return {
             return keys
         end,
     },
-}
+{
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+        -- "3rd/image.nvim", -- Optional image support in preview window
+    },
+    config = function ()
+        require("neo-tree").setup({
+            close_if_last_window = true,
+            filesystem = {
+                follow_current_file = true,
+                hijack_netrw_behavior = "open_current",
+                use_libuv_file_watcher = true, -- Automatically updates the tree
+                filtered_items = {
+                    hide_dotfiles = false,
+                    hide_gitignored = true,
+                },
+                cwd_target = {
+                    markers = { ".git", "env" }, -- Define project root markers
+                    upward = true, -- Traverse upward to find the markers
+                },
+            },
+            window = {
+                position = "left",
+                width = 30,
+                mappings = {
+                    ["l"] = "open",          -- Use `l` to open or expand directories
+                    ["h"] = "close_node",    -- Use `h` to close directories
+                }
+            },
+            default_component_configs = {
+                indent = {
+                    with_markers = true,
+                    expanders = {
+                        none = " ",
+                        open = "▾",
+                        closed = "▸",
+                    },
+                },
+            },
+        })
+    end
+}}

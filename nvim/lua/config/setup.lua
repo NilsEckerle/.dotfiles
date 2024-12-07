@@ -6,7 +6,7 @@ vim.opt.expandtab = true
 vim.opt.colorcolumn = "80"
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'no'
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight wen yanking (copying) text",
@@ -15,9 +15,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
--- https://www.youtube.com/watch?v=LaS32vctfOY
-vim.opt.signcolumn = 'yes'
 
 local lspconfig_defaults = require('lspconfig').util.default_config
 lspconfig_defaults.capabilities = vim.tbl_deep_extend(
