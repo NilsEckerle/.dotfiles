@@ -37,10 +37,17 @@ function repo_tmux {
     # echo "Tmux session '$tmux_session' already exists. Switching..."
     tmux switch-client -t "$tmux_session"
   else
-    # Create a new tmux session
-    tmux new-session -d -s "$tmux_session" -c "$repo_path" -n "yazi"
-    tmux new-window -t "$tmux_session" -n "zsh" -c "$repo_path"
-    tmux select-window -t "$tmux_session:0"
+    setup_directory="$HOME/.dotfiles/scripts/tmux_repo_config"
+
+    # create tmux session
+    # Check if the specific file exists
+    if [ -f "$setup_directory/$repo_name.sh" ]; then
+      # Execute the specific script
+      bash "$setup_directory/$repo_name.sh" "$repo_path" "$tmux_session"
+    else
+      # Execute the default script
+      bash "$setup_directory/default.sh" "$repo_path" "$tmux_session"
+    fi
 
     # Attach to the tmux session if not already in tmux
     if [ -z "$TMUX" ]; then
