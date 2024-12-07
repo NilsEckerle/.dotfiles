@@ -5,13 +5,16 @@ export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:/home/nils/.local/share/bob/nvim-bin"
 export PATH="$PATH:/usr/share/dotnet"
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH
-export PATH="$PATH:/opt/homebrew/bin/brew"
-eval "$(/opt/homebrew/bin/brew shellenv)"
 # ----- What OS are we running? ----- #
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
-  # add sdl2 to $Path
-  export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
+    # add sdl2 to $Path
+    export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
+    export PATH="$PATH:/opt/homebrew/bin/brew"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin/brew"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # ----- oh-my-zsh ----- #
