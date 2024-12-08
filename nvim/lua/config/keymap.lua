@@ -1,4 +1,3 @@
-local vim = vim
 vim.keymap.set("i", "jj", "<esc>")
 vim.keymap.set("i", "kk", "<esc>")
 
@@ -32,8 +31,16 @@ end
 vim.keymap.set("n", "<leader><leader>", find_files_in_git_root, {desc = "Find in Project Root"})
 vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, {desc = "Find in cwd"})
 
-vim.keymap.set("n", "<leader>qq", "<cmd>q<cr>")
+vim.keymap.set("n", "<leader>qq", "<cmd>x<cr>")
 vim.keymap.set("n", "<leader>qQ", "<cmd>q!<cr>")
 vim.keymap.set("n", "<leader>qw", "<cmd>wq<cr>")
 
 vim.keymap.set("n", "<leader>e", open_neotree_in_git_root)
+
+-- LSP
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to Declaration" })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show Informations" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+-- vim.keymap.set("n", "<leader>cd", vim.lsp.util.show_line_diagnostics, { desc = "Code Diagnostics" })
+vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
