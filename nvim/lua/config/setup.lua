@@ -4,6 +4,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.colorcolumn = "80"
+vim.opt.guicursor = "n-v-i-c:block"
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = 'no'
