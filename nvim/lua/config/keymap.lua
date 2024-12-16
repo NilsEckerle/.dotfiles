@@ -44,3 +44,5 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show Informations" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 -- vim.keymap.set("n", "<leader>cd", vim.lsp.util.show_line_diagnostics, { desc = "Code Diagnostics" })
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
+
+vim.keymap.set("n", "<leader>w", "<C-w>", { desc = "CTRL-w" })
