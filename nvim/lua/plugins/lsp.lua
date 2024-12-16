@@ -6,15 +6,16 @@ return {
             ft = "lua", -- only load on lua files
             opts = {
                 library = {
-                    { path = "${3rd}/luv/library", words = { "vim%.uv" }}
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } }
                 },
             },
         },
-        config =function()
+        config = function()
             require("lspconfig").lua_ls.setup {}
+            require("lspconfig").pyright.setup {}
         end
     },
-    {'hrsh7th/cmp-nvim-lsp'},
+    { 'hrsh7th/cmp-nvim-lsp' },
     {
         'hrsh7th/nvim-cmp',
         event = "InsertEnter",
