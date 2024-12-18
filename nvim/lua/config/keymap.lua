@@ -31,12 +31,12 @@ end
 vim.keymap.set("n", "<leader><leader>", find_files_in_git_root, {desc = "Find in Project Root"})
 vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, {desc = "Find in cwd"})
 
-vim.keymap.set("n", "<leader>qq", "<cmd>x<cr>")
-vim.keymap.set("n", "<leader>qQ", "<cmd>q!<cr>")
-vim.keymap.set("n", "<leader>qw", "<cmd>wq<cr>")
+vim.keymap.set("n", "<leader>qq", "<cmd>x<cr>", { desc = "x" } )
+vim.keymap.set("n", "<leader>qQ", "<cmd>q!<cr>", { desc = "q!" } )
+vim.keymap.set("n", "<leader>qw", "<cmd>wq<cr>", { desc = "qw" } )
 
-vim.keymap.set("n", "<leader>e", open_neotree_in_git_root) -- Neotree
-vim.keymap.set("n", "-", "<cmd>Oil<cr>") -- Oil
+vim.keymap.set("n", "<leader>e", open_neotree_in_git_root, { desc = "Open Neotree" } )
+vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open Oil" } )
 
 -- LSP
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
@@ -47,3 +47,5 @@ vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
 
 vim.keymap.set("n", "<leader>w", "<C-w>", { desc = "CTRL-w" })
+
+vim.keymap.set("n", "<leader>gg", "<cmd>term lazygit<cr>", { desc = "lazygit" })
