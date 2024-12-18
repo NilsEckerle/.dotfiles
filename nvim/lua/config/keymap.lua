@@ -35,7 +35,8 @@ vim.keymap.set("n", "<leader>qq", "<cmd>x<cr>")
 vim.keymap.set("n", "<leader>qQ", "<cmd>q!<cr>")
 vim.keymap.set("n", "<leader>qw", "<cmd>wq<cr>")
 
-vim.keymap.set("n", "<leader>e", open_neotree_in_git_root)
+vim.keymap.set("n", "<leader>e", open_neotree_in_git_root) -- Neotree
+vim.keymap.set("n", "-", "<cmd>Oil<cr>") -- Oil
 
 -- LSP
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
