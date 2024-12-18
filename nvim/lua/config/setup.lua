@@ -9,6 +9,8 @@ vim.opt.guicursor = "n-v-i-c:block"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = 'no'
 
+vim.opt.ignorecase = true
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight wen yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
