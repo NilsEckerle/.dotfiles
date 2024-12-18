@@ -11,14 +11,14 @@ return {
         },
         keys = {
             {
-                "<leader>?",
+                "<leader>g?",
                 function()
                     require("which-key").show({ global = false })
                 end,
                 desc = "Buffer Local Keymaps (which-key)",
             },
             {
-                "<leader>H",
+                "<leader>?",
                 function()
                     require("which-key").show({ global = true })
                 end,
