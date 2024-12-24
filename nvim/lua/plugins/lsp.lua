@@ -2,61 +2,41 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            "folke/lazydev.nvim",
-            ft = "lua", -- only load on lua files
-            opts = {
-                library = {
-                    { path = "${3rd}/luv/library", words = { "vim%.uv" } }
+            'saghen/blink.cmp',
+            {
+                "folke/lazydev.nvim",
+                ft = "lua", -- only load on lua files
+                opts = {
+                    library = {
+                        { path = "${3rd}/luv/library", words = { "vim%.uv" } }
+                    },
                 },
             },
         },
         config = function()
-            require("lspconfig").lua_ls.setup {}
-            require("lspconfig").pyright.setup {}
-        end
-    },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    {
-        'hrsh7th/nvim-cmp',
-        event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "L3MON4D3/LuaSnip",
-            "saadparwaiz1/cmp_luasnip",
-            "rafamadriz/friendly-snippets",
-        },
-        config = function()
-            local cmp = require("cmp")
-            local luasnip = require("luasnip")
-            require("luasnip.loaders.from_vscode").lazy_load()
+            local capabilities = require('blink.cmp').get_lsp_capabilities()
+            require("lspconfig").lua_ls.setup { capabilities = capabilities }
+            require("lspconfig").pyright.setup { capabilities = capabilities }
 
-            cmp.setup({
-                completion = {
-                    completeopt = "menu,menuone,preview",
-                },
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ["C-k"] = cmp.mapping.select_prev_item(),
-                    ["C-j"] = cmp.mapping.select_next_item(),
-                    ["C-b"] = cmp.mapping.scroll_docs(-4),
-                    ["C-n"] = cmp.mapping.scroll_docs(4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                }),
-                sources = cmp.config.sources({
-                    { name = "luasnip" },
-                    { name = "buffer" },
-                    { name = "path" },
-                }),
+            vim.api.nvim_create_autocmd('LspAttach', {
+                desc = 'LSP actions',
+                callback = function(event)
+                    local opts = { buffer = event.buf }
+                    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+                    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+                    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+                    -- vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+                    -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+                    -- vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+                    -- vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                    -- vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                    -- vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                end,
             })
         end
     },
+
     {
         'williamboman/mason.nvim',
         build = ':MasonUpdate', -- Automatically update Mason registry
@@ -64,12 +44,14 @@ return {
             require('mason').setup()
         end
     },
+
     {
         'williamboman/mason-lspconfig.nvim',
         config = function()
             require('mason-lspconfig').setup()
         end,
     },
+
     {
 
         "williamboman/mason.nvim",
