@@ -49,3 +49,8 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
 vim.keymap.set("n", "<leader>w", "<C-w>", { desc = "CTRL-w" })
 
 vim.keymap.set("n", "<leader>gg", "<cmd>term lazygit<cr>", { desc = "lazygit" })
+
+--- Replace without loosing p register
+vim.keymap.set("x", "<leader>p", "\"_dP", {desc = "replace while keeping p register"})
+vim.keymap.set("n", "<leader>p", "p", {desc = "replace while keeping p register"})
+
