@@ -1,6 +1,7 @@
 ---@diagnostic disable: missing-fields
 vim.keymap.set("i", "jj", "<esc>")
 vim.keymap.set("i", "kk", "<esc>")
+vim.keymap.set("n", "<esc>", "<cmd>noh<CR>", { noremap = true, silent = true })
 
 local function get_git_root()
 	local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
