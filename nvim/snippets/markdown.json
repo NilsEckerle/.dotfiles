@@ -1,0 +1,14 @@
+{
+    "todo-list": {
+        "prefix":"todolist",
+        "body": [
+            "# TODO",
+            "",
+            "- [ ] ${1:Task}",
+            "",
+            "# DONE",
+            "",
+            ""
+        ]
+    }
+}
