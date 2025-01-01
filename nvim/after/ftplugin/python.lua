@@ -1,3 +1,4 @@
+local set = vim.opt_local
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*.py",
     callback = function()
