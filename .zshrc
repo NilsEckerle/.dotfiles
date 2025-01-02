@@ -59,7 +59,7 @@ alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-w
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'
 # Python
 alias env_create="python3 -m venv env"
-alias ack="source env/bin/activate"
+alias ack="source .env/bin/activate"
 
 # # ----- MacOS GamePortingToolKit ----- #
 # ########################################
