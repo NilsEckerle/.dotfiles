@@ -86,10 +86,11 @@ then
 fi
 
 # Welcoming info
-echo ""
-echo "brew version running: `which brew`, `brew --version`"
-nerdfetch
-echo ""
+# echo "brew version running: `which brew`, `brew --version`"
+if command -v figlet >/dev/null 2>&1; then
+    # basename "$PWD" | figlet -t # print only the folder
+    pwd | figlet -t # print the path
+fi
 
 
 # eval SSH_AUTH_SOCK=/tmp/ssh-XXXXXXd7Iv7N/agent.139110; export SSH_AUTH_SOCK;
