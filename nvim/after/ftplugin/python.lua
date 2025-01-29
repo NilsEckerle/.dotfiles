@@ -1,4 +1,5 @@
 local set = vim.opt_local
+
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*.py",
     callback = function()
@@ -25,3 +26,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end, { desc = "Run Python File in Floating Terminal" })
     end,
 })
+
+
