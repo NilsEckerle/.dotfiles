@@ -1,6 +1,7 @@
 return {
     {
         'stevearc/conform.nvim',
+		event = { "BufReadPre", "BufNewFile" },
         opts = {},
         config = function()
             require("conform").setup({
@@ -11,6 +12,13 @@ return {
                     javascript = { "prettierd", "prettier", stop_after_first = true },
                 },
             })
-        end
+			vim.keymap.set({"n", "v"}, "<leader>cf", function ()
+				require("conform").format({
+					lsp_fallback = true,
+					async = false,
+					timeout_ms = 500,
+				})
+			end, {desc = "Format file or range (in visual mode)"})
+        end,
     }
 }
