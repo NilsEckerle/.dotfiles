@@ -7,6 +7,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.guicursor = "n-v-i-c:block"
 vim.opt.scrolloff = 10
 
+vim.opt.foldenable = true
+vim.opt.foldlevelstart = 99 -- Opens all folds when entering a buffer
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- fold via treesitter context (functions, classes, ...)
 vim.opt.foldcolumn = "0" -- disables fold column
