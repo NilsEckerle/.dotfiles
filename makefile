@@ -1,31 +1,34 @@
-all: important
+all: important scripts oh-my-zsh zsh_default_shell neovim tmux kitty yazi alacritty 
 
 important: zsh vim i3 wallpaper 
 
-scripts:
-	@echo "setting up scripts..."
-	ln -s -f ~/.dotfiles/scripts/ ~/
-	
-zsh:
-	@echo "setting up zsh..."
-	ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
+zsh_default_shell: 
+	@echo "making zsh the default shell..." 
+	chsh -s $(which zsh) 
 
-oh-my-zsh:
-	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+scripts: 
+	@echo "setting up scripts..." 
+	ln -s -f ~/.dotfiles/scripts/ ~/ 
 
-vim:
-	echo "setting up vim..."
-	ln -s -f ~/.dotfiles/vimrc ~/.vimrc
-	ln -s -f ~/.dotfiles/vim ~/.vim
+zsh: 
+	@echo "setting up zsh..." 
+	ln -s -f ~/.dotfiles/.zshrc ~/.zshrc 
 
-neovim:
-	@echo "setting up neovim..."
-	ln -s -f ~/.dotfiles/nvim ~/.config/nvim
+oh-my-zsh: 
+	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh 
 
-tmux:
-	@echo "setting up tmux..."
-	ln -s -f ~/.dotfiles/.tmux.conf ~/.tmux.conf
-	ln -s -f ~/.dotfiles/tmux ~/.tmux
+vim: 
+	@echo "setting up vim..." 
+	ln -s -f ~/.dotfiles/vimrc ~/.vimrc ln -s -f ~/.dotfiles/vim ~/.vim 
+
+neovim: 
+	@echo "setting up neovim..." 
+	ln -s -f ~/.dotfiles/nvim ~/.config/nvim 
+
+tmux: 
+	@echo "setting up tmux..." 
+	ln -s -f ~/.dotfiles/.tmux.conf ~/.tmux.conf 
+	ln -s -f ~/.dotfiles/tmux ~/.tmux 
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	
 alacritty:
