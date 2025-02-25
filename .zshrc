@@ -21,8 +21,19 @@ fi
 #########################
 source $ZSH/oh-my-zsh.sh
 plugins=(git)
-ZSH_THEME="nilse-theme"
+ZSH_THEME="robbyrussell"
 PROMPT="%F{1}%m%f%B|%b%F{6}%n%f %B%F{45}%~%f%b%F{1} > %f"
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Format for Git branch and pull/push status
+zstyle ':vcs_info:git:*' formats '%F{yellow}[%b]%f %F{green}%a%f'
+zstyle ':vcs_info:*' enable git
+
+# Prompt with Git branch and diff
+PROMPT='%F{1}%m%f|%F{6}%n%f %F{45}%~%f%b %F{yellow}${vcs_info_msg_0_}%f ${GIT_REMOTE_STATUS}
+%F{1} > %f'
 
 # ----- zoxide ----- #
 ######################
