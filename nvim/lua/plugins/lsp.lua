@@ -38,6 +38,23 @@ return {
 				),
 				capabilities = capabilities,
 			})
+			require("lspconfig").omnisharp.setup({
+				capabilities = capabilities,
+				cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+				enable_editorconfig_support = true,
+				enable_roslyn_analyzers = true,
+				organize_imports_on_format = true,
+				enable_import_completion = true,
+				handlers = {
+					["textDocument/definition"] = require('omnisharp_extended').handler,
+				},
+				settings = {
+					omnisharp = {
+						useModernNet = true,
+						sdkPath = "/usr/share/dotnet/sdk"
+					}
+				}
+			})
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				desc = "LSP actions",
@@ -68,6 +85,7 @@ return {
 			ensure_installed = {
 				"debugpy",
 				"pyright",
+				"omnisharp",
 			},
 		},
 	},
@@ -116,4 +134,8 @@ return {
 			end)
 		end,
 	},
+
+	{
+		"Hoffs/omnisharp-extended-lsp.nvim",
+	}
 }
