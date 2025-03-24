@@ -1,11 +1,12 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.colorcolumn = "80"
 vim.opt.guicursor = "n-v-i-c:block"
 vim.opt.scrolloff = 10
+vim.opt.conceallevel = 1
 
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99 -- Opens all folds when entering a buffer
