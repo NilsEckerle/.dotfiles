@@ -70,7 +70,12 @@ alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-w
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'
 # Python
 alias env_create="python3 -m venv env"
-alias ack="source .env/bin/activate"
+alias act="source .env/bin/activate"
+# Godot
+alias godot_run='nohup Godot_v4.3-stable_mono_linux.x86_64 > /dev/null 2>&1 &'
+alias godot='nohup Godot_v4.3-stable_mono_linux.x86_64 -e > /dev/null 2>&1 &'
+
+
 
 # # ----- MacOS GamePortingToolKit ----- #
 # ########################################
@@ -109,3 +114,5 @@ fi
 # alias switch_brew_x86="arch -x86_64 /usr/local/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
 # alias switch_brew_arm="arch -arm64  /opt/homebrew/bin/brew; echo 'brew version running: `which brew`, `brew --version`\nsystem archetecture: `arch`'"
 export EDITOR=nvim
+export PATH="$HOME/Applications/tdf/target/release:$PATH"
+export PATH="$HOME/GodotMono:$PATH"
