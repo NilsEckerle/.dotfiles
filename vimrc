@@ -77,3 +77,4 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 set background=dark
 colorscheme gruvbox 
+set clipboard=unnamedplus
