@@ -69,7 +69,7 @@ alias nvim.='nvim . '
 alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-window=right,70%); tldr -C "$selected_command"'
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'
 # Python
-alias env_create="python3 -m venv env"
+alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 # Godot
 alias godot_run='nohup Godot_v4.3-stable_mono_linux.x86_64 > /dev/null 2>&1 &'
