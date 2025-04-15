@@ -76,7 +76,7 @@ create_symlink() {
         backup_if_exists "$dest"
     fi
     
-    mkdir -p "$(dirname "$dest")"
+    mkdir -p "$(dirname "$dest")"jk
     ln -sf "$src" "$dest"
     log "Created symlink: $dest -> $src"
 }
@@ -89,7 +89,7 @@ eval $PKG_UPDATE
 
 # Install essential packages
 log "Installing Linux essentials..."
-$PKG_INSTALL git curl wget make gcc g++ build-essential figlet zsh tmux vim neovim python3 python3-pip python3-venv fzf
+$PKG_INSTALL git curl wget make gcc g++ build-essential figlet zsh tmux vim neovim python3 python3-pip python3-venv fzf	kitty
 
 # Install Homebrew if not installed
 if ! command_exists brew; then
@@ -147,8 +147,8 @@ create_symlink "$DOTFILES_DIR/vim" "$HOME/.vim"
 create_symlink "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 
 # Tmux setup with fix for TPM
+log "Setting up Tmux..."
 create_symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
-create_symlink "$DOTFILES_DIR/tmux" "$HOME/.tmux"
 
 # Fix TPM installation
 log "Setting up Tmux Plugin Manager (TPM)..."
@@ -160,6 +160,7 @@ fi
 mkdir -p "$HOME/.tmux/plugins"
 git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 log "TPM installed successfully"
+
 
 # Setup i3 if available
 if command_exists i3; then
