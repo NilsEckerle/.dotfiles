@@ -4,14 +4,13 @@
 
 ### Clone the Repository
 ```
-git clone git@github.com:N1lsE/.dotfiles.git ~/.dotfiles
+git clone https"//github.com/NilsEckerle/.dotfiles.git ~/.dotfiles
 ```
 
-### create symlinks
-Make shure every symlink you want to create via the `make` command (makefile) doesn't exist befor running.
+### start the setup
+
 ```
-cd ~/dotfiles
-make
-cd ~
+cd ~/.dotfiles
+./setup-scripts/[linux.sh | macos.sh]
 ```
 
