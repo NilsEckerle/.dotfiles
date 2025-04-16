@@ -1,5 +1,3 @@
-![my Terminal setup .png](readme_images/terminal_setup.png)
-
 # .dotfiles
 
 ![Terminal Setup](readme_images/terminal_setup.png)
