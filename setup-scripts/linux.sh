@@ -152,9 +152,9 @@ create_symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 
 # Fix TPM installation
 log "Setting up Tmux Plugin Manager (TPM)..."
-if [ -d "$HOME/.tmux/plugins/tpm" ]; then
+if [ -d "$HOME/.tmux/plugins" ]; then
     log "Removing existing TPM installation..."
-    rm -rf "$HOME/.tmux/plugins/tpm"
+    rm -rf "$HOME/.tmux/plugins"
 fi
 
 mkdir -p "$HOME/.tmux/plugins"
