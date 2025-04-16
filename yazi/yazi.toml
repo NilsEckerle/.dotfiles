@@ -32,7 +32,7 @@ edit = [
   { run = 'code -w %*', block = true, desc = "code (block)", for = "windows" },
 ]
 open = [
-  { run = 'xdg-open "$1"', desc = "Open", for = "linux" },
+  { run = 'xreader "$1"', desc = "Open", for = "linux" },
   { run = 'open "$@"', desc = "Open", for = "macos" },
   { run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
 ]
@@ -69,11 +69,10 @@ rules = [
   ] },
   # PDF
   { name = "*.pdf", use = [
-    "open_pdf",
-    "open_pdf_in_preview",
-    "open_pdf_wsl",
     "open",
     "reveal",
+    "open_pdf_in_preview",
+    "open_pdf_wsl",
   ] },
   # Folder
   { name = "*/", use = [
