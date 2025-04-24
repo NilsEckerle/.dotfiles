@@ -9,7 +9,7 @@ function repo_tmux {
   fi
 
   # Find the repository path
-  repo_path=$(find "${dirs_to_find_in[@]}" -name .git -type d -prune -maxdepth 5 |
+  repo_path=$(find -maxdepth 5 "${dirs_to_find_in[@]}" -name .git -type d -prune |
     sed 's/\/.git$//' |
     awk -F'/' '{print $NF "\t" $0}' |
     fzf --with-nth=1 --delimiter="\t" $filter_params --select-1 |
