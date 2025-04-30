@@ -67,6 +67,7 @@ alias ll='ls -la'
 alias c='clear'
 alias y='yazi'
 alias yh='yazi ~/'
+alias todo='nvim ~/Documents/.todo.md'
 
 # Git
 alias lg='lazygit'
