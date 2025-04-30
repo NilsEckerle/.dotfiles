@@ -5,6 +5,9 @@ set $alt Mod1
 # set font
 font pango:FiraCode Nerd Font 10
 
+# dont focus updated window
+focus_on_window_activation none
+
 # use mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
 
