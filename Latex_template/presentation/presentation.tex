@@ -1,0 +1,71 @@
+% ----------------------------------------------------------------
+% SETUP ----------------------------------------------------------
+% ----------------------------------------------------------------
+\input{preamble.tex}
+
+\title{TITLE}
+\author{Nils Eckerle}
+\date{}
+% SETUP END ------------------------------------------------------
+
+% ----------------------------------------------------------------
+% BEGIN DOCUMENT -------------------------------------------------
+% ----------------------------------------------------------------
+\begin{document}
+
+	\maketitle
+
+\begin{frame}{Gliederung}
+	\tableofcontents
+\end{frame}
+
+% BEGIN PRESENTATION ---------------------------------------------
+\section{Testing beamer}
+
+\subsection{List}
+
+\begin{frame}{Test Frame}
+	this is some test presentation
+	\begin{itemize}
+		\item<1-> alsgdhs
+		\item<2-> qttqwwqet
+		\item<3-> hhkl;lh
+		\item<4-> yiyioypio
+	\end{itemize}
+
+	\onslide<2>{Hello World}\onslide<3>{Hello You}
+
+	\only<2>{Hello World}\only<3>{Hello You}
+\end{frame}
+
+\subsection{Blocks}
+
+\begin{frame}{Test Blocks}
+	\begin{example}
+		example
+	\end{example}
+	\begin{theorem}[Pythagoras]
+		theorem
+	\end{theorem}
+  \begin{proof}<2>
+		proof
+	\end{proof}
+\end{frame}
+
+\subsubsection{Columns}
+
+\begin{frame}{Test Blocks}
+	\begin{columns}
+		\column{0.5\textwidth} This is my text. it is a verry long test. verry long
+		text. verry long text. verry long text. verry long text. verry long text. verry long text. verry long text. verry long text.
+		\column{0.5\textwidth} \begin{itemize}
+			\item Hello World, i am here to show a multi line item.
+			\item I am not.
+			\item !
+		\end{itemize}
+	\end{columns}
+\end{frame}
+% END PRESENTATION -----------------------------------------------
+
+\end{document}
+% END DOCUMENT ---------------------------------------------------
