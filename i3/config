@@ -13,9 +13,14 @@ floating_modifier $super
 
 # autostart
 exec --no-startup-id hsetroot -center ~/.wallpaper.png
+# Autostart applications on specific workspaces
+exec --no-startup-id kitty
+exec --no-startup-id firefox
+exec --no-startup-id spotify
+exec --no-startup-id discord
 
 # start a terminal
-bindsym $super+Return exec alacritty
+bindsym $super+Return exec kitty
 
 # start dmenu (a program launcher)
 bindsym $super+d exec i3-dmenu-desktop --dmenu="dmenu -i -b \
@@ -65,19 +70,18 @@ bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $super+Shift+space focus mode_toggle
-
+bindsym $super+Shift+space layout toggle splitv stacked tabbed splith spiral
 # workspace names / font-awesome
-set $ws1 "01 "
-set $ws2 "02 "
-set $ws3 "03 "
-set $ws4 "04 "
-set $ws5 "05 "
-set $ws6 "06 "
-set $ws7 "07 "
-set $ws8 "08 "
-set $ws9 "09 "
-set $wsX "10 "
+set $ws1 "01 "
+set $ws2 "02 "
+set $ws3 "03 "
+set $ws4 "04 "
+set $ws5 "05 "
+set $ws6 "06 "
+set $ws7 "07 "
+set $ws8 "08 "
+set $ws9 "09 "
+set $wsX "10 "
 
 # switch to workspace
 bindsym $super+Control+Right workspace next
@@ -214,6 +218,13 @@ client.urgent           $red $red $white $red $red
 
 #end of window title bars & borders section
 
+# Assign applications to specific workspaces
+assign [class="kitty"] workspace $ws1
+assign [class="firefox"] workspace $ws2
+assign [class="Spotify"] workspace $ws9
+assign [class="discord"] workspace $wsX
+# Spotify fix (it doesn't always respect assign)
+for_window [class="Spotify"] move to workspace $ws9
 
 # window rules, you can find the window class using xprop
 for_window [class=Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver] floating enable
