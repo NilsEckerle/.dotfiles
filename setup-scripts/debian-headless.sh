@@ -171,6 +171,9 @@ create_symlinks() {
         "yazi:$HOME/.config/yazi"
         "vimrc:$HOME/.vimrc"
         "vim:$HOME/.vim"
+				".tmux.conf:$HOME/.tmux.conf"
+				".zshrc:$HOME/.zshrc"
+				".luarc.json:$HOME/.luarc.json"
     )
 
     for config in "${configs[@]}"; do
