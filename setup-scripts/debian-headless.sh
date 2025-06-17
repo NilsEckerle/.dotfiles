@@ -249,7 +249,6 @@ UsePAM yes
 X11Forwarding yes
 PrintMotd no
 AcceptEnv LANG LC_*
-EOFystem sftp /usr/lib/openssh/sftp-server
 EOF
     
     # Test SSH configuration
