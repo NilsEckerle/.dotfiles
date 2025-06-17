@@ -31,6 +31,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- TTY-specific configuration
+if os.getenv("TERM") == "linux" then
+    vim.opt.termguicolors = false
+    vim.opt.number = true
+    vim.opt.relativenumber = false  -- Relative numbers can be problematic in TTY
+    vim.cmd([[
+        set t_Co=16
+        " Force line number colors
+        highlight LineNr ctermfg=8 ctermbg=NONE
+        highlight CursorLineNr ctermfg=11 ctermbg=NONE
+    ]])
+else
+    vim.opt.termguicolors = true
+    vim.opt.number = true
+    vim.opt.relativenumber = true
+end
+
 -- disable popup when changing config
 require("lazy").setup({
 	change_detection = {
@@ -38,21 +55,3 @@ require("lazy").setup({
 		notify = false,
 	},
 })
-
--- TTY-specific configuration
-if os.getenv("TERM") == "linux" then
-    vim.opt.termguicolors = false
-    vim.cmd([[
-        set t_Co=16
-        colorscheme default
-        " Or use a 16-color compatible theme
-        " colorscheme gruvbox
-        " set background=dark
-    ]])
-else
-    vim.opt.termguicolors = true
-    vim.cmd([[
-        colorscheme gruvbox
-        set background=dark
-    ]])
-end
