@@ -89,6 +89,7 @@ install_apt_packages() {
         "python3"
         "python3-pip"
         "python3-venv"
+        "yarnpkg"
     )
 
     for package in "${packages[@]}"; do
