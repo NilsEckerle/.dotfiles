@@ -238,8 +238,8 @@ setup_ssh() {
         log_info "SSH config backed up to /etc/ssh/sshd_config.backup"
     fi
     
-    # Configure SSH daemon for key-only authentication
-    sudo tee /etc/ssh/sshd_config.d/99-custom.conf > /dev/null <<EOF
+		# Configure SSH daemon for key-only authentication
+		sudo tee /etc/ssh/sshd_config.d/99-custom.conf > /dev/null <<EOF
 # Custom SSH configuration for key-only authentication
 PasswordAuthentication no
 PubkeyAuthentication yes
@@ -249,7 +249,7 @@ UsePAM yes
 X11Forwarding yes
 PrintMotd no
 AcceptEnv LANG LC_*
-Subsystem sftp /usr/lib/openssh/sftp-server
+EOFystem sftp /usr/lib/openssh/sftp-server
 EOF
     
     # Test SSH configuration
