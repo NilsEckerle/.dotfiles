@@ -44,6 +44,10 @@ git clone https://github.com/NilsEckerle/.dotfiles.git ~/.dotfiles
 
 ### Start the Setup
 
+Add your user to the sudoers group as the script prompts. If the usermod command
+is missing you have to run `su -` to get the PATH of the root user where the
+usermod is pressent.
+
 ```bash
 cd ~/.dotfiles
 git switch debian-headless

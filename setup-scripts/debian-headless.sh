@@ -3,26 +3,6 @@
 # Debian 12 Dotfiles Setup Script
 # Run this script from your ~/.dotfiles directory
 
-# Check if running as root
-if [ "$EUID" -eq 0 ]; then
-    log_error "This script should NOT be run as root!"
-    log_error "It will install dotfiles in the wrong location (/root instead of your user home)"
-    log_error ""
-    log_error "If your user is not in sudo group, run this as root first:"
-    log_error "  usermod -aG sudo your-username"
-    log_error ""
-    log_error "Then log out/in and run this script as your regular user."
-    exit 1
-fi
-
-# Check if user has sudo privileges
-if ! sudo -n true 2>/dev/null; then
-    log_error "User $USER is not in sudo group. Please run as root first:"
-    log_error "  usermod -aG sudo $USER"
-    log_error "Then log out/in and run this script as $USER"
-    exit 1
-fi
-
 set -e  # Exit on any error
 
 # Colors for output
@@ -48,6 +28,27 @@ log_warning() {
 log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
+
+# Check if running as root
+if [ "$EUID" -eq 0 ]; then
+    log_error "This script should NOT be run as root!"
+    log_error "It will install dotfiles in the wrong location (/root instead of your user home)"
+    log_error ""
+    log_error "If your user is not in sudo group, run this as root first:"
+    log_error "  usermod -aG sudo your-username"
+    log_error ""
+    log_error "Then log out/in and run this script as your regular user."
+    exit 1
+fi
+
+# Check if user has sudo privileges
+if ! sudo -n true 2>/dev/null; then
+    log_error "User $USER is not in sudo group. Please run as root first:"
+    log_error "  usermod -aG sudo $USER"
+		log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
+    log_error "Then log out/in and run this script as $USER"
+    exit 1
+fi
 
 # Check if script is run from dotfiles directory
 if [ ! -f "README.md" ] || [ ! -d "nvim" ] || [ ! -d "setup-scripts" ]; then
