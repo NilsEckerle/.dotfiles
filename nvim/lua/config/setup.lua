@@ -38,3 +38,21 @@ require("lazy").setup({
 		notify = false,
 	},
 })
+
+-- TTY-specific configuration
+if os.getenv("TERM") == "linux" then
+    vim.opt.termguicolors = false
+    vim.cmd([[
+        set t_Co=16
+        colorscheme default
+        " Or use a 16-color compatible theme
+        " colorscheme gruvbox
+        " set background=dark
+    ]])
+else
+    vim.opt.termguicolors = true
+    vim.cmd([[
+        colorscheme gruvbox
+        set background=dark
+    ]])
+end
