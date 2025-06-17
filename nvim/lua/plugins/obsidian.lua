@@ -27,8 +27,9 @@ return {
 		-- Generate filenames with timestamp + title
 		note_id_func = function(title)
 			local timestamp = os.date("%Y%m%d%H%M")
-			local clean_title = title:gsub(" ", "-"):lower()
-			return timestamp .. "_" .. clean_title
+			-- local clean_title = title:gsub(" ", "-"):lower()
+			-- return timestamp .. "_" .. clean_title
+			return timestamp
 		end,
 
 		-- Disable automatic frontmatter updates
@@ -65,6 +66,9 @@ return {
 
 		local vault_dir = vim.fn.expand("~/Documents/Zettelkasten")
 
+		-- Word limit toggle variable
+		local word_limit_enabled = true
+
 		local function is_in_vault()
 			local buf_path = vim.fn.expand("%:p")
 			return vim.startswith(buf_path, vault_dir)
@@ -82,6 +86,7 @@ return {
     end
 
     local function should_enforce_limit()
+      if not word_limit_enabled then return false end -- Check if word limit is enabled
       if not is_in_vault() then return false end
       
       local filename = vim.fn.expand("%:t")
@@ -132,6 +137,7 @@ return {
 					map("v", "<leader>ol", "<cmd>ObsidianLink<CR>", opts_map)
 					map("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", opts_map)
 					map("n", "gf", "<cmd>ObsidianFollowLink<CR>", opts_map)
+					map("n", "gd", "<cmd>ObsidianFollowLink<CR>", opts_map)
 				end
 			end,
 		})
@@ -141,8 +147,9 @@ return {
 			vim.ui.input({ prompt = "Note title: " }, function(title)
 				if title then
 					local timestamp = os.date("%Y%m%d%H%M")
-					local clean_title = title:gsub(" ", "-"):lower()
-					local filename = timestamp .. "_" .. clean_title .. ".md"
+					-- local clean_title = title:gsub(" ", "-"):lower()
+					-- local filename = timestamp .. "_" .. clean_title .. ".md"
+					local filename = timestamp .. ".md"
 					local filepath = vim.fn.expand("~/Documents/Zettelkasten/Permanent/" .. filename)
 
 					-- Create file with exact template content
@@ -168,8 +175,9 @@ return {
 			vim.ui.input({ prompt = "Note title: " }, function(title)
 				if title then
 					local timestamp = os.date("%Y%m%d%H%M")
-					local clean_title = title:gsub(" ", "-"):lower()
-					local filename = timestamp .. "_" .. clean_title .. ".md"
+					-- local clean_title = title:gsub " ", "-"):lower()
+					-- local filename = timestamp .. "_" .. clean_title .. ".md"
+					local filename = timestamp .. ".md"
 					local filepath = vim.fn.expand("~/Documents/Zettelkasten/Permanent/" .. filename)
 
 					-- Create file with exact template content
@@ -188,10 +196,17 @@ return {
 					vim.fn.writefile(template_content, filepath)
 
 					-- Insert link at cursor position
-					local link = "[[" .. timestamp .. "_" .. clean_title .. "]]"
+					local link = "[[" .. timestamp .. "|" .. title .. "]]"
 					vim.api.nvim_put({ link }, "c", true, true)
 				end
 			end)
+		end, {})
+
+		-- Toggle word limit command
+		vim.api.nvim_create_user_command("ObsidianToggleWordLimit", function()
+			word_limit_enabled = not word_limit_enabled
+			local status = word_limit_enabled and "enabled" or "disabled"
+			vim.notify("Word limit " .. status, vim.log.levels.INFO)
 		end, {})
 	end,
 }
