@@ -1,7 +1,5 @@
 # .dotfiles
 
-![Terminal Setup](readme_images/terminal_setup.png)
-
 A collection of my personal dotfiles for configuring various development tools
 and environments on debian. This repository contains configurations for terminal
 emulators, window managers, text editors, and more.
@@ -40,15 +38,16 @@ Debian 12.11.0 amd64
 
 ### Clone the Repository
 
-<!-- ```bash -->
-<!-- git clone https://github.com/NilsEckerle/.dotfiles.git ~/.dotfiles -->
-<!-- ``` -->
+```bash
+git clone https://github.com/NilsEckerle/.dotfiles.git ~/.dotfiles
+```
 
 ### Start the Setup
 
 ```bash
 cd ~/.dotfiles
-./setup-scripts/debian.sh
+git switch debian-headless
+./setup-scripts/debian-headless.sh
 ```
 
 ## License
