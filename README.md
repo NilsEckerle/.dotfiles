@@ -50,8 +50,8 @@ usermod is pressent.
 
 ```bash
 cd ~/.dotfiles
-git switch debian-headless
-./setup-scripts/debian-headless.sh
+git switch debian-config
+./setup-scripts/debian.sh 2>&1 | tee setup.log
 ```
 
 ## License
