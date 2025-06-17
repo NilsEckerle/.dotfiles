@@ -10,24 +10,7 @@ export EDITOR=nvim
 #################################
 # Base PATH additions
 export PATH="$PATH:$HOME/.local/share/bob/nvim-bin"
-export PATH="$PATH:/usr/share/dotnet"
-export PATH="$PATH:$HOME/Applications/tdf/target/release"
-export PATH="$PATH:$HOME/GodotMono"
 export PATH="$PATH:$HOME/.dotfiles/scripts/latex-utils"
-
-# Package config
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH
-
-# ----- OS-Specific Configuration ----- #
-########################################
-if [[ $(uname) == "Darwin" ]]; then
-    # macOS specific settings
-    export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    # Linux specific settings
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 
 # ----- Oh-My-Zsh Configuration ----- #
 ######################################
@@ -35,8 +18,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-# ----- Custom Prompt ----- #
-############################
+# Custom Prompt ----- #
 # Load version control info
 autoload -Uz vcs_info
 precmd() { vcs_info }
@@ -64,22 +46,11 @@ function cd() {
 ######################
 # File Management
 alias ll='ls -la'
-alias c='clear'
-alias y='yazi'
-alias yh='yazi ~/'
 alias todo='nvim ~/Documents/.todo.md'
 
-# Git
-alias lg='lazygit'
-alias github='eval `ssh-agent`; ssh-add ~/.ssh/github'
-alias fr="$HOME/scripts/switch_repo.sh"
-
 # Editors
-alias v='nvim'
-alias v.='nvim .'
 alias n='nvim'
 alias n.='nvim . '
-alias nvim.='nvim . '
 
 # Documentation & Help
 alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-window=right,70%); tldr -C "$selected_command"'
@@ -89,17 +60,10 @@ alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a
 alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 
-# PDF Viewing
-alias pdf='tdf'
-
-# Godot
-alias godot_run='nohup Godot_v4.3-stable_mono_linux.x86_64 > /dev/null 2>&1 &'
-alias godot='nohup Godot_v4.3-stable_mono_linux.x86_64 -e > /dev/null 2>&1 &'
-
 # ----- Tmux Auto-Start ----- #
 ##############################
 if [ -z "$TMUX" ]; then
-    tmux attach -t TMUX || tmux a -t Default || $HOME/scripts/tmux_create_default.sh
+    tmux attach -t TMUX || tmux
 fi
 
 # ----- Welcome Message ----- #
