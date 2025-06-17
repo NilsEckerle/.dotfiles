@@ -42,10 +42,10 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 # Check if user has sudo privileges
-if ! sudo -n true 2>/dev/null; then
+if ! groups "$USER" | grep -q '\bsudo\b'; then
     log_error "User $USER is not in sudo group. Please run as root first:"
     log_error "  usermod -aG sudo $USER"
-		log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
+    log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
     log_error "Then log out/in and run this script as $USER"
     exit 1
 fi
