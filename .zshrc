@@ -52,6 +52,26 @@ alias todo='nvim ~/Documents/.todo.md'
 alias n='nvim'
 alias n.='nvim . '
 
+# git
+alias gs='git status'
+alias ga='git add'
+alias gd='git diff --color-words'
+alias gc='git commit'
+alias gp='git pull'
+alias gP='git push'
+alias gf='git fetch'
+alias go='git switch'
+alias gamend='git commit --amend'
+
+#git enhanced
+alias gl='git log --oneline --graph --decorate -10'
+alias gla='git log --oneline --graph --decorate --all'
+alias gll='git log --graph --pretty=format:"%C(yellow)%h%Creset %C(blue)%an%Creset %C(green)%cr%Creset %s %C(auto)%d%Creset" --abbrev-commit'
+
+#git undo
+alias gr='git reset'
+alias grh='git reset --hard'
+
 # Documentation & Help
 alias help='selected_command=$(tldr -l | fzf --preview "tldr -C {1}" --preview-window=right,70%); tldr -C "$selected_command"'
 alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a[1]}" | fzf --preview "man {1}" --preview-window=right,70%); man "$selected_command"'

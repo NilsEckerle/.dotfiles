@@ -383,7 +383,7 @@ main() {
     setup_sudo
     
     # Configure headless/TTY boot
-    setup_headless_boot
+    # setup_headless_boot
     
     # Install Homebrew
     install_homebrew
