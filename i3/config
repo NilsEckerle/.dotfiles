@@ -25,16 +25,16 @@ set $darkgray #1d2021
 set $white    #ebdbb2
 
 # Workspace names
-set $ws1 "1: "
-set $ws2 "2: "
-set $ws3 "3: "
-set $ws4 "4: "
-set $ws5 "5: "
-set $ws6 "6: "
-set $ws7 "7: "
-set $ws8 "8: "
-set $ws9 "9: "
-set $ws10 "10: "
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 #################################
 #        General Settings       #
@@ -123,7 +123,7 @@ bindsym Shift+Print exec scrot -s 'Screenshot_%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~
 bindsym $super+Print exec scrot -u 'Screenshot_%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send "Screenshot saved" "$f"'
 
 # Kill focused window
-bindsym $super+q kill
+bindsym $super+c kill
 bindsym $alt+F4 kill
 
 #################################
@@ -177,8 +177,8 @@ bindsym $super+Shift+space floating toggle
 bindsym $super+space focus mode_toggle
 
 # Focus parent/child container
-bindsym $super+a focus parent
-bindsym $super+c focus child
+# bindsym $super+a focus parent
+# bindsym $super+c focus child
 
 #################################
 #         Workspaces            #
@@ -343,28 +343,28 @@ bindsym $super+u [instance="scratchpad"] scratchpad show
 #################################
 
 bar {
-    position bottom
-    status_command i3status -c ~/.config/i3/i3status.conf
-    font pango:FiraCode Nerd Font 11
-    height 32
-    separator_symbol " │ "
-    strip_workspace_numbers yes
-    
-    colors {
-        background $bg
-        statusline $white
-        separator $gray
-        
-        #                   border    backgr.   text
-        focused_workspace   $aqua     $aqua     $darkgray
-        inactive_workspace  $bg       $bg       $gray
-        active_workspace    $gray     $gray     $yellow
-        urgent_workspace    $red      $red      $bg
-        binding_mode        $yellow   $yellow   $darkgray
-    }
-    
-    tray_output primary
-    tray_padding 4
+	position bottom
+		status_command i3status -c ~/.config/i3/i3status.conf
+		font pango:FiraCode Nerd Font 11
+		height 32
+		separator_symbol " │ "
+		# strip_workspace_numbers yes
+
+		colors {
+			background $bg
+				statusline $white
+				separator $gray
+
+				#                   border    backgr.   text
+				focused_workspace   $aqua     $aqua     $darkgray
+				inactive_workspace  $bg       $bg       $gray
+				active_workspace    $gray     $gray     $yellow
+				urgent_workspace    $red      $red      $bg
+				binding_mode        $yellow   $yellow   $darkgray
+		}
+
+	tray_output primary
+		tray_padding 4
 }
 
 #################################
