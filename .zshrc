@@ -48,6 +48,7 @@ function cd() {
 # File Management
 alias ll='ls -la'
 alias todo='nvim ~/Documents/.todo.md'
+alias fr="$HOME/scripts/switch_repo.sh"
 
 # Editors
 alias n='nvim'
