@@ -30,6 +30,8 @@ APT_PACKAGES_MINIMAL=(
     "file"
     "python3"
     "python3-pip"
+    "syncthing"
+    "flatpak"
 )
 
 APT_PACKAGES_FULL=(
@@ -46,6 +48,10 @@ APT_PACKAGES_FULL=(
     "tree"
     "unzip"
     "zip"
+    "gnome-software-plugin-flatpak"
+		"pavucontrol"
+		"pulseaudio-module-bluetooth"
+		"blueman"
 )
 
 # GUI-specific packages
@@ -60,11 +66,13 @@ APT_PACKAGES_GUI=(
     "libreoffice"
     "gparted"
     "synaptic"
+		"nemo"
 )
 
 # i3 window manager packages
 APT_PACKAGES_I3=(
     "i3"
+    "i3blocks"
     "i3status"
     "i3lock"
     "dmenu"
@@ -80,6 +88,19 @@ APT_PACKAGES_SSH=(
     "openssh-server"
 )
 
+# Add this to your package lists section (around line 50-60)
+APT_PACKAGES_FLATPAK=(
+)
+
+# Flatpak Package Lists
+FLATPAK_PACKAGES_MINIMAL=()
+
+FLATPAK_PACKAGES_FULL=(
+    "com.valvesoftware.Steam"
+    #"com.discordapp.Discord"
+    #"com.spotify.Client"
+)
+
 # Homebrew Package Lists
 BREW_PACKAGES_MINIMAL=(
     "neovim"
@@ -89,12 +110,8 @@ BREW_PACKAGES_MINIMAL=(
 BREW_PACKAGES_FULL=(
     "neovim"
     "zoxide"
-    "bat"
-    "exa"
     "fd"
-    "starship"
     "lazygit"
-    "gh"
 )
 
 # Snap Package Lists
@@ -108,17 +125,14 @@ SNAP_PACKAGES_FULL=(
     "slack --classic"
 )
 
-# Steam requires special handling (will be installed via apt after adding repo)
-STEAM_PACKAGES=(
-    "steam"
-)
-
 # APT Sources to add (format: "repository_line|keyring_url|keyring_path")
 # Example: "deb [signed-by=/usr/share/keyrings/example.gpg] https://example.com/apt stable main|https://example.com/key.gpg|/usr/share/keyrings/example.gpg"
 CUSTOM_APT_SOURCES=(
-    # Steam repository
-    "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ stable steam|https://repo.steampowered.com/steam/archive/stable/steam.gpg|/usr/share/keyrings/steam.gpg"
-    # Add more repositories here as needed
+    # Syncthing repository
+    "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable|https://syncthing.net/release-key.txt|/usr/share/keyrings/syncthing-archive-keyring.gpg"
+    # needed for steam
+    "deb http://deb.debian.org/debian/ bookworm main contrib non-free"
+    # Add custom repositories here as needed
     # "deb [signed-by=/usr/share/keyrings/example.gpg] https://example.com/apt stable main|https://example.com/key.gpg|/usr/share/keyrings/example.gpg"
 )
 
@@ -343,6 +357,36 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Function to install essential tools needed for setup
+install_essential_tools() {
+    log_info "Installing essential tools for setup..."
+
+    # Update package list first
+    sudo apt update
+
+    # Define essential tools needed for the setup process
+    local essential_tools=(
+        "curl"
+        "wget"
+        "gnupg"
+        "ca-certificates"
+        "apt-transport-https"
+        "software-properties-common"
+    )
+
+    # Install each essential tool if not already present
+    for tool in "${essential_tools[@]}"; do
+        if ! command_exists "$tool" && ! dpkg -l | grep -q "^ii  $tool "; then
+            log_info "Installing essential tool: $tool"
+            sudo apt install -y "$tool"
+        else
+            log_success "Essential tool already available: $tool"
+        fi
+    done
+
+    log_success "Essential tools installation completed"
+}
+
 # Function to add custom APT sources
 add_apt_sources() {
     if [ ${#CUSTOM_APT_SOURCES[@]} -eq 0 ]; then
@@ -382,11 +426,45 @@ add_apt_sources() {
     log_success "Package list updated"
 }
 
+# Function to enable contrib and non-free repositories for Steam
+enable_contrib_nonfree() {
+    if [ "$INSTALL_LEVEL" = "full" ] && [ "$ENABLE_GUI" = true ]; then
+        log_info "Enabling contrib and non-free repositories for Steam support..."
+        
+        # Check if contrib and non-free are already enabled
+        if ! grep -q "contrib" /etc/apt/sources.list; then
+            # Backup original sources.list
+            sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+            
+            # Add contrib and non-free to main repository lines
+            sudo sed -i 's/main$/main contrib non-free non-free-firmware/' /etc/apt/sources.list
+            
+            # Update package list
+            sudo apt update
+            log_success "Contrib and non-free repositories enabled"
+        else
+            log_success "Contrib and non-free repositories already enabled"
+        fi
+        
+        # Enable multiarch for 32-bit support (required for Steam)
+        log_info "Enabling 32-bit architecture support for Steam..."
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        log_success "32-bit architecture support enabled"
+    fi
+}
+
 # Function to install packages via apt
 install_apt_packages() {
     log_info "Installing APT packages (level: $INSTALL_LEVEL)..."
     
-    # Add custom APT sources first
+    # Install essential tools first (needed for adding custom sources)
+    install_essential_tools
+
+    # Enable contrib/non-free and multiarch for Steam if needed
+    enable_contrib_nonfree
+    
+    # Add custom APT sources
     add_apt_sources
     
     # Start with base packages based on install level
@@ -412,11 +490,6 @@ install_apt_packages() {
     if [ "$INSTALL_I3" = true ]; then
         packages+=("${APT_PACKAGES_I3[@]}")
     fi
-    
-    # Add Steam if full install and GUI enabled
-    if [ "$INSTALL_LEVEL" = "full" ] && [ "$ENABLE_GUI" = true ]; then
-        packages+=("${STEAM_PACKAGES[@]}")
-    fi
 
     for package in "${packages[@]}"; do
         if dpkg -l | grep -q "^ii  $package "; then
@@ -427,15 +500,62 @@ install_apt_packages() {
             log_success "$package installed"
         fi
     done
-    
-    # Copy scripts to .local/bin and make them executable (including subdirectories)
-    if [ -d "$DOTFILES_DIR/scripts" ]; then
-        log_info "Copying scripts to $HOME/.local/bin..."
-        find "$DOTFILES_DIR/scripts" -type f -executable -exec cp {} "$HOME/.local/bin/" \;
-        find "$DOTFILES_DIR/scripts" -name "*.sh" -exec cp {} "$HOME/.local/bin/" \;
-        chmod +x "$HOME/.local/bin"/*
-        log_success "Scripts copied and made executable"
+}
+
+# Function to install Flatpak
+install_flatpak() {
+    log_info "Installing Flatpak..."
+
+    # Install Flatpak package
+    for package in "${APT_PACKAGES_FLATPAK[@]}"; do
+        if dpkg -l | grep -q "^ii  $package "; then
+            log_success "$package is already installed"
+        else
+            log_info "Installing $package..."
+            sudo apt install -y "$package"
+            log_success "$package installed"
+        fi
+    done
+
+    # Add Flathub repository (the main Flatpak repository)
+    log_info "Adding Flathub repository..."
+    if ! flatpak remotes | grep -q "flathub"; then
+        sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        log_success "Flathub repository added"
+    else
+        log_success "Flathub repository already exists"
     fi
+}
+
+# Function to install Flatpak packages
+install_flatpak_packages() {
+    # Only install Flatpak packages for full installations
+    if [ "$INSTALL_LEVEL" != "full" ]; then
+        log_info "Skipping Flatpak packages (minimal installation)"
+        return
+    fi
+
+    log_info "Installing Flatpak packages..."
+
+    # Start with base packages based on install level
+    local packages=()
+    packages=("${FLATPAK_PACKAGES_MINIMAL[@]}")
+
+    # Add full packages if enabled
+    if [ "$INSTALL_LEVEL" = "full" ]; then
+        packages+=("${FLATPAK_PACKAGES_FULL[@]}")
+    fi
+
+    # Install each package
+    for package in "${packages[@]}"; do
+        if flatpak list | grep -q "$package"; then
+            log_success "$package is already installed"
+        else
+            log_info "Installing $package via Flatpak..."
+            sudo flatpak install -y flathub "$package"
+            log_success "$package installed via Flatpak"
+        fi
+    done
 }
 
 # Function to install Homebrew
@@ -800,7 +920,7 @@ main() {
     select_profile
     
     log_info "Starting Debian 12 dotfiles setup with profile: $PROFILE"
-    
+
     # Install system packages
     install_apt_packages
     
@@ -813,6 +933,12 @@ main() {
     else
         setup_headless_boot
     fi
+
+    # Install Flatpak
+    install_flatpak
+    
+    # Install Flatpak packages
+    install_flatpak_packages
     
     # Install Homebrew
     install_homebrew
