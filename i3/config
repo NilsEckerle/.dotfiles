@@ -41,7 +41,7 @@ set $ws10 "10"
 #################################
 
 # Don't focus updated window
-focus_on_window_activation none
+# focus_on_window_activation none
 
 # Use mouse+$super to drag floating windows
 floating_modifier $super
@@ -91,8 +91,8 @@ exec --no-startup-id xss-lock -- i3lock -c 282828
 # Start applications
 exec --no-startup-id kitty
 exec --no-startup-id firefox
-exec --no-startup-id spotify
-exec --no-startup-id discord
+exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi --no-startup-id spotify
+exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi --no-startup-id discord
 
 #################################
 #         Key Bindings          #
@@ -346,7 +346,7 @@ bar {
 	position bottom
 		status_command i3status -c ~/.config/i3/i3status.conf
 		font pango:FiraCode Nerd Font 11
-		height 32
+		height 24
 		separator_symbol " │ "
 		# strip_workspace_numbers yes
 
@@ -364,7 +364,7 @@ bar {
 		}
 
 	tray_output primary
-		tray_padding 4
+		tray_padding 1
 }
 
 #################################
