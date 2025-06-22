@@ -104,9 +104,9 @@ bindsym $super+Shift+Return exec kitty --class floating-terminal
 for_window [class="floating-terminal"] floating enable, resize set 800 600, move position center
 
 # Application launcher
-bindsym $super+d exec rofi -show drun
-bindsym $super+Shift+d exec rofi -show run
-bindsym $super+Tab exec rofi -show window
+bindsym $super+d exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi -show drun
+bindsym $super+Shift+d exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi -show run
+bindsym $super+Tab exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi -show window
 
 # File manager
 bindsym $super+e exec thunar
