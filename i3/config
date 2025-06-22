@@ -1,91 +1,190 @@
-# set modifier
+# i3 config file (v4)
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+#################################
+#           Variables           #
+#################################
+
+# Set modifiers
 set $super Mod4
 set $alt Mod1
 
-# set font
-font pango:FiraCode Nerd Font 10
+# Set font
+font pango:FiraCode Nerd Font 11
 
-# dont focus updated window
+# Set gruvbox colorscheme colors
+set $bg       #282828
+set $red      #cc241d
+set $green    #98971a
+set $yellow   #d79921
+set $blue     #458588
+set $purple   #b16286
+set $aqua     #689d68
+set $gray     #a89984
+set $darkgray #1d2021
+set $white    #ebdbb2
+
+# Workspace names
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7: "
+set $ws8 "8: "
+set $ws9 "9: "
+set $ws10 "10: "
+
+#################################
+#        General Settings       #
+#################################
+
+# Don't focus updated window
 focus_on_window_activation none
 
-# use mouse+$super to drag floating windows to their wanted position
+# Use mouse+$super to drag floating windows
 floating_modifier $super
 
-# autostart
-exec --no-startup-id hsetroot -center ~/.wallpaper.png
-# Autostart applications on specific workspaces
+# Hide edge borders
+hide_edge_borders smart
+
+# Gaps
+gaps inner 12
+gaps outer 0
+smart_gaps on
+
+# Window borders
+for_window [class=".*"] border pixel 3
+
+# Disable mouse warping
+mouse_warping none
+
+#################################
+#          Autostart            #
+#################################
+
+# Compositor for transparency and effects
+exec --no-startup-id picom
+
+# Wallpaper
+exec --no-startup-id nitrogen --restore
+
+# Network manager applet
+exec --no-startup-id nm-applet
+
+# Bluetooth manager
+exec --no-startup-id blueman-applet
+
+# Audio control
+exec --no-startup-id pasystray
+
+# Notification daemon
+exec --no-startup-id dunst
+
+# Auto-lock screen after 10 minutes
+exec --no-startup-id xss-lock -- i3lock -c 282828
+
+# Restore layout (if you use it)
+# exec --no-startup-id i3-msg 'workspace $ws1; append_layout ~/.config/i3/workspace-1.json'
+
+# Start applications
 exec --no-startup-id kitty
 exec --no-startup-id firefox
 exec --no-startup-id spotify
 exec --no-startup-id discord
 
-# start a terminal
+#################################
+#         Key Bindings          #
+#################################
+
+# Terminal
 bindsym $super+Return exec kitty
+bindsym $super+Shift+Return exec kitty --class floating-terminal
+for_window [class="floating-terminal"] floating enable, resize set 800 600, move position center
 
-# start dmenu (a program launcher)
-bindsym $super+d exec i3-dmenu-desktop --dmenu="dmenu -i -b \
--fn 'Poppins:size=9' -nb '#141c21' -nf '#93a1a1' \
--sb '#289c93' -sf '#141c21'"
+# Application launcher
+bindsym $super+d exec rofi -show drun
+bindsym $super+Shift+d exec rofi -show run
+bindsym $super+Tab exec rofi -show window
 
-# common apps keybinds
-bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'xdg-open ~/$f'
-bindsym $super+l exec i3lock -i ~/.lock.png
-bindsym $super+w exec firefox
+# File manager
 bindsym $super+e exec thunar
 
-# change volume and brightness
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
-bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
-bindsym XF86AudioMute exec amixer set Master toggle
-bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+# Web browser
+bindsym $super+w exec firefox
 
-# kill focused window
-bindsym $super+c kill
+# Lock screen
+bindsym $super+l exec i3lock -c 282828
+
+# Screenshots
+bindsym Print exec scrot 'Screenshot_%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send "Screenshot saved" "$f"'
+bindsym Shift+Print exec scrot -s 'Screenshot_%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send "Screenshot saved" "$f"'
+bindsym $super+Print exec scrot -u 'Screenshot_%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send "Screenshot saved" "$f"'
+
+# Kill focused window
+bindsym $super+q kill
 bindsym $alt+F4 kill
 
-# change focus
+#################################
+#       Window Navigation       #
+#################################
+
+# Change focus
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+semicolon focus right
+
+# Arrow keys
 bindsym $super+Left focus left
 bindsym $super+Down focus down
 bindsym $super+Up focus up
 bindsym $super+Right focus right
 
-# move focused window
+# Move focused window
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+semicolon move right
+
+# Arrow keys
 bindsym $super+Shift+Left move left
 bindsym $super+Shift+Down move down
 bindsym $super+Shift+Up move up
 bindsym $super+Shift+Right move right
 
-# split in horizontal or vertical orientation
-bindsym $super+h split h
+#################################
+#         Layout Control        #
+#################################
+
+# Split orientation
+bindsym $super+b split h
 bindsym $super+v split v
 
-# change split direction for already opened windows
-bindsym $super+s layout toggle split
+# Change container layout
+bindsym $super+s layout stacking
+bindsym $super+t layout tabbed
+bindsym $super+y layout toggle split
 
-# enter fullscreen mode for the focused container
+# Toggle fullscreen
 bindsym $super+f fullscreen toggle
 
-# toggle tiling / floating
-bindsym $super+space floating toggle
+# Toggle tiling / floating
+bindsym $super+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-bindsym $super+Shift+space layout toggle splitv stacked tabbed splith spiral
-# workspace names / font-awesome
-set $ws1 "01 "
-set $ws2 "02 "
-set $ws3 "03 "
-set $ws4 "04 "
-set $ws5 "05 "
-set $ws6 "06 "
-set $ws7 "07 "
-set $ws8 "08 "
-set $ws9 "09 "
-set $wsX "10 "
+# Change focus between tiling / floating windows
+bindsym $super+space focus mode_toggle
 
-# switch to workspace
-bindsym $super+Control+Right workspace next
-bindsym $super+Control+Left workspace prev
+# Focus parent/child container
+bindsym $super+a focus parent
+bindsym $super+c focus child
+
+#################################
+#         Workspaces            #
+#################################
+
+# Switch to workspace
 bindsym $super+1 workspace $ws1
 bindsym $super+2 workspace $ws2
 bindsym $super+3 workspace $ws3
@@ -95,9 +194,9 @@ bindsym $super+6 workspace $ws6
 bindsym $super+7 workspace $ws7
 bindsym $super+8 workspace $ws8
 bindsym $super+9 workspace $ws9
-bindsym $super+0 workspace $wsX
+bindsym $super+0 workspace $ws10
 
-# move focused container to workspace
+# Move container to workspace
 bindsym $super+Shift+1 move container to workspace $ws1
 bindsym $super+Shift+2 move container to workspace $ws2
 bindsym $super+Shift+3 move container to workspace $ws3
@@ -107,133 +206,188 @@ bindsym $super+Shift+6 move container to workspace $ws6
 bindsym $super+Shift+7 move container to workspace $ws7
 bindsym $super+Shift+8 move container to workspace $ws8
 bindsym $super+Shift+9 move container to workspace $ws9
-bindsym $super+Shift+0 move container to workspace $wsX
+bindsym $super+Shift+0 move container to workspace $ws10
 
-# switch to workspace
-# bindsym $super+Control+Right workspace next
-# bindsym $super+Control+Left workspace prev
-# bindsym $super+1 workspace 1:I
-# bindsym $super+2 workspace 2:II
-# bindsym $super+3 workspace 3:III
-# bindsym $super+4 workspace 4:IV
-# bindsym $super+5 workspace 5:V
-# bindsym $super+6 workspace 6:VI
+# Move to workspace with focused container
+bindsym $super+$alt+1 move container to workspace $ws1; workspace $ws1
+bindsym $super+$alt+2 move container to workspace $ws2; workspace $ws2
+bindsym $super+$alt+3 move container to workspace $ws3; workspace $ws3
+bindsym $super+$alt+4 move container to workspace $ws4; workspace $ws4
+bindsym $super+$alt+5 move container to workspace $ws5; workspace $ws5
+bindsym $super+$alt+6 move container to workspace $ws6; workspace $ws6
+bindsym $super+$alt+7 move container to workspace $ws7; workspace $ws7
+bindsym $super+$alt+8 move container to workspace $ws8; workspace $ws8
+bindsym $super+$alt+9 move container to workspace $ws9; workspace $ws9
+bindsym $super+$alt+0 move container to workspace $ws10; workspace $ws10
 
-# move focused container to workspace
-# bindsym $super+Shift+1 move container to workspace 1:I
-# bindsym $super+Shift+2 move container to workspace 2:II
-# bindsym $super+Shift+3 move container to workspace 3:III
-# bindsym $super+Shift+4 move container to workspace 4:IV
-# bindsym $super+Shift+5 move container to workspace 5:V
-# bindsym $super+Shift+6 move container to workspace 6:VI
+# Navigate workspaces
+bindsym $super+Ctrl+Right workspace next
+bindsym $super+Ctrl+Left workspace prev
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $super+BackSpace exec "i3-msg restart"
+# Back and forth workspace switching
+workspace_auto_back_and_forth yes
+bindsym $super+z workspace back_and_forth
+bindsym $super+Shift+z move container to workspace back_and_forth; workspace back_and_forth
 
-# exit i3
-bindsym $super+q exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+#################################
+#        Media Controls         #
+#################################
 
-# resize window (you can also use the mouse for that)
+# Volume control
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send "Volume" "$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1)%"
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send "Volume" "$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1)%"
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send "Volume" "Muted"
+
+# Brightness control
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+ && notify-send "Brightness" "$(brightnessctl get)"
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- && notify-send "Brightness" "$(brightnessctl get)"
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#################################
+#           Modes               #
+#################################
+
+# Resize mode
 mode "resize" {
-	bindsym Left resize shrink width 5 px or 5 ppt
-	bindsym Down resize grow height 5 px or 5 ppt
-	bindsym Up resize shrink height 5 px or 5 ppt
-	bindsym Right resize grow width 5 px or 5 ppt
-	bindsym Return mode "default"
-	}
+    bindsym h resize shrink width 5 px or 5 ppt
+    bindsym j resize grow height 5 px or 5 ppt
+    bindsym k resize shrink height 5 px or 5 ppt
+    bindsym semicolon resize grow width 5 px or 5 ppt
+
+    bindsym Left resize shrink width 5 px or 5 ppt
+    bindsym Down resize grow height 5 px or 5 ppt
+    bindsym Up resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow width 5 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $super+r mode "default"
+}
 bindsym $super+r mode "resize"
 
-# set primary gruvbox colorscheme colors
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
+# Power management mode
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
+    # Exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $super+Shift+e mode "$mode_system"
 
-# panel
-# bar {
-# 	status_command i3status
-# 	position top
-# 	workspace_min_width 24
-# 	padding 2px 8px 2px 8px
-# 	strip_workspace_numbers yes
-#
-# 	colors {
-# 	background #141c21
-# 	statusline #141c21
-# 	separator #141c21
-#
-# 	# colour of border, background, and text
-# 	focused_workspace #141c21 #d12f2c #93a1a1
-# 	active_workspace #141c21 #141c21 #93a1a1
-# 	inactive_workspace #141c21 #141c21 #93a1a1
-# 	urgent_workspace #141c21 #b08500 #93a1a1
-# 	}
-# }
-#start of bar section
-bar {
-  position bottom
-  status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  colors {
-    # bar background color
-    background $bg
-    # text color used for blocks that do not have a color specified.
-    statusline $yellow
-    # workspaces section            
-    #                    border  backgr. text
-    focused_workspace    $aqua $aqua $darkgray
-    inactive_workspace   $darkgray $darkgray $yellow
-    active_workspace     $darkgray $darkgray $yellow
-    urgent_workspace     $red $red $bg
-  }
-} #end of bar section
+#################################
+#        Window Rules           #
+#################################
 
-# colour of border, background, text, indicator, and child_border
-# client.focused #d12f2c #263640 #93a1a1 #696ebf #2587cc1
-# client.focused_inactive #263640 #b08500 #93a1a1 #263640 #263640
-# client.unfocused #263640 #b08500 #93a1a1 #263640 #263640
-# client.urgent #263640 #b08500 #93a1a1 #263640 #263640
-# client.placeholder #263640 #b08500 #93a1a1 #263640 #263640
-# client.background #263640
-#start of window title bars & borders section
-
-# green gruvbox
-# class                 border|backgr|text|indicator|child_border
-#client.focused          $green $green $darkgray $purple $darkgray
-#client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-#client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-#client.urgent           $red $red $white $red $red
-
-# blue gruvbox
-# class                 border|backgr|text|indicator|child_border
-client.focused          $blue $blue $darkgray $purple $darkgray
-client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-client.urgent           $red $red $white $red $red
-
-#end of window title bars & borders section
-
-# Assign applications to specific workspaces
+# Assign applications to workspaces
 assign [class="kitty"] workspace $ws1
 assign [class="firefox"] workspace $ws2
+assign [class="code"] workspace $ws3
 assign [class="Spotify"] workspace $ws9
-assign [class="discord"] workspace $wsX
-# Spotify fix (it doesn't always respect assign)
+assign [class="discord"] workspace $ws10
+
+# Spotify fix (doesn't always respect assign)
 for_window [class="Spotify"] move to workspace $ws9
 
-# window rules, you can find the window class using xprop
-for_window [class=Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver] floating enable
-for_window [class=Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver] focus
-for_window [class=".*"] border pixel 8
-hide_edge_borders smart
-gaps inner 12
-smart_gaps on
+# Floating windows
+for_window [class="Arandr"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [title="File Transfer*"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="GParted"] floating enable
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="Lightdm-settings"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Manjaro-hello"] floating enable
+for_window [class="Manjaro Settings Manager"] floating enable border normal
+for_window [title="MuseScore: Play Panel"] floating enable
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Oblogout"] fullscreen enable
+for_window [class="octopi"] floating enable
+for_window [title="About Pale Moon"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="qt5ct"] floating enable sticky enable border normal
+for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="Skype"] floating enable border normal
+for_window [class="Timeset-gui"] floating enable border normal
+for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="Xfburn"] floating enable
 
-# background
-exec --no-startup-id nitrogen --restore
-exec --no-startup-id compton
+# Media windows
+for_window [class="Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver"] floating enable
+for_window [class="Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver"] focus
+
+# Scratchpad
+for_window [instance="scratchpad"] move scratchpad
+exec --no-startup-id kitty --name scratchpad
+bindsym $super+u [instance="scratchpad"] scratchpad show
+
+#################################
+#         Status Bar            #
+#################################
+
+bar {
+    position bottom
+    status_command i3status -c ~/.config/i3/i3status.conf
+    font pango:FiraCode Nerd Font 11
+    height 32
+    separator_symbol " │ "
+    strip_workspace_numbers yes
+    
+    colors {
+        background $bg
+        statusline $white
+        separator $gray
+        
+        #                   border    backgr.   text
+        focused_workspace   $aqua     $aqua     $darkgray
+        inactive_workspace  $bg       $bg       $gray
+        active_workspace    $gray     $gray     $yellow
+        urgent_workspace    $red      $red      $bg
+        binding_mode        $yellow   $yellow   $darkgray
+    }
+    
+    tray_output primary
+    tray_padding 4
+}
+
+#################################
+#        Window Colors          #
+#################################
+
+# class                 border    backgr.   text      indicator child_border
+client.focused          $blue     $blue     $darkgray $purple   $blue
+client.focused_inactive $darkgray $darkgray $yellow   $purple   $darkgray
+client.unfocused        $darkgray $darkgray $yellow   $purple   $darkgray
+client.urgent           $red      $red      $white    $red      $red
+client.placeholder      $bg       $bg       $white    $bg       $bg
+client.background       $bg
+
+#################################
+#       System Controls         #
+#################################
+
+# Reload configuration file
+bindsym $super+Shift+c reload
+
+# Restart i3 inplace
+bindsym $super+Shift+r restart
+
+# Exit i3 (logs you out of your X session)
+bindsym $super+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

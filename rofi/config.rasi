@@ -1,0 +1,230 @@
+/* ~/.config/rofi/config.rasi */
+
+configuration {
+    modi: "drun,window,run";
+    width: 50;
+    lines: 15;
+    columns: 1;
+    font: "FiraCode Nerd Font 12";
+    show-icons: true;
+    icon-theme: "Papirus";
+    terminal: "kitty";
+    drun-display-format: "{name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: "   Window";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: true;
+}
+
+@theme "gruvbox-dark"
+
+/* Custom gruvbox colors override */
+* {
+    /* Gruvbox dark colors */
+    bg0:     #282828;
+    bg1:     #3c3836;
+    bg2:     #504945;
+    bg3:     #665c54;
+    bg4:     #7c6f64;
+    
+    fg0:     #fbf1c7;
+    fg1:     #ebdbb2;
+    fg2:     #d5c4a1;
+    fg3:     #bdae93;
+    fg4:     #a89984;
+    
+    red:     #fb4934;
+    green:   #b8bb26;
+    yellow:  #fabd2f;
+    blue:    #83a598;
+    purple:  #d3869b;
+    aqua:    #8ec07c;
+    orange:  #fe8019;
+    
+    /* Override theme colors */
+    background:                  @bg0;
+    background-color:            @bg0;
+    foreground:                  @fg1;
+    border-color:                @bg2;
+    separatorcolor:              @bg2;
+    scrollbar-handle:            @bg2;
+    
+    normal-background:           transparent;
+    normal-foreground:           @fg1;
+    alternate-normal-background: @bg1;
+    alternate-normal-foreground: @fg1;
+    selected-normal-background:  @blue;
+    selected-normal-foreground:  @bg0;
+    
+    active-background:           transparent;
+    active-foreground:           @green;
+    alternate-active-background: @bg1;
+    alternate-active-foreground: @green;
+    selected-active-background:  @green;
+    selected-active-foreground:  @bg0;
+    
+    urgent-background:           transparent;
+    urgent-foreground:           @red;
+    alternate-urgent-background: @bg1;
+    alternate-urgent-foreground: @red;
+    selected-urgent-background:  @red;
+    selected-urgent-foreground:  @bg0;
+}
+
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       600px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      2px solid;
+    border-radius:               8px;
+    border-color:                @blue;
+    background-color:            @background;
+    cursor:                      "default";
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     20px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    children:                    [ "inputbar", "message", "listview", "mode-switcher" ];
+}
+
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px solid;
+    border-radius:               6px;
+    border-color:                @border-color;
+    background-color:            @bg1;
+    text-color:                  @foreground;
+    children:                    [ "prompt", "textbox-prompt-colon", "entry" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  @blue;
+}
+
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "::";
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+entry {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Search...";
+    placeholder-color:           @fg4;
+}
+
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       12;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     5px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      "default";
+}
+
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               6px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+
+element normal.normal {
+    background-color:            @normal-background;
+    text-color:                  @normal-foreground;
+}
+
+element selected.normal {
+    background-color:            @selected-normal-background;
+    text-color:                  @selected-normal-foreground;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        28px;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+mode-switcher{
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @foreground;
+}
+
+button {
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               6px;
+    border-color:                @border-color;
+    background-color:            @bg1;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+
+button selected {
+    background-color:            @selected-normal-background;
+    text-color:                  @selected-normal-foreground;
+}
