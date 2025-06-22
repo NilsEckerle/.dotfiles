@@ -1,7 +1,7 @@
 #!/bin/bash
 function repo_tmux {
   filter_params=""
-  dirs_to_find_in=("$HOME/Documents" "$HOME/.dotfiles")
+  dirs_to_find_in=("$HOME/Documents" "/media/nils/storage/Documents/" "$HOME/.dotfiles")
 
   # Apply filter if an argument is provided
   if [ -n "$1" ]; then
