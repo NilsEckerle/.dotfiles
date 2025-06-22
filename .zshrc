@@ -11,6 +11,7 @@ export EDITOR=nvim
 # Base PATH additions
 export PATH="$PATH:$HOME/.local/share/bob/nvim-bin"
 export PATH="$PATH:$HOME/.dotfiles/scripts/latex-utils"
+export PATH="$PATH:/snap/bin"
 
 # ----- Oh-My-Zsh Configuration ----- #
 ######################################
@@ -62,6 +63,7 @@ alias gP='git push'
 alias gf='git fetch'
 alias go='git switch'
 alias gamend='git commit --amend'
+alias lg='lazygit'
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
