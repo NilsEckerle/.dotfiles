@@ -683,6 +683,7 @@ create_symlinks() {
         ".luarc.json:$HOME/.luarc.json"
         "scripts:$HOME/scripts"
         "rofi:$HOME/.config/rofi"
+        ".profile:$HOME/.profile"
     )
 
     # Add i3 config if i3 is being installed
