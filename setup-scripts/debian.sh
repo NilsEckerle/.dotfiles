@@ -57,6 +57,7 @@ APT_PACKAGES_FULL=(
 # GUI-specific packages
 APT_PACKAGES_GUI=(
     "xorg"
+		"xclip"
     "lightdm"
     "firefox-esr"
     "thunar"
