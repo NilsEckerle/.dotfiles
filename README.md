@@ -1,5 +1,7 @@
 # .dotfiles
 
+![[readme_images/terminal_setup.png]]
+
 A collection of my personal dotfiles for configuring various development tools
 and environments on debian. This repository contains configurations for terminal
 emulators, window managers, text editors, and more.
