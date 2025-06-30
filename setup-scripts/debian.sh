@@ -685,6 +685,8 @@ create_symlinks() {
         "scripts:$HOME/scripts"
         "rofi:$HOME/.config/rofi"
         ".xprofile:$HOME/.xprofile"
+				".themes:$HOME/.themes"
+				"gtk-3.0:$HOME/gtk-3.0"
     )
 
     # Add i3 config if i3 is being installed
