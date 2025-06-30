@@ -1,3 +1,4 @@
 vim/undodir/
 tmux/plugins/tpm/
 nvim/*.json
+.themes/Gruvbox-GTK-Theme
