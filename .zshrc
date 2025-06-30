@@ -33,7 +33,7 @@ PROMPT='%F{1}%m%f|%F{6}%n%f %F{45}%~%f%b %F{yellow}${vcs_info_msg_0_}%f ${GIT_RE
 %F{1} > %f'
 
 # ----- Zoxide (Smart Directory Navigation) ----- #
-##################################################
+###################################################
 eval "$(zoxide init --cmd z zsh)"
 function cd() {
   if [[ "$1" == "--" ]]; then
