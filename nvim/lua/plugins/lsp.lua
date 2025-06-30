@@ -86,6 +86,7 @@ return {
 				"debugpy",
 				"pyright",
 				"omnisharp",
+				"clangd",
 			},
 		},
 	},
