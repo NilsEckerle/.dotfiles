@@ -7,6 +7,7 @@ vim.opt.colorcolumn = "80"
 vim.opt.guicursor = "n-v-i-c:block"
 vim.opt.scrolloff = 10
 vim.opt.conceallevel = 1
+vim.opt.breakindent = true
 
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99 -- Opens all folds when entering a buffer
@@ -15,10 +16,13 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- fold via treesitter cont
 vim.opt.foldcolumn = "0" -- disables fold column
 vim.opt.foldtext = "" -- shows the code line in folded state
 
+vim.opt.mouse = ""
+
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = "no"
 
 vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
