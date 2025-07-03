@@ -25,10 +25,11 @@ return {
 					client.server_capabilities.documentFormattingProvider = true
 				end
 			})
+
 			require("lspconfig").clangd.setup({
 				cmd = { "clangd" },
 				filetypes = { "c", "cpp", "objc", "objcpp" },
-				rot_dir = require("lspconfig.util").root_pattern(
+				root_dir = require("lspconfig.util").root_pattern(
 					".clangd",
 					".clang-tidy",
 					".clang-format",
@@ -37,7 +38,25 @@ return {
 					"build"
 				),
 				capabilities = capabilities,
+				on_attach = function(client, bufnr)
+					-- Enable inlay hints if supported
+					if client.server_capabilities.inlayHintProvider then
+						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+					end
+				end,
+				settings = {
+					clangd = {
+						InlayHints = {
+							Designators = true,
+							Enabled = true,
+							ParameterNames = true,
+							DeducedTypes = true,
+						},
+						fallbackFlags = { "-std=c17" },
+					},
+				},
 			})
+
 			require("lspconfig").omnisharp.setup({
 				capabilities = capabilities,
 				cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
@@ -138,5 +157,31 @@ return {
 
 	{
 		"Hoffs/omnisharp-extended-lsp.nvim",
+	},
+	{
+		"chrisgrieser/nvim-lsp-endhints",
+		event = "LspAttach",
+		opts = {}, -- required, even if empty
+		config = function ()
+			-- default settings
+			require("lsp-endhints").setup {
+				icons = {
+						type = "󰊕 ",      -- right arrow with line
+						parameter = "󰘦 ", -- curved arrow
+						offspec = "󰞘 ",   -- dashed arrow
+						unknown = "󰘨 ",   -- question arrow
+				},
+				label = {
+					truncateAtChars = 20,
+					padding = 1,
+					marginLeft = 0,
+					sameKindSeparator = ", ",
+				},
+				extmark = {
+					priority = 50,
+				},
+				autoEnableHints = true,
+			}
+		end
 	}
 }
