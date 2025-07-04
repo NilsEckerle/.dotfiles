@@ -686,7 +686,7 @@ create_symlinks() {
         "rofi:$HOME/.config/rofi"
         ".xprofile:$HOME/.xprofile"
 				".themes:$HOME/.themes"
-				"gtk-3.0:$HOME/gtk-3.0"
+				"gtk-3.0:$HOME/.config/gtk-3.0"
     )
 
     # Add i3 config if i3 is being installed
@@ -724,7 +724,7 @@ create_symlinks() {
         
         # Create symlink
         log_info "Creating symlink: $target -> $source_path"
-        ln -s "$source_path" "$target"
+        ln -sf "$source_path" "$target"
         log_success "Symlink created for $source"
     done
 }
