@@ -24,7 +24,7 @@ return {
 
 		ui = { enable = false },
 		disable_frontmatter = true,
-		
+
 		completion = {
 			nvim_cmp = true,
 			min_chars = 2,
@@ -86,13 +86,13 @@ return {
 			if not word_limit_enabled or not is_in_vault() then
 				return false
 			end
-			
+
 			local filename = vim.fn.expand("%:t")
 			-- Skip templates and example files
 			if filename:match("[Tt]emplate") or filename:match("[Ee]xample") then
 				return false
 			end
-			
+
 			return true
 		end
 
@@ -100,8 +100,10 @@ return {
 		-- KEYMAP SETUP
 		-- ====================================================================
 		local function setup_keymaps()
-			if not is_in_vault() then return end
-			
+			if not is_in_vault() then
+				return
+			end
+
 			local map = vim.keymap.set
 			local opts = { noremap = true, silent = true, buffer = 0 }
 
@@ -117,7 +119,7 @@ return {
 			map("n", "<leader>oL", "<cmd>ObsidianLinkNew<CR>", opts)
 			map("n", "<leader>ol", "<cmd>ObsidianLink<CR>", opts)
 			map("v", "<leader>ol", "<cmd>ObsidianLink<CR>", opts)
-			
+
 			-- Open in Obsidian app
 			map("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", opts)
 		end
@@ -138,7 +140,7 @@ return {
 			})
 
 			-- Show word count on text changes
-			vim.api.nvim_create_autocmd({"TextChanged", "TextChangedI"}, {
+			vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 				buffer = 0,
 				callback = function()
 					if should_enforce_word_limit() then
@@ -168,7 +170,7 @@ return {
 		})
 
 		-- Setup keymaps and word limit for vault files
-		vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+		vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 			pattern = vault_dir .. "/*",
 			callback = function()
 				setup_keymaps()
@@ -210,8 +212,10 @@ return {
 
 		local function create_new_note()
 			vim.ui.input({ prompt = "Note title: " }, function(title)
-				if not title then return end
-				
+				if not title then
+					return
+				end
+
 				local timestamp, filepath = create_note_template(title)
 				vim.cmd("edit " .. filepath)
 			end)
@@ -219,10 +223,12 @@ return {
 
 		local function create_and_link_note()
 			vim.ui.input({ prompt = "Note title: " }, function(title)
-				if not title then return end
-				
+				if not title then
+					return
+				end
+
 				local timestamp, filepath = create_note_template(title)
-				
+
 				-- Insert link at cursor
 				local link = "[[" .. timestamp .. "|" .. title .. "]]"
 				vim.api.nvim_put({ link }, "c", true, true)

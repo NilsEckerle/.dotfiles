@@ -3,6 +3,17 @@ vim.opt.relativenumber = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
+vim.opt.list = true
+vim.opt.listchars = {
+	tab = '▸ ',
+	trail = '-',
+-- 	space = '·',
+-- 	eol = '¬',
+-- 	extends = '❯',
+-- 	precedes = '❮',
+-- 	nbsp = '⦸'
+}
+
 vim.opt.colorcolumn = "80"
 vim.opt.guicursor = "n-v-i-c:block"
 vim.opt.scrolloff = 10

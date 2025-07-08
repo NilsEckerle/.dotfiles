@@ -77,7 +77,13 @@ return {
 				)
 				vim.api.nvim_buf_set_keymap(0, "n", "<Leader>lv", ":VimtexView<CR>", { noremap = true, silent = true })
 				vim.api.nvim_buf_set_keymap(0, "n", "<Leader>lc", ":VimtexClean<CR>", { noremap = true, silent = true })
-				vim.api.nvim_buf_set_keymap(0, "n", "<Leader>le", ":!tex4ebook %<CR>", {noremap = true, silent = true})
+				vim.api.nvim_buf_set_keymap(
+					0,
+					"n",
+					"<Leader>le",
+					":!tex4ebook %<CR>",
+					{ noremap = true, silent = true }
+				)
 			end,
 		})
 	end,

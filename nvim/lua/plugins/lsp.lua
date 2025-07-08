@@ -19,11 +19,11 @@ return {
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			require("lspconfig").lua_ls.setup({ capabilities = capabilities })
-			require("lspconfig").pyright.setup({ 
+			require("lspconfig").pyright.setup({
 				capabilities = capabilities,
-				on_attach = function (client, bufnr)
+				on_attach = function(client, bufnr)
 					client.server_capabilities.documentFormattingProvider = true
-				end
+				end,
 			})
 
 			require("lspconfig").clangd.setup({
@@ -65,14 +65,14 @@ return {
 				organize_imports_on_format = true,
 				enable_import_completion = true,
 				handlers = {
-					["textDocument/definition"] = require('omnisharp_extended').handler,
+					["textDocument/definition"] = require("omnisharp_extended").handler,
 				},
 				settings = {
 					omnisharp = {
 						useModernNet = true,
-						sdkPath = "/usr/share/dotnet/sdk"
-					}
-				}
+						sdkPath = "/usr/share/dotnet/sdk",
+					},
+				},
 			})
 
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -162,14 +162,14 @@ return {
 		"chrisgrieser/nvim-lsp-endhints",
 		event = "LspAttach",
 		opts = {}, -- required, even if empty
-		config = function ()
+		config = function()
 			-- default settings
-			require("lsp-endhints").setup {
+			require("lsp-endhints").setup({
 				icons = {
-						type = "󰊕 ",      -- right arrow with line
-						parameter = "󰘦 ", -- curved arrow
-						offspec = "󰞘 ",   -- dashed arrow
-						unknown = "󰘨 ",   -- question arrow
+					type = "󰊕 ", -- right arrow with line
+					parameter = "󰘦 ", -- curved arrow
+					offspec = "󰞘 ", -- dashed arrow
+					unknown = "󰘨 ", -- question arrow
 				},
 				label = {
 					truncateAtChars = 20,
@@ -181,7 +181,7 @@ return {
 					priority = 50,
 				},
 				autoEnableHints = true,
-			}
-		end
-	}
+			})
+		end,
+	},
 }
