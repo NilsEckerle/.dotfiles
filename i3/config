@@ -67,6 +67,9 @@ mouse_warping none
 # Compositor for transparency and effects
 exec --no-startup-id picom
 
+# start comption
+exec_always --no-startup-id compton -b
+
 # Wallpaper
 exec --no-startup-id nitrogen --restore
 
