@@ -88,11 +88,14 @@ exec --no-startup-id xss-lock -- i3lock -c 282828
 # Restore layout (if you use it)
 # exec --no-startup-id i3-msg 'workspace $ws1; append_layout ~/.config/i3/workspace-1.json'
 
+# Setup background
+exec --no-startup-id feh --bg-fill ~/wallpaper/gruv-astronaut.png
+
 # Start applications
 exec --no-startup-id kitty
 exec --no-startup-id firefox
-exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi --no-startup-id spotify
-exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop rofi --no-startup-id discord
+exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id spotify
+exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id discord
 
 #################################
 #         Key Bindings          #
@@ -294,11 +297,11 @@ bindsym $super+Shift+e mode "$mode_system"
 assign [class="kitty"] workspace $ws1
 assign [class="firefox"] workspace $ws2
 assign [class="code"] workspace $ws3
-assign [class="Spotify"] workspace $ws9
+assign [class="spotify"] workspace $ws9
 assign [class="discord"] workspace $ws10
 
-# Spotify fix (doesn't always respect assign)
-for_window [class="Spotify"] move to workspace $ws9
+# spotify fix (doesn't always respect assign)
+for_window [class="spotify"] move to workspace $ws9
 
 # Floating windows
 for_window [class="Arandr"] floating enable

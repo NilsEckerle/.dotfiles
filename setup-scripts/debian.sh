@@ -687,6 +687,7 @@ create_symlinks() {
         ".xprofile:$HOME/.xprofile"
 				".themes:$HOME/.themes"
 				"gtk-3.0:$HOME/.config/gtk-3.0"
+				"wallpaper:$HOME/wallpaper"
     )
 
     # Add i3 config if i3 is being installed
