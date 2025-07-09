@@ -50,6 +50,7 @@ return {
 
 			vim.keymap.set("n", "<leader><leader>", find_files_in_git_root, { desc = "Find in Project Root" })
 			vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Find Files" })
+			vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Find Grep" })
 		end,
 	},
 }
