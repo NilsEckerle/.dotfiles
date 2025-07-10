@@ -46,6 +46,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Make visual selection darker
+vim.cmd('highlight Visual guibg=#101010 ctermbg=237')
+
 -- disable popup when changing config
 require("lazy").setup({
 	change_detection = {
