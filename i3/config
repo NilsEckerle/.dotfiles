@@ -6,8 +6,8 @@
 #################################
 
 # Set modifiers
-set $super Mod1
-set $alt Mod4
+set $super Mod4
+set $alt Mod1
 
 # Set font
 font pango:FiraCode Nerd Font 11
