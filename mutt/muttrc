@@ -1,0 +1,46 @@
+source ~/.config/mutt/passwords
+
+# Create ~/.config/mutt/passwords (keep this file LOCAL, don't commit) and add:
+# set imap_pass = "your_actual_password"
+# set smtp_pass = "your_actual_password"
+
+# Add to your .gitignore:
+# passwords
+# *.local
+# *_local
+
+# ProtonMail IMAP settings
+set imap_user = "nilseckerle2001@protonmail.com"
+set folder = "imap://127.0.0.1:1143"
+set spoolfile = "+INBOX"
+
+# ProtonMail SMTP settings
+set smtp_url = "smtp://nilseckerle2001@protonmail.com@127.0.0.1:1025"
+
+
+source ~/.config/mutt/gruvbox/colors-gruvbox.muttrc
+
+set delete = no
+set confirmappend = no
+set move = no
+
+set sort = "reverse-date"
+set editor = "nvim"
+set timeout = "5"
+set date_format = "%Y-%m-%d %H:%M"
+set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
+set help = no
+set status_format = "?:Help q:Quit A:Archive d:Del u:Undel s:Save m:Mail r:Reply g:Group A:Archive t:Tag T:Tag-pattern f:Forward"
+set markers = no              # Remove the + for wrapped lines
+set narrow_tree = yes         # Narrower thread tree
+set flag_chars = "*🔴🗑️  N    "
+set mailcap_path = "~/.config/mutt/mailcap"
+
+# ProtonMail folders (standard IMAP folders)
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+Trash"
+mailboxes "+Archive"
+
+# Archive macro for ProtonMail
+macro index,pager A "<save-message>+Archive<enter>" "Archive message"

@@ -16,8 +16,15 @@ export PATH="$PATH:/snap/bin"
 # ----- Oh-My-Zsh Configuration ----- #
 ######################################
 ZSH_THEME="robbyrussell"
-plugins=(git)
+plugins=(
+	git
+)
+
 source $ZSH/oh-my-zsh.sh
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion) # Autosuggestions configuration
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # Source the plugin
+bindkey '^Y' autosuggest-accept # Bind Ctrl+Y to accept suggestion
 
 # Custom Prompt ----- #
 # Load version control info
@@ -53,6 +60,11 @@ alias fr="$HOME/scripts/switch_repo.sh"
 # Editors
 alias n='nvim'
 alias n.='nvim . '
+
+# email
+alias email='neomutt'
+alias mail='neomutt'
+alias m='neomutt'
 
 # git
 alias gs='git status'
