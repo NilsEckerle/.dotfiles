@@ -114,12 +114,6 @@ bindsym $super+d exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd
 bindsym $super+Shift+d exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi -show run
 bindsym $super+Tab exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi -show window
 
-# File manager
-bindsym $super+e exec thunar
-
-# Web browser
-bindsym $super+w exec firefox
-
 # Lock screen
 bindsym $super+l exec i3lock -c 282828
 
@@ -202,29 +196,17 @@ bindsym $super+8 workspace $ws8
 bindsym $super+9 workspace $ws9
 bindsym $super+0 workspace $ws10
 
-# Move container to workspace
-bindsym $super+Shift+1 move container to workspace $ws1
-bindsym $super+Shift+2 move container to workspace $ws2
-bindsym $super+Shift+3 move container to workspace $ws3
-bindsym $super+Shift+4 move container to workspace $ws4
-bindsym $super+Shift+5 move container to workspace $ws5
-bindsym $super+Shift+6 move container to workspace $ws6
-bindsym $super+Shift+7 move container to workspace $ws7
-bindsym $super+Shift+8 move container to workspace $ws8
-bindsym $super+Shift+9 move container to workspace $ws9
-bindsym $super+Shift+0 move container to workspace $ws10
-
 # Move to workspace with focused container
-bindsym $super+$alt+1 move container to workspace $ws1; workspace $ws1
-bindsym $super+$alt+2 move container to workspace $ws2; workspace $ws2
-bindsym $super+$alt+3 move container to workspace $ws3; workspace $ws3
-bindsym $super+$alt+4 move container to workspace $ws4; workspace $ws4
-bindsym $super+$alt+5 move container to workspace $ws5; workspace $ws5
-bindsym $super+$alt+6 move container to workspace $ws6; workspace $ws6
-bindsym $super+$alt+7 move container to workspace $ws7; workspace $ws7
-bindsym $super+$alt+8 move container to workspace $ws8; workspace $ws8
-bindsym $super+$alt+9 move container to workspace $ws9; workspace $ws9
-bindsym $super+$alt+0 move container to workspace $ws10; workspace $ws10
+bindsym $super+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $super+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $super+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $super+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $super+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $super+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $super+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $super+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $super+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $super+Shift+0 move container to workspace $ws10; workspace $ws10
 
 # Navigate workspaces
 bindsym $super+Ctrl+Right workspace next
@@ -298,13 +280,8 @@ bindsym $super+Shift+e mode "$mode_system"
 
 # Assign applications to workspaces
 assign [class="kitty"] workspace $ws1
-assign [class="firefox"] workspace $ws2
-assign [class="code"] workspace $ws3
 assign [class="spotify"] workspace $ws9
 assign [class="discord"] workspace $ws10
-
-# spotify fix (doesn't always respect assign)
-for_window [class="spotify"] move to workspace $ws9
 
 # Floating windows
 for_window [class="Arandr"] floating enable
