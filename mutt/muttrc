@@ -30,7 +30,7 @@ set timeout = "5"
 set date_format = "%Y-%m-%d %H:%M"
 set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
 set help = no
-set status_format = "?:Help q:Quit A:Archive d:Del u:Undel s:Save m:Mail r:Reply g:Group A:Archive t:Tag T:Tag-pattern f:Forward"
+set status_format = "?:Help q:Quit A:Archive d:Del u:Undel s:Save m:Mail r:Reply g:Group t:Tag T:Tag-pattern f:Forward Ctrl+G:Abort"
 set markers = no              # Remove the + for wrapped lines
 set narrow_tree = yes         # Narrower thread tree
 set flag_chars = "*🔴🗑️  N    "
@@ -44,3 +44,68 @@ mailboxes "+Archive"
 
 # Archive macro for ProtonMail
 macro index,pager A "<save-message>+Archive<enter>" "Archive message"
+
+# Vim-like keybindings
+# First disable conflicting bindings
+bind index g noop
+bind pager g noop
+
+# Navigation
+bind index gg first-entry
+bind index G last-entry
+bind index \Cd half-down
+bind index \Cu half-up
+bind pager gg top
+bind pager G bottom
+bind pager \Cd half-down
+bind pager \Cu half-up
+
+# Actions
+bind index D delete-message
+bind index U undelete-message
+bind index F search
+bind index R group-reply
+bind pager D delete-message
+bind pager U undelete-message
+bind pager F search
+bind pager R group-reply
+
+# Additional Vim-like bindings
+bind index j next-entry
+bind index k previous-entry
+bind index J next-thread
+bind index K previous-thread
+bind index l display-message
+bind index h change-folder
+bind pager j next-line
+bind pager k previous-line
+bind pager l view-attachments
+bind pager h exit
+
+# More Vim-inspired commands
+bind index / search
+bind index n search-next
+bind index N search-opposite
+bind index * search-next
+bind index \# search-opposite
+bind pager / search
+bind pager n search-next
+bind pager N search-opposite
+
+# Visual mode-like selection
+bind index v tag-entry
+bind index V tag-pattern
+bind index \Cv tag-prefix
+
+# Quick movements
+bind index H top-page
+bind index M middle-page
+bind index L bottom-page
+bind pager H top
+bind pager L bottom
+
+# File operations (Vim-like)
+bind index o sort-mailbox
+bind index O sort-reverse
+bind compose o edit-message
+
