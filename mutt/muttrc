@@ -40,7 +40,13 @@ set mailcap_path = "~/.config/mutt/mailcap"
 set record = "+Sent"
 set postponed = "+Drafts"
 set trash = "+Trash"
-mailboxes "+Archive"
+mailboxes "+INBOX" "+Archive" "+Sent" "+Drafts" "+Trash"
+
+macro index,pager gi "<change-folder>+INBOX<enter>" "Go to Inbox"
+macro index,pager gd "<change-folder>+Drafts<enter>" "Go to Drafts"  
+macro index,pager ga "<change-folder>+Archive<enter>" "Go to Archive"
+macro index,pager gs "<change-folder>+Sent<enter>" "Go to Sent"
+macro index,pager gt "<change-folder>+Trash<enter>" "Go to Trash"
 
 # Archive macro for ProtonMail
 macro index,pager A "<save-message>+Archive<enter>" "Archive message"
