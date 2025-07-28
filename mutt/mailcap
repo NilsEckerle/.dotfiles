@@ -1,1 +1,11 @@
 text/html; firefox --new-window %s; nametemplate=%s.html; copiousoutput
+
+# Image attachments - open with feh
+image/jpeg; feh  %s; nametemplate=%s.jpg
+image/jpg; feh %s; nametemplate=%s.jpg
+image/png; feh %s; nametemplate=%s.png
+image/gif; feh %s; nametemplate=%s.gif
+image/bmp; feh %s; nametemplate=%s.bmp
+image/tiff; feh %s; nametemplate=%s.tiff
+image/webp; feh %s; nametemplate=%s.webp
+image/*; feh %s

@@ -688,6 +688,8 @@ create_symlinks() {
 				".themes:$HOME/.themes"
 				"gtk-3.0:$HOME/.config/gtk-3.0"
 				"wallpaper:$HOME/wallpaper"
+				"mutt:$HOME/.config/mutt"
+				"feh:$HOME/.config/feh"
     )
 
     # Add i3 config if i3 is being installed

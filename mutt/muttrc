@@ -1,4 +1,5 @@
 source ~/.config/mutt/passwords
+source ~/.config/mutt/aliases
 
 # Create ~/.config/mutt/passwords (keep this file LOCAL, don't commit) and add:
 # set imap_pass = "your_actual_password"
@@ -33,8 +34,8 @@ set timeout = "5"
 set date_format = "%Y-%m-%d %H:%M"
 set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
 set help = no
-set status_format = "?:Help q:Quit A:Archive d:Del u:Undel s:Save m:Mail r:Reply g:Group t:Tag T:Tag-pattern f:Forward Ctrl+G:Abort"
-set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l]   [Atts: %a]  -- (y:Send  q:Quit  s:Subject  a:Attach  e:Edit  f:From  t:To  c:Cc b:Bcc)"
+set status_format = "?:Help q:Quit m:Mail - A:Archive d:Del u:Undel s:Save - r:Reply g:Group-reply t:Tag T:Tag-pattern f:Forward - a:Aliases Ctrl+G:Abort"
+set compose_format = "-- [msg size: %l]   [Atts: %a] -- (y:Send  q:Quit  s:Subject  a:Attach  e:Edit  f:From  t:To  c:Cc b:Bcc)"
 set markers = no              # Remove the + for wrapped lines
 set narrow_tree = yes         # Narrower thread tree
 set flag_chars = "*🔴🗑️  N    "
@@ -95,6 +96,10 @@ bind pager k previous-line
 bind pager l view-attachments
 bind pager h exit
 
+# Attachments
+bind attach l view-attach
+bind attach h exit
+
 # More Vim-inspired commands
 bind index / search
 bind index n search-next
@@ -122,3 +127,5 @@ bind index o sort-mailbox
 bind index O sort-reverse
 bind compose o edit-message
 
+# aliases
+macro index,pager a "<alias-dialog>" "Show aliases"
