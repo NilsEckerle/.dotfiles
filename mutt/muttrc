@@ -17,6 +17,9 @@ set spoolfile = "+INBOX"
 # ProtonMail SMTP settings
 set smtp_url = "smtp://nilseckerle2001@protonmail.com@127.0.0.1:1025"
 
+set from = "nilseckerle2001@protonmail.com"
+set realname = "Nils Eckerle"
+
 
 source ~/.config/mutt/gruvbox/colors-gruvbox.muttrc
 
@@ -31,6 +34,7 @@ set date_format = "%Y-%m-%d %H:%M"
 set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
 set help = no
 set status_format = "?:Help q:Quit A:Archive d:Del u:Undel s:Save m:Mail r:Reply g:Group t:Tag T:Tag-pattern f:Forward Ctrl+G:Abort"
+set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l]   [Atts: %a]  -- (y:Send  q:Quit  s:Subject  a:Attach  e:Edit  f:From  t:To  c:Cc b:Bcc)"
 set markers = no              # Remove the + for wrapped lines
 set narrow_tree = yes         # Narrower thread tree
 set flag_chars = "*🔴🗑️  N    "
@@ -42,11 +46,6 @@ set postponed = "+Drafts"
 set trash = "+Trash"
 mailboxes "+INBOX" "+Archive" "+Sent" "+Drafts" "+Trash"
 
-macro index,pager gi "<change-folder>+INBOX<enter>" "Go to Inbox"
-macro index,pager gd "<change-folder>+Drafts<enter>" "Go to Drafts"  
-macro index,pager ga "<change-folder>+Archive<enter>" "Go to Archive"
-macro index,pager gs "<change-folder>+Sent<enter>" "Go to Sent"
-macro index,pager gt "<change-folder>+Trash<enter>" "Go to Trash"
 
 # Archive macro for ProtonMail
 macro index,pager A "<save-message>+Archive<enter>" "Archive message"
@@ -55,6 +54,14 @@ macro index,pager A "<save-message>+Archive<enter>" "Archive message"
 # First disable conflicting bindings
 bind index g noop
 bind pager g noop
+
+#quick movements
+macro index,pager gi "<change-folder>+INBOX<enter>" "Go to Inbox"
+macro index,pager gd "<change-folder>+Drafts<enter>" "Go to Drafts"  
+macro index,pager ga "<change-folder>+Archive<enter>" "Go to Archive"
+macro index,pager gs "<change-folder>+Sent<enter>" "Go to Sent"
+macro index,pager gt "<change-folder>+Trash<enter>" "Go to Trash"
+macro index,pager g? "<change-folder>?" "show folder browser"
 
 # Navigation
 bind index gg first-entry
