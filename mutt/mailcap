@@ -9,3 +9,5 @@ image/bmp; feh %s; nametemplate=%s.bmp
 image/tiff; feh %s; nametemplate=%s.tiff
 image/webp; feh %s; nametemplate=%s.webp
 image/*; feh %s
+
+application/pdf; zathura %s; nametemplate=%s.pdf
