@@ -101,30 +101,6 @@ return {
 
 	{
 		"williamboman/mason.nvim",
-		build = ":MasonUpdate", -- Automatically update Mason registry
-		config = function()
-			require("mason").setup()
-		end,
-		opts = {
-			ensure_installed = {
-				"debugpy",
-				"pyright",
-				"omnisharp",
-				"clangd",
-			},
-		},
-	},
-
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup()
-		end,
-	},
-
-	{
-
-		"williamboman/mason.nvim",
 		cmd = "Mason",
 		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		build = ":MasonUpdate",
@@ -134,6 +110,7 @@ return {
 				"stylua",
 				"shfmt",
 				"clangd",
+				"basedpyright",
 			},
 		},
 		---@param opts MasonSettings | {ensure_installed: string[]}
@@ -162,8 +139,16 @@ return {
 	},
 
 	{
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("mason-lspconfig").setup()
+		end,
+	},
+
+	{
 		"Hoffs/omnisharp-extended-lsp.nvim",
 	},
+
 	{
 		"chrisgrieser/nvim-lsp-endhints",
 		event = "LspAttach",

@@ -10,6 +10,16 @@ return {
 					python = { "isort", "black" },
 					rust = { "rustfmt", lsp_format = "fallback" },
 					javascript = { "prettierd", "prettier", stop_after_first = true },
+					c = { "clang_format" },
+					cpp = { "clang_format" },
+				},
+				formatters = {
+					clang_format = {
+						prepend_args = {
+							"--style=file", -- use .clang-format file
+							"--fallback-style=LLVM" -- FALLBACK if no .clang-format found
+						},
+					},
 				},
 			})
 			vim.keymap.set({ "n", "v" }, "<leader>cf", function()

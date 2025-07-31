@@ -5,8 +5,10 @@ return {
 		---@type oil.SetupOpts
 		opts = {},
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
-		config = function()
-			require("oil").setup({})
+		config = function(opts)
+			require("oil").setup(opts)
+
+			vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Oil up baby" })
 
 			-- Set buffer-local keymap for Oil buffers
 			vim.api.nvim_create_autocmd("FileType", {
