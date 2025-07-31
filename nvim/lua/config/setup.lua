@@ -8,7 +8,7 @@ opt.number = true
 opt.relativenumber = true
 opt.tabstop = 2
 opt.shiftwidth = 2
-opt.expandtab = false
+opt.expandtab = true
 opt.list = true
 opt.listchars = {
 	tab = "▸ ",
@@ -20,7 +20,7 @@ opt.listchars = {
 	-- 	nbsp = '⦸'
 }
 
-opt.colorcolumn = "80"
+opt.colorcolumn = "100"
 opt.guicursor = "n-v-i-c:block"
 opt.scrolloff = 10
 opt.conceallevel = 1
