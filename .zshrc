@@ -77,6 +77,7 @@ alias gf='git fetch'
 alias go='git switch'
 alias gamend='git commit --amend'
 alias lg='lazygit'
+alias gitclip='(echo "Analyze the git status and diff below, then create focused commit messages for logically separated changes. Each commit should address only one specific topic or feature. Provide the exact git commands needed to stage and commit each change with descriptive but concise messages." && echo "" && gs && gd) | xclip -selection clipboard'
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
