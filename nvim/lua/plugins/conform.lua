@@ -2,7 +2,12 @@ return {
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		opts = {},
+		opts = {
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_format = true,
+			},
+		},
 		config = function()
 			require("conform").setup({
 				formatters_by_ft = {
@@ -17,18 +22,21 @@ return {
 					clang_format = {
 						prepend_args = {
 							"--style=file", -- use .clang-format file
-							"--fallback-style=LLVM" -- FALLBACK if no .clang-format found
+							"--fallback-style=LLVM", -- FALLBACK if no .clang-format found
 						},
 					},
 				},
 			})
-			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+
+			local function format()
 				require("conform").format({
 					lsp_fallback = true,
 					async = false,
 					timeout_ms = 500,
 				})
-			end, { desc = "Format file or range (in visual mode)" })
+			end
+
+			vim.keymap.set({ "n", "v" }, "<leader>cf", format, { desc = "Format file or range (in visual mode)" })
 		end,
 	},
 }
