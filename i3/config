@@ -100,6 +100,13 @@ exec --no-startup-id firefox
 exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id spotify
 exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id discord
 
+# x server fix
+exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY
+exec --no-startup-id /usr/lib/at-spi2-core/at-spi-bus-launcher --launch-immediately
+exec --no-startup-id export XDG_CURRENT_DESKTOP=i3
+exec --no-startup-id export XDG_SESSION_DESKTOP=i3
+exec --no-startup-id export XDG_SESSION_TYPE=x11
+
 #################################
 #         Key Bindings          #
 #################################
