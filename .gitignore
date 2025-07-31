@@ -7,3 +7,4 @@ passwords
 *.local
 *_local
 mutt/aliases
+*.toml-*
