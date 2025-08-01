@@ -12,17 +12,16 @@ map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Code Diagnostics" })
 map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
 
+map("n", "<down>", "<cmd>cnext<CR>", { desc = "Quickfix next" })
+map("n", "<up>", "<cmd>cprev<CR>", { desc = "Quickfix previous" })
+map("n", "<left>", "<cmd>cclose<CR>", { desc = "Quickfix close" })
+map("n", "<right>", "<cmd>copen<CR>", { desc = "Quickfix open" })
+
 map("n", "<leader>Gg", "<cmd>term lazygit<cr>", { desc = "lazygit" })
 
 -- Replace without loosing p register
 map("x", "<leader>p", '"_dP', { desc = "replace while keeping p register" })
 map("n", "<leader>p", "p", { desc = "replace while keeping p register" })
-
--- Disable arrow keys
-map("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
-map("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
-map("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
-map("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
 map("n", "<leader>o", function()
   local file_dir = vim.fn.expand("%:p:h")

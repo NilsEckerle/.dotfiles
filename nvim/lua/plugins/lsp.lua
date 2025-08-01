@@ -86,6 +86,7 @@ return {
 							vim.keymap.set( "n", "gd", "<cmd>Telescope lsp_definitions<cr>", { buffer = buffer, desc = "Go to definition" })
 							vim.keymap.set( "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { buffer = buffer, desc = "Go to declaration" })
 							vim.keymap.set( "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", { buffer = buffer, desc = "Go to implementation" })
+							vim.keymap.set( "n", "gr", vim.lsp.buf.references, { buffer = buffer, desc = "Go to implementation" })
 						end,
 					})
 					-- vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
