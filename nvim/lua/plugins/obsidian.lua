@@ -1,7 +1,7 @@
 -- ============================================================================
 -- CONFIGURATION VARIABLES
 -- ============================================================================
-local VAULT_PATH = "/media/nils/storage/Documents/Zettelkasten/"
+local VAULT_PATH = "/home/nils/Documents/Zettelkasten/"
 local VAULT_NAME = "Zettelkasten"
 
 return {
