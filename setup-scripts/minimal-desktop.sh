@@ -298,6 +298,7 @@ create_symlinks() {
     "wallpaper:$HOME/wallpaper"
     "mutt:$HOME/.config/mutt"
     "feh:$HOME/.config/feh"
+    "i3/rofi-calculator.desktop:$HOME/.local/share/applications/rofi-calculator.desktop"
   )
 
   # Add i3 config if i3 is being installed

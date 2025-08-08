@@ -8,3 +8,4 @@ passwords
 *_local
 mutt/aliases
 *.toml-*
+rofi/calc_history

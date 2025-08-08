@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Calculator
+Comment=Rofi Calculator with scientific notation support
+Exec=bash -c 'cd && .config/i3/rofi-calculator-script.sh'
+Icon=calc
+Terminal=false
+Type=Application
+Categories=Utility;Calculator;
+Keywords=calculator;calc;math;rofi;scientific;
+StartupNotify=false
