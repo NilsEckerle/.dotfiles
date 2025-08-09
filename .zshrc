@@ -77,21 +77,29 @@ alias gf='git fetch'
 alias go='git switch'
 alias gamend='git commit --amend'
 alias lg='lazygit'
-alias gitclip='(echo "Analyze the git status and diff below, then create focused commit messages for logically separated changes. Each commit should address only one specific topic or feature. Provide the exact git commands needed to stage and commit each change with descriptive but concise messages." && echo "" && gs && gd) | xclip -selection clipboard'
+alias gitclip='(echo "# Git Commit Analysis
 
-alias gitclip='(
-  echo "Analyze the git status and diff below, then create focused commit messages for logically separated changes." &&
-  echo "Each commit should address only one specific topic or feature." &&
-  echo "Provide the exact git commands needed to stage and commit each change with descriptive but concise messages." &&
-  echo "" &&
-  echo "Recent commit messages for reference:" &&
-  git log -10 &&
-  echo "" &&
-  echo "git status:" &&
-  gs &&
-  echo "git diff:" &&
-  gd
-) | xclip -selection clipboard'
+**Task**: Analyze the git status and diff below to create focused, atomic commits.
+
+**Requirements**:
+- Each commit should address ONE specific change (atomic commits)
+- Group related changes logically (e.g., feature additions, bug fixes, refactoring, documentation)
+- Use conventional commit format: type(scope): description
+- Keep commit messages concise but descriptive (50 chars max for subject)
+
+**Output Format**:
+1. Brief analysis of what changes were detected
+2. Individual code blocks for each recommended commit with staging commands
+3. Final code block with all commands combined
+
+**Example Output**:
+\`\`\`bash
+# Commit 1: Add user authentication
+git add src/auth.js src/middleware/auth.js
+git commit -m \"feat(auth): add JWT token validation\"
+\`\`\`
+
+**Git Status and Diff**:" && echo "" && gs && gd) | xclip -selection clipboard'
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
