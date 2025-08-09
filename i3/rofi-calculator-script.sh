@@ -5,40 +5,44 @@
 # Function to evaluate mathematical expression
 calculate() {
   local expression="$1"
+  # Convert scientific notation and constants for awk
+  local awk_expr="$expression"
+  awk_expr=$(echo "$awk_expr" | sed 's/\([0-9]\)e\([+-]\?[0-9]\)/\110^\2/g')
+  awk_expr=$(echo "$awk_expr" | sed 's/\bpi\b/atan2(0,-1)/g')
+  awk_expr=$(echo "$awk_expr" | sed 's/\be\b/exp(1)/g')
 
-  # Convert scientific notation (e.g., 16e6 -> 16*10^6) for bc compatibility
-  expression=$(echo "$expression" | sed 's/\([0-9]\)e\([+-]\?[0-9]\)/\1*10^\2/g')
+  # Try awk first
+  result=$(awk "BEGIN {printf \"%.10g\", $awk_expr}" 2>/dev/null)
 
-  result=$(awk "BEGIN {printf \"%.10g\", $expression}" 2>/dev/null)
+  # # If awk failed (exit status != 0) or result is invalid, use Python
+  # if [[ $? -ne 0 ]] || [[ -z "$result" || "$result" == "nan" || "$result" == "inf" || "$result" == "-inf" ]]; then
+  #   # Prepare expression for Python
+  #   local python_expr="$expression"
+  #   python_expr=$(echo "$python_expr" | sed 's/\bpi\b/math.pi/g')
+  #   python_expr=$(echo "$python_expr" | sed 's/\be\b/math.e/g')
+  #   python_expr=$(echo "$python_expr" | sed 's/\b\(sin\|cos\|tan\|exp\|log\|sqrt\|atan2\)\b/math.\1/g')
+  #   result=$(python3 -c "import math; print($python_expr)" 2>/dev/null)
+  # fi
 
   echo "$result"
 }
 
 # Main calculator function
 main() {
-  # History file for calculator
-  HIST_FILE="$HOME/.config/rofi/calc_history"
-  mkdir -p "$(dirname "$HIST_FILE")"
+  # If argument provided, calculate once and exit
+  if [ -n "$1" ]; then
+    expression="$1"
+  else
+    # Show rofi prompt for calculation
+    expression=$(rofi -dmenu -p "Calculator" -mesg "Examples: 16e6/1024, sin(pi/2), sqrt(144), log(100), 2**8")
 
-  # If no argument provided, show rofi prompt
-  if [ -z "$1" ]; then
-    # Read history and create menu options
-    history_entries=""
-    if [ -f "$HIST_FILE" ]; then
-      history_entries=$(tail -20 "$HIST_FILE" | tac)
-    fi
-
-    # Show rofi with history and prompt for new calculation
-    expression=$(echo -e "$history_entries" | rofi -dmenu -p "Calculator" -mesg "Examples: 16e6/1024, sin(pi/2), sqrt(144), log(100), 2**8")
-
+    # If user cancels (Escape) or provides empty input, exit
     if [ -z "$expression" ]; then
       exit 0
     fi
-  else
-    expression="$1"
   fi
 
-  # Clean up expression (remove spaces around operators for better parsing)
+  # Clean up expression
   expression=$(echo "$expression" | sed 's/ //g')
 
   # Calculate result
@@ -49,20 +53,18 @@ main() {
     exit 1
   fi
 
-  # Format result (remove trailing zeros and decimal point if not needed)
-  formatted_result=$(echo "$result" | sed 's/\.0*$//' | sed 's/\(.*\.\)0*$/\1/' | sed 's/\.$//') 
+  # Format result
+  formatted_result=$(echo "$result" | sed 's/\.0$//' | sed 's/\(.\.\)0$/\1/' | sed 's/\.$//') 
 
   # Copy to clipboard
   echo "$formatted_result" | xclip -selection clipboard
 
-  # Save to history
-  echo "$expression = $formatted_result" >> "$HIST_FILE"
-
   # Show result notification
   notify-send "Calculator" "$expression = $formatted_result" -t 3000
 
-  # Also show in rofi for immediate visibility
-  echo "$expression = $formatted_result" | rofi -dmenu -p "Result (copied to clipboard)" -mesg "Result copied to clipboard"
+  # Show result and exit
+  echo "$expression = $formatted_result"
+  exit 0
 }
 
 main "$@"
