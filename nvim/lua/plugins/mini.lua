@@ -6,3 +6,4 @@ return {
 		statusline.setup({ use_icons = true })
 	end,
 }
+-- Hallo welt

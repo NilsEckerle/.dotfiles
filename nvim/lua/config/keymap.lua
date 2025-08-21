@@ -34,3 +34,4 @@ map("n", "<leader>o", function()
     end
   })
 end, { desc = "Open current file directory in Nemo" })
+-- Hallo welt

@@ -3,3 +3,4 @@ require("config.lazy") -- also includes plugins
 require("config.keymap")
 require("config.after")
 vim.g.lazy_disable_warn_reload = true -- Suppress the re-sourcing warning
+-- Hallo welt
