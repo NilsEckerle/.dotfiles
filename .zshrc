@@ -131,3 +131,6 @@ fi
 if command -v figlet >/dev/null 2>&1; then
     pwd | figlet -t  # Print the current path
 fi
+
+# Created by `pipx` on 2025-08-10 12:51:36
+export PATH="$PATH:/home/nils/.local/bin"
