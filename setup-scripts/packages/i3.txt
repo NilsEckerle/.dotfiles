@@ -1,0 +1,11 @@
+i3
+i3blocks
+i3status
+i3lock
+dmenu
+rofi
+compton
+nitrogen
+scrot
+xorg
+lightdm
