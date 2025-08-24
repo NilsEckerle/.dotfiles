@@ -1,9 +1,14 @@
-source ~/.config/mutt/passwords
-source ~/.config/mutt/aliases
+source ~/.config/mutt/passwords.env
+source ~/.config/mutt/aliases.env
 
-# Create ~/.config/mutt/passwords (keep this file LOCAL, don't commit) and add:
+# Create ~/.config/mutt/passwords.env (keep this file LOCAL, don't commit) and add:
 # set imap_pass = "your_actual_password"
 # set smtp_pass = "your_actual_password"
+
+# Create ~/.config/mutt/aliases.env (keep this file LOCAL, don't commit) and add:
+# alias name email
+# e.g.
+# alias don donjoe@donjoe.com
 
 # Add to your .gitignore:
 # passwords
