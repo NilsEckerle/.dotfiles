@@ -1,0 +1,3 @@
+# Package Manager Configuration
+# Format: manager/package
+apt/htop
