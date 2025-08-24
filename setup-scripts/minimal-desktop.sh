@@ -286,9 +286,6 @@ main() {
   # Install TPM (Tmux Plugin Manager)
   install_tpm
 
-  install_homebrew
-  install_brew_packages
-
   # Create symlinks
   create_symlinks
 
