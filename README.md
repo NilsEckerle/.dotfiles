@@ -8,7 +8,7 @@ emulators, window managers, text editors, and more.
 
 ## Debian version used and tested
 
-Debian 12.11.0 amd64
+Debian 13
 
 ## What's Inside
 
@@ -52,8 +52,8 @@ usermod is pressent.
 
 ```bash
 cd ~/.dotfiles
-git switch debian-config
-./setup-scripts/debian.sh 2>&1 | tee setup.log
+git switch debian-13
+./setup-scripts/minimal-desktop.sh 2>&1 | tee setup.log
 ```
 
 ## License
