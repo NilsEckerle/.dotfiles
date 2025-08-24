@@ -1,0 +1,17 @@
+apt/sudo
+apt/zsh
+apt/tmux
+apt/vim
+apt/curl
+apt/wget
+apt/git
+apt/build-essential
+apt/fzf
+apt/kitty
+apt/nemo
+apt/tldr
+apt/feh
+apt/xclip
+apt/neomutt
+brew/zoxide
+brew/neovim
