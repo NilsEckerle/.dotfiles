@@ -9,7 +9,7 @@ apt/build-essential
 apt/fzf
 apt/kitty
 apt/nemo
-apt/tldr
+apt/tealdeer
 apt/feh
 apt/xclip
 apt/neomutt
