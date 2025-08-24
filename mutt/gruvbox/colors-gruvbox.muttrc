@@ -1,4 +1,4 @@
-# Gruvbox color scheme for NeoMutt - Only Important Messages Bold
+# Gruvbox color scheme for NeoMutt - Compatible with older versions
 # Basic colors
 color normal        color223    color235
 color error         color167    color235
@@ -25,66 +25,27 @@ color sidebar_flagged    color167    color235
 color sidebar_spoolfile  color214    color235
 color sidebar_unread     color108    color235
 
+# Index colors - using standard color index syntax
 # Default/read messages - subtle colors
-color index_number      color245    color235    "~A"    # Message number (gray)
-color index_flags       color245    color235    "~A"    # Flags (gray)
-color index_date        color241    color235    "~A"    # Date (dark gray)
-color index_author      color223    color235    "~A"    # Author (light gray)
-color index_size        color241    color235    "~A"    # Size (dark gray)
-color index_subject     color223    color235    "~A"    # Subject (light gray)
+color index         color223    color235    "~A"        # All messages
 
-# New messages - normal weight green (no bold)
-color index_number      color245    color235    "~N"    # Message number stays gray
-color index_flags       color142    color235    "~N"    # Flags in green, normal weight
-color index_date        color241    color235    "~N"    # Date stays gray
-color index_author      color142    color235    "~N"    # Author in green, normal weight
-color index_size        color241    color235    "~N"    # Size stays gray
-color index_subject     color142    color235    "~N"    # Subject in green, normal weight
+# New messages - green
+color index         color142    color235    "~N"        # New messages
 
-# Unread messages - same as new, normal weight
-color index_number      color245    color235    "~U"
-color index_flags       color142    color235    "~U"
-color index_date        color241    color235    "~U"
-color index_author      color142    color235    "~U"
-color index_size        color241    color235    "~U"
-color index_subject     color142    color235    "~U"
+# Unread messages - same as new
+color index         color142    color235    "~U"        # Unread messages
 
-# Flagged/important messages - red accent with bold
-color index_number      color245    color235    "~F"
-color index_flags       brightcolor167    color235    "~F"    # Bright red flags, bold
-color index_date        color241    color235    "~F"    # Date stays gray
-color index_author      brightcolor167    color235    "~F"    # Bright red author, bold
-color index_size        color241    color235    "~F"    # Size stays gray
-color index_subject     brightcolor167    color235    "~F"    # Bright red subject, bold
+# Flagged/important messages - bright red
+color index         brightcolor167    color235    "~F"        # Flagged messages
 
 # Deleted messages - very dim
-color index_number      color237    color235    "~D"
-color index_flags       color237    color235    "~D"
-color index_date        color237    color235    "~D"
-color index_author      color237    color235    "~D"
-color index_size        color237    color235    "~D"
-color index_subject     color237    color235    "~D"
+color index         color237    color235    "~D"        # Deleted messages
 
-# Tagged messages - blue accent
-color index_number      color245    color235    "~T"
-color index_flags       color109    color235    "~T"
-color index_date        color241    color235    "~T"
-color index_author      color109    color235    "~T"
-color index_size        color241    color235    "~T"
-color index_subject     color109    color235    "~T"
+# Tagged messages - blue
+color index         color109    color235    "~T"        # Tagged messages
 
-# Personal messages (to you) - orange accent
-color index_author      color214    color235    "~p!~F"
-color index_subject     color214    color235    "~p!~F"
-
-# Fallback index colors - only important messages bold
-color index         color223    color235    "~A"        # All messages
-color index         color142    color235    "~N"        # New (normal weight green)
-color index         color142    color235    "~U"        # Unread (normal weight green)
-color index         brightcolor167    color235    "~F"        # Flagged (bold red)
-color index         color214    color235    "~p!~F"     # Personal
-color index         color109    color235    "~T"        # Tagged
-color index         color237    color235    "~D"        # Deleted
+# Personal messages (to you) - orange
+color index         color214    color235    "~p!~F"     # Personal messages (not flagged)
 
 # Message headers
 color hdrdefault    color246    color235
