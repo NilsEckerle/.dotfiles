@@ -12,55 +12,6 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# ============================================================================
-# PACKAGE LISTS CONFIGURATION
-# ============================================================================
-
-# APT Package Lists
-APT_PACKAGES=(
-  "sudo"
-  "zsh" 
-  "tmux"
-  "vim"
-  "curl"
-  "wget"
-  "git"
-  "build-essential"
-  "procps"
-  "file"
-  "fzf"
-  "kitty"
-  "nemo"
-  "tldr"
-  "feh"
-  "xclip"
-  "neomutt"
-)
-
-# i3 packages
-APT_PACKAGES+=(
-  "i3"
-  "i3blocks"
-  "i3status"
-  "i3lock"
-  "dmenu"
-  "rofi"
-  "compton"
-  "nitrogen"
-  "scrot"
-  "xorg"
-  "lightdm"
-)
-
-BREW_PACKAGES=(
-  "zoxide"
-  "neovim"
-)
-
-# APT Sources to add (format: "repository_line|keyring_url|keyring_path")
-# Example: "deb [signed-by=/usr/share/keyrings/example.gpg] https://example.com/apt stable main|https://example.com/key.gpg|/usr/share/keyrings/example.gpg"
-CUSTOM_APT_SOURCES=()
-
 # Logging functions
 log_info() {
   echo -e "${BLUE}[INFO]${NC} $1"
@@ -109,165 +60,12 @@ if [ ! -f "README.md" ] || [ ! -d "nvim" ] || [ ! -d "setup-scripts" ]; then
   exit 1
 fi
 
-
 DOTFILES_DIR=$(pwd)
 log_info "Dotfiles directory: $DOTFILES_DIR"
 
 # Function to check if command exists
 command_exists() {
   command -v "$1" >/dev/null 2>&1
-}
-
-# Function to install essential tools needed for setup
-install_essential_tools() {
-  log_info "Installing essential tools for setup..."
-
-  # Update package list first
-  sudo apt update
-
-  # Define essential tools needed for the setup process
-  local essential_tools=(
-    "curl"
-    "wget"
-    "gnupg"
-    "ca-certificates"
-    "apt-transport-https"
-    "software-properties-common"
-  )
-
-  # Install each essential tool if not already present
-  for tool in "${essential_tools[@]}"; do
-    if ! command_exists "$tool" && ! dpkg -l | grep -q "^ii  $tool "; then
-      log_info "Installing essential tool: $tool"
-      sudo apt install -y "$tool"
-    else
-      log_success "Essential tool already available: $tool"
-    fi
-  done
-
-  log_success "Essential tools installation completed"
-}
-
-# Function to add custom APT sources
-add_apt_sources() {
-  if [ ${#CUSTOM_APT_SOURCES[@]} -eq 0 ]; then
-    log_info "No custom APT sources to add"
-    return
-  fi
-
-  log_info "Adding custom APT sources..."
-
-  for source_entry in "${CUSTOM_APT_SOURCES[@]}"; do
-    # Skip empty entries
-    [ -z "$source_entry" ] && continue
-
-    # Parse the source entry (format: "repo_line|key_url|keyring_path")
-    IFS='|' read -r repo_line key_url keyring_path <<< "$source_entry"
-
-    # Extract repository name for logging
-    repo_name=$(echo "$repo_line" | grep -o 'https://[^/]*' | sed 's|https://||' | head -n1)
-    log_info "Adding repository: $repo_name"
-
-    # Download and add the GPG key
-    if [ -n "$key_url" ] && [ -n "$keyring_path" ]; then
-      log_info "Downloading GPG key from $key_url"
-      curl -fsSL "$key_url" | sudo gpg --dearmor -o "$keyring_path"
-      sudo chmod 644 "$keyring_path"
-      log_success "GPG key added to $keyring_path"
-    fi
-
-    # Add the repository
-    echo "$repo_line" | sudo tee "/etc/apt/sources.list.d/$(basename "$keyring_path" .gpg).list" > /dev/null
-    log_success "Repository added: $repo_name"
-  done
-
-  # Update package list after adding sources
-  log_info "Updating package list after adding custom sources..."
-  sudo apt update
-  log_success "Package list updated"
-}
-
-# Function to install packages via apt
-install_apt_packages() {
-  log_info "Installing APT packages (level: $INSTALL_LEVEL)..."
-
-  # Install essential tools first (needed for adding custom sources)
-  install_essential_tools
-
-  # Add custom APT sources
-  add_apt_sources
-
-  # Start with base packages based on install level
-
-  for package in "${APT_PACKAGES[@]}"; do
-    if dpkg -l | grep -q "^ii  $package "; then
-      log_success "$package is already installed"
-    else
-      log_info "Installing $package..."
-      sudo apt install -y "$package"
-      log_success "$package installed"
-    fi
-  done
-}
-
-# Function to install Homebrew
-install_homebrew() {
-    if command_exists brew; then
-        log_success "Homebrew is already installed"
-        return
-    fi
-
-    log_info "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
-    # Add Homebrew to PATH for current session
-    if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
-    
-    log_success "Homebrew installed"
-}
-
-# Function to install packages via Homebrew
-install_brew_packages() {
-    log_info "Installing Homebrew packages (level: $INSTALL_LEVEL)..."
-    
-    # Ensure brew is in PATH
-    if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
-
-    for package in "${BREW_PACKAGES[@]}"; do
-        if brew list "$package" >/dev/null 2>&1; then
-            log_success "$package is already installed via brew"
-        else
-            log_info "Installing $package via brew..."
-            brew install "$package"
-            log_success "$package installed via brew"
-        fi
-    done
-}
-
-# Function to install TPM (Tmux Plugin Manager)
-install_tpm() {
-  local tpm_dir="$HOME/.tmux/plugins/tpm"
-
-  if [ -d "$tpm_dir" ]; then
-    log_success "TPM (Tmux Plugin Manager) is already installed"
-    return
-  fi
-
-  log_info "Installing TPM (Tmux Plugin Manager)..."
-
-  # Create tmux plugins directory
-  mkdir -p "$HOME/.tmux/plugins"
-
-  # Clone TPM repository
-  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
-
-  log_success "TPM installed"
-  log_info "TPM installed to $tmp_dir"
-  log_warning "After tmux configuration is set up, press prefix + I to install plugins"
 }
 
 # Function to create symlinks
@@ -339,6 +137,28 @@ create_symlinks() {
     ln -sf "$source_path" "$target"
     log_success "Symlink created for $source"
   done
+}
+
+# Function to install TPM (Tmux Plugin Manager)
+install_tpm() {
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+
+  if [ -d "$tpm_dir" ]; then
+    log_success "TPM (Tmux Plugin Manager) is already installed"
+    return
+  fi
+
+  log_info "Installing TPM (Tmux Plugin Manager)..."
+
+  # Create tmux plugins directory
+  mkdir -p "$HOME/.tmux/plugins"
+
+  # Clone TPM repository
+  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+
+  log_success "TPM installed"
+  log_info "TPM installed to $tmp_dir"
+  log_warning "After tmux configuration is set up, press prefix + I to install plugins"
 }
 
 # Function to setup Zsh as default shell
@@ -451,11 +271,11 @@ setup_zshrc() {
 main() {
   log_info "Starting Debian 12 dotfiles minimal setup"
 
-  # Install system packages
-  install_apt_packages
-
   # Setup sudo
   setup_sudo
+
+  # install packages
+  ./setup-scripts/install-package-list.sh base.pk i3.pk
 
   # setup i3
   setup_i3wm
