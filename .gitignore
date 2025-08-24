@@ -9,3 +9,4 @@ passwords
 mutt/aliases
 *.toml-*
 rofi/calc_history
+*.env
