@@ -1,4 +1,0 @@
-curl
-git
-vim
-htop
