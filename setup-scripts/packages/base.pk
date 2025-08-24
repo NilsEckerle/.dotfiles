@@ -13,5 +13,5 @@ apt/tldr
 apt/feh
 apt/xclip
 apt/neomutt
-brew/zoxide
+apt/zoxide
 brew/neovim
