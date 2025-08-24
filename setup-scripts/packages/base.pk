@@ -1,5 +1,6 @@
 apt/sudo
 apt/zsh
+apt/zsh-autosuggestions
 apt/tmux
 apt/vim
 apt/curl
