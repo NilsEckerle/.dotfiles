@@ -100,6 +100,7 @@ git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
 **Git Status and Diff**:" && echo "" && gs && gd) | xclip -selection clipboard'
+alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
