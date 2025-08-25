@@ -68,7 +68,6 @@ mouse_warping none
 exec --no-startup-id picom
 
 # start comption
-exec_always --no-startup-id compton -b
 
 # Wallpaper
 exec --no-startup-id nitrogen --restore
@@ -88,6 +87,9 @@ exec --no-startup-id dunst
 # Auto-lock screen after 10 minutes
 exec --no-startup-id xss-lock -- i3lock -c 282828
 
+# gpu monitor
+exec --no-startup-id ~/.config/i3/gpu_monitor.sh
+
 # Restore layout (if you use it)
 # exec --no-startup-id i3-msg 'workspace $ws1; append_layout ~/.config/i3/workspace-1.json'
 
@@ -96,9 +98,9 @@ exec --no-startup-id feh --bg-fill ~/wallpaper/gruv-astronaut.png
 
 # Start applications
 exec --no-startup-id kitty
-exec --no-startup-id firefox
-exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id spotify
-exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share rofi --no-startup-id discord
+#exec --no-startup-id firefox
+#exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share --no-startup-id spotify
+#exec XDG_DATA_DIRS=/usr/share/:/usr/local/share/:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share --no-startup-id discord
 
 # x server fix
 exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY
