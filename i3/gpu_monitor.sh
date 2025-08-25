@@ -1,16 +1,26 @@
 #!/bin/bash
-# GPU Monitor - RX 7700S (discrete GPU)
-
+# Simple GPU Monitor using radeontop
 mkdir -p /tmp
 
+if ! command -v radeontop >/dev/null 2>&1; then
+  echo "radeontop not found. Install with: sudo pacman -S radeontop"
+  exit 1
+fi
+
+echo "Starting GPU monitor using radeontop..."
+
 while true; do
-    # Monitor card0 (discrete RX 7700S)
-    if [ -f /sys/class/drm/card0/device/gpu_busy_percent ]; then
-        gpu_usage=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null)
-        echo "${gpu_usage:-0}%" > /tmp/gpu_usage
-    else
-        echo "N/A" > /tmp/gpu_usage
-    fi
-    
-    sleep 2
+  # Run radeontop for 1 sample, parse GPU usage
+  gpu_usage=$(timeout 3s radeontop -d - -l 1 2>/dev/null | \
+    grep -oP 'gpu \K[0-9]+(?=\.[0-9]+%)' | head -1)
+
+  if [ -n "$gpu_usage" ]; then
+    echo "${gpu_usage}%" > /tmp/gpu_usage
+    echo "$(date): GPU Usage: ${gpu_usage}%"
+  else
+    echo "N/A" > /tmp/gpu_usage
+    echo "$(date): GPU Usage: N/A (radeontop failed)"
+  fi
+
+  sleep 2
 done
