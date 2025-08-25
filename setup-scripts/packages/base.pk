@@ -8,6 +8,7 @@ apt/wget
 apt/git
 apt/build-essential
 apt/fzf
+apt/ripgrep
 apt/kitty
 apt/nemo
 apt/tealdeer
