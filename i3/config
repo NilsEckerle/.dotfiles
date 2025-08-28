@@ -65,12 +65,15 @@ mouse_warping none
 #################################
 
 # Compositor for transparency and effects
-exec --no-startup-id picom
+exec --no-startup-id picom --backend glx
 
 # start comption
 
 # Wallpaper
 exec --no-startup-id nitrogen --restore
+
+# Clock
+exec --no-startup-id ~/.config/i3/start-conky.sh
 
 # Network manager applet
 exec --no-startup-id nm-applet
