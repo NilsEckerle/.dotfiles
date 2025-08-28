@@ -135,3 +135,6 @@ fi
 
 # Created by `pipx` on 2025-08-10 12:51:36
 export PATH="$PATH:/home/nils/.local/bin"
+
+xset -dpms
+xset s off
