@@ -4,7 +4,8 @@ apt/i3status
 apt/i3lock
 apt/dmenu
 apt/rofi
-apt/compton
 apt/nitrogen
 apt/scrot
 apt/xorg
+apt/picom
+apt/conky-all

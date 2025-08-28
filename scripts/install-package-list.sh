@@ -18,9 +18,6 @@ NC='\033[0m' # No Color
 # CONFIGURATION
 # ============================================================================
 
-# Base directory for package files
-PACKAGES_DIR="$PWD/setup-scripts/packages"
-
 # Arrays to hold packages (will be populated from files)
 APT_PACKAGES=()
 BREW_PACKAGES=()
@@ -52,9 +49,9 @@ show_usage() {
   fi
   echo ""
   echo "Examples:"
-  echo "  $0 base.pk         # Install base packages only"
-  echo "  $0 base.pk i3.pk   # Install base + i3 packages"
-  echo "  $0 minimal.pk      # Install minimal packages only"
+  echo "  $0 packages/base.pk         # Install base packages only"
+  echo "  $0 ./packages/base.pk ./packages/i3.pk   # Install base + i3 packages"
+  echo "  $0 /home/user/Documents/minimal.pk      # Install minimal packages only"
 }
 
 # Function to read packages from file
@@ -110,7 +107,7 @@ load_packages() {
  
  # Load packages from specified files
  for file in "${package_files[@]}"; do
-   local file_path="$PACKAGES_DIR/$file"
+   local file_path="$PWD/$file"
 
    # This is an APT package file
    read_package_file "$file_path"
@@ -138,7 +135,7 @@ validate_package_files() {
   local missing_files=()
   
   for file in "${package_files[@]}"; do
-    local file_path="$PACKAGES_DIR/$file"
+    local file_path="$PWD/$file"
     if [ ! -f "$file_path" ]; then
       missing_files+=("$file")
     fi
@@ -175,20 +172,6 @@ if ! groups "$USER" | grep -q '\bsudo\b'; then
   log_error "  usermod -aG sudo $USER"
   log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
   log_error "Then log out/in and run this script as $USER"
-  exit 1
-fi
-
-# Check if script is run from dotfiles directory
-if [ ! -f "README.md" ] || [ ! -d "nvim" ] || [ ! -d "setup-scripts" ]; then
-  log_error "Please run this script from your ~/.dotfiles directory"
-  exit 1
-fi
-
-# Check if packages directory exists
-if [ ! -d "$PACKAGES_DIR" ]; then
-  log_error "Packages directory not found: $PACKAGES_DIR"
-  log_error "Please create the packages directory structure"
-  log_error "$PWD/setup-scripts/packages/package_file.pk"
   exit 1
 fi
 

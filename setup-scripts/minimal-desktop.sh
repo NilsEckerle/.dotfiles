@@ -97,6 +97,8 @@ create_symlinks() {
     "mutt:$HOME/.config/mutt"
     "feh:$HOME/.config/feh"
     "i3/rofi-calculator.desktop:$HOME/.local/share/applications/rofi-calculator.desktop"
+    "systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
+    "conky:$HOME/.config/conky"
   )
 
   # Add i3 config if i3 is being installed
@@ -275,7 +277,7 @@ main() {
   setup_sudo
 
   # install packages
-  ./setup-scripts/install-package-list.sh base.pk i3.pk
+  ./scripts/install-package-list.sh setup-scripts/packages/base.pk setup-scripts/packages/i3.pk
 
   # setup i3
   setup_i3wm
