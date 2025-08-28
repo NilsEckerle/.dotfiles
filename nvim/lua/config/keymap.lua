@@ -4,6 +4,8 @@ map("i", "jj", "<esc>")
 map("i", "kk", "<esc>")
 map("n", "<esc>", "<cmd>noh<CR>", { noremap = true, silent = true })
 
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode with double ESC" })
+
 -- LSP
 map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to Declaration" })

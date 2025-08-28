@@ -1,6 +1,14 @@
+-- lua/plugins/lsp.lua
+local mason_ensure_installed = {
+  "stylua",
+  "shfmt",
+  "clangd",
+  "basedpyright",
+  "omnisharp",
+}
+
 return {
-	{
-		"neovim/nvim-lspconfig",
+	{ "neovim/nvim-lspconfig",
 		dependencies = {
 			"saghen/blink.cmp",
 			{
@@ -18,116 +26,50 @@ return {
 		},
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
-			require("lspconfig").lua_ls.setup({ capabilities = capabilities })
-			require("lspconfig").pyright.setup({
-				capabilities = capabilities,
-				on_attach = function(client, bufnr)
-					client.server_capabilities.documentFormattingProvider = true
-				end,
-			})
-
-			require("lspconfig").clangd.setup({
-				cmd = { "clangd" },
-				filetypes = { "c", "cpp", "objc", "objcpp" },
-				root_dir = require("lspconfig.util").root_pattern(
-					".clangd",
-					".clang-tidy",
-					".clang-format",
-					"compile_commands.json",
-					"compile_flags.txt",
-					"build"
-				),
-				capabilities = capabilities,
-				on_attach = function(client, bufnr)
-					-- Enable inlay hints if supported
-					if client.server_capabilities.inlayHintProvider then
-						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-					end
-				end,
-				settings = {
-					clangd = {
-						InlayHints = {
-							Designators = true,
-							Enabled = true,
-							ParameterNames = true,
-							DeducedTypes = true,
-						},
-						fallbackFlags = { "-std=c17" },
-					},
-				},
-			})
-
-			require("lspconfig").omnisharp.setup({
-				capabilities = capabilities,
-				cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-				enable_editorconfig_support = true,
-				enable_roslyn_analyzers = true,
-				organize_imports_on_format = true,
-				enable_import_completion = true,
-				handlers = {
-					["textDocument/definition"] = require("omnisharp_extended").handler,
-				},
-				settings = {
-					omnisharp = {
-						useModernNet = true,
-						sdkPath = "/usr/share/dotnet/sdk",
-					},
-				},
-			})
-
+			
+			-- Load individual language server configurations
+			require("plugins.lsp.lua-ls")(capabilities)
+			require("plugins.lsp.pyright")(capabilities)
+			require("plugins.lsp.clangd")(capabilities)
+			require("plugins.lsp.omnisharp")(capabilities)
+			
+			-- Global LSP keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {
 				desc = "LSP actions",
 				callback = function(event)
-					vim.api.nvim_create_autocmd("LspAttach", {
-						desc = "LSP actions",
-						callback = function(event)
-							local buffer = event.buf
-							vim.keymap.set( "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", { buffer = buffer, desc = "Show hover information" })
-							vim.keymap.set( "n", "gd", "<cmd>Telescope lsp_definitions<cr>", { buffer = buffer, desc = "Go to definition" })
-							vim.keymap.set( "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { buffer = buffer, desc = "Go to declaration" })
-							vim.keymap.set( "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", { buffer = buffer, desc = "Go to implementation" })
-							vim.keymap.set( "n", "<leader>cr", vim.lsp.buf.references, { buffer = buffer, desc = "Quickfix refferences" })
-						end,
-					})
-					-- vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-					-- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-					-- vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-					-- vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-					-- vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-					-- vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+					local buffer = event.buf
+					vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", 
+						{ buffer = buffer, desc = "Show hover information" })
+					vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", 
+						{ buffer = buffer, desc = "Go to definition" })
+					vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", 
+						{ buffer = buffer, desc = "Go to declaration" })
+					vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", 
+						{ buffer = buffer, desc = "Go to implementation" })
+					vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, 
+						{ buffer = buffer, desc = "LSP references" })
 				end,
 			})
 		end,
 	},
-
-	{
-		"williamboman/mason.nvim",
+	{ "williamboman/mason.nvim",
 		cmd = "Mason",
 		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		build = ":MasonUpdate",
 		opts_extend = { "ensure_installed" },
 		opts = {
-			ensure_installed = {
-				"stylua",
-				"shfmt",
-				"clangd",
-				"basedpyright",
-			},
-		},
-		---@param opts MasonSettings | {ensure_installed: string[]}
+			ensure_installed = mason_ensure_installed},
 		config = function(_, opts)
 			require("mason").setup(opts)
 			local mr = require("mason-registry")
 			mr:on("package:install:success", function()
 				vim.defer_fn(function()
-					-- trigger FileType event to possibly load this newly installed LSP server
 					require("lazy.core.handler.event").trigger({
 						event = "FileType",
 						buf = vim.api.nvim_get_current_buf(),
 					})
 				end, 100)
 			end)
-
 			mr.refresh(function()
 				for _, tool in ipairs(opts.ensure_installed) do
 					local p = mr.get_package(tool)
@@ -138,30 +80,24 @@ return {
 			end)
 		end,
 	},
-
-	{
-		"williamboman/mason-lspconfig.nvim",
+	{ "williamboman/mason-lspconfig.nvim",
 		config = function()
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "omnisharp" },
+				automatic_installation = true,
+			})
 		end,
 	},
-
-	{
-		"Hoffs/omnisharp-extended-lsp.nvim",
-	},
-
-	{
-		"chrisgrieser/nvim-lsp-endhints",
+	{ "chrisgrieser/nvim-lsp-endhints",
 		event = "LspAttach",
-		opts = {}, -- required, even if empty
+		opts = {},
 		config = function()
-			-- default settings
 			require("lsp-endhints").setup({
 				icons = {
-					type = "󰊕 ", -- right arrow with line
-					parameter = "󰘦 ", -- curved arrow
-					offspec = "󰞘 ", -- dashed arrow
-					unknown = "󰘨 ", -- question arrow
+					type = "󰊕 ",
+					parameter = "󰘦 ",
+					offspec = "󰞘 ",
+					unknown = "󰘨 ",
 				},
 				label = {
 					truncateAtChars = 20,
@@ -177,4 +113,3 @@ return {
 		end,
 	},
 }
--- Hallo welt
