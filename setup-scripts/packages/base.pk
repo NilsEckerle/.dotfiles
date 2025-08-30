@@ -16,4 +16,6 @@ apt/feh
 apt/xclip
 apt/neomutt
 apt/zoxide
+apt/fonts-firacode
+apt/fonts-noto-color-emoji
 brew/neovim
