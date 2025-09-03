@@ -26,6 +26,7 @@ vim.keymap.set("n", "<leader>cX", run_main, { desc = "Run already compiled main 
 
 vim.keymap.set("n", "<leader>make", "<cmd>:make build<cr>", { buffer = true })
 vim.keymap.set("n", "<leader>clean", "<cmd>:make clean<cr>", { buffer = true })
+vim.keymap.set("n", "<leader>run", function() floating_term.send_command("make run") end, { buffer = true })
 
 -- Terminal toggle keymap
 vim.keymap.set("n", "<leader>t", floating_term.toggle, { desc = "Toggle Floating Terminal" })
