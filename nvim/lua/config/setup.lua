@@ -67,4 +67,11 @@ function vim.get_visual_selection()
 		return ""
 	end
 end
--- Hallo welt
+
+-- Set .h files to be recognized as C instead of C++
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.h",
+  callback = function()
+    vim.bo.filetype = "c"
+  end,
+})
