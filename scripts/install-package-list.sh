@@ -107,7 +107,23 @@ load_packages() {
  
  # Load packages from specified files
  for file in "${package_files[@]}"; do
-   local file_path="$PWD/$file"
+   local file_path="$file"
+   
+   # Handle different path types (same logic as validate_package_files)
+   case "$file" in
+     # Absolute path - use as-is
+     /*)
+       file_path="$file"
+       ;;
+     # Tilde expansion - expand and don't modify further
+     ~*)
+       file_path="${file/#~/$HOME}"
+       ;;
+     # Relative path - prepend current directory
+     *)
+       file_path="$PWD/$file"
+       ;;
+   esac
 
    # This is an APT package file
    read_package_file "$file_path"
@@ -135,7 +151,24 @@ validate_package_files() {
   local missing_files=()
   
   for file in "${package_files[@]}"; do
-    local file_path="$PWD/$file"
+    local file_path="$file"
+    
+    # Handle different path types
+    case "$file" in
+      # Absolute path - use as-is
+      /*)
+        file_path="$file"
+        ;;
+      # Tilde expansion - expand and don't modify further
+      ~*)
+        file_path="${file/#~/$HOME}"
+        ;;
+      # Relative path - prepend current directory
+      *)
+        file_path="$PWD/$file"
+        ;;
+    esac
+    
     if [ ! -f "$file_path" ]; then
       missing_files+=("$file")
     fi
@@ -174,10 +207,6 @@ if ! groups "$USER" | grep -q '\bsudo\b'; then
   log_error "Then log out/in and run this script as $USER"
   exit 1
 fi
-
-DOTFILES_DIR=$(pwd)
-log_info "Dotfiles directory: $DOTFILES_DIR"
-log_info "Packages directory: $PACKAGES_DIR"
 
 # Function to check if command exists
 command_exists() {
