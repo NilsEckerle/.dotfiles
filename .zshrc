@@ -10,8 +10,9 @@ export EDITOR=nvim
 #################################
 # Base PATH additions
 export PATH="$PATH:$HOME/.local/share/bob/nvim-bin"
-export PATH="$PATH:$HOME/.dotfiles/scripts/latex-utils"
+# export PATH="$PATH:$HOME/.dotfiles/scripts/latex-utils"
 export PATH="$PATH:/snap/bin"
+export PATH="$PATH:$HOME/scripts"
 
 # ----- Oh-My-Zsh Configuration ----- #
 ######################################
@@ -102,6 +103,9 @@ git commit -m \"feat(auth): add JWT token validation\"
 **Git Status and Diff**:" && echo "" && gs && gd) | xclip -selection clipboard'
 alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
+#useful
+alias lxt='latex_template.sh'
+
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
 alias gla='git log --oneline --graph --decorate --all'
@@ -119,8 +123,8 @@ alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a
 alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ----- Tmux Auto-Start ----- #
 ##############################
