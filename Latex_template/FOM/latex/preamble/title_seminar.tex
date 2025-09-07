@@ -1,0 +1,73 @@
+\newlength{\logoWidth}
+\newlength{\spalteEins}
+\newlength{\spalteZwei}
+
+\settowidth{\logoWidth}{\fbox{\normalsize\daStudiengang}}
+\addtolength{\logoWidth}{-1ex}
+
+%-----------------------------------------------------------------------------%
+\begin{titlepage}%                                Formatierung der Titelseite %
+%-----------------------------------------------------------------------------%
+\begin{center}
+  \sffamily
+  \pdfbookmark{Titel}{title}%
+  \href{\daUniURL}{\includegraphics[width=\logoWidth]{images/FOM.jpg}} \\ %
+%  \vspace{\stretch{1}}
+%  \href{\daFakultaetURL}{\normalsize \daFakultaet} \\%
+%  \href{\daInstitutURL}{\normalsize \daInstitut} \\%
+%  \href{\daFachgebietURL}{\normalsize \daFachgebiet} \\%
+%  {\normalsize \daUniAdresse} \\%
+%  {\normalsize \daUniPLZ~\daUniOrt}\\%
+  \vspace{\stretch{12}}%
+  \hrule
+  \begin{spacing}{1.8}%
+	\vspace{\stretch{5}} %
+    {\sffamily\bfseries\LARGE\daTitelEins}\\ %
+    {\sffamily\bfseries\LARGE\daTitelZwei}\\ %
+    {\sffamily\bfseries\LARGE\daTitelDrei}\\ %
+	\vspace{\stretch{4}} %
+	{\sffamily\LARGE\daAutor}\\ %	    
+	\vspace{\stretch{3}} %
+	{\sffamily\large Matrikelnummer: \daMatrikelnummer}\\ %	    
+	\vspace{\stretch{3}} %
+  \end{spacing}%
+  \hrule
+  \vspace{\stretch{10}}%
+  \begin{spacing}{1.1}
+    {\sffamily\bfseries\Large Seminararbeit}\\ % Zu ersetzen!
+    \vspace{\stretch{3}}%
+    {\large im Modul}\\
+    \vspace{\stretch{3}}%
+    {\large\bfseries Fallstudie/Wissenschaftliches Arbeiten}\\
+%    \vspace{\stretch{3}}%
+%    {\large der Fakultät}\\
+    \vspace{\stretch{3}}%
+  	{\large im Studiengang {\large \daStudiengang}} \\%
+    \vspace{\stretch{3}}%
+  	{\large der \href{\daUniURL}{FOM Hochschule für Oekonomie \& Management}} \\%
+    \vspace{\stretch{8}}%
+    {\normalsize\daAutor}\\%
+    {\normalsize\daAutorAdresse}\\%
+    {\normalsize\daAutorPLZ~\daAutorOrt}\\%
+    \vspace{\stretch{8}}%
+    {\small vorgelegt bei}\\%
+    \vspace{\stretch{2}}%
+    {\normalsize\daGutachterEins}\par%
+%    \vspace{\stretch{2}}%
+%    {\small und}\\%
+%    \vspace{\stretch{2}}%
+%    {\normalsize\daGutachterZwei}\par
+  \end{spacing}
+% \enlargethispage{1em}
+  \vspace{\stretch{8}}%
+  {\normalsize \daAutorOrt, \daDate}
+\end{center}
+
+\settowidth{\spalteEins}{\fbox{Mündliche Prüfung:}}
+\setlength{\spalteZwei}{\textwidth}
+\addtolength{\spalteZwei}{-\spalteEins}
+
+
+%-----------------------------------------------------------------------------%
+\end{titlepage}
+%-----------------------------------------------------------------------------%

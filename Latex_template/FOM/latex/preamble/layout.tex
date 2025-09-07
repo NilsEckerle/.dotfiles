@@ -1,0 +1,265 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%          layout.tex - Pakete, Layout- und Formatierungsanweisungen          %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}%                       verwendetes Input Encoding %
+\usepackage[TS1,T1]{fontenc}%                       verwendete Font Encodings %
+\usepackage{csquotes}%                                      Anführungszeichen %
+\usepackage{amsmath,amsfonts,amssymb}%   AMS Mathematik-Hilfsmittel für LaTeX %
+\usepackage{esvect}%                                      Schöne Vektorpfeile %
+\usepackage{textcomp}%                 Unterstützung der Text Companion Fonts %
+\usepackage[pdftex]{graphicx}%           Unterstützung für Graphik-Einbindung %
+\usepackage[pdftex,hyperref,cmyk,dvipsnames]{xcolor}%          Treiber-unabhängige Farb- % 
+%                                        erweiterungen für LaTeX und pdfLaTeX %
+% \definecolor{uniblue}{cmyk}{1 0.72 0 0.38}%       Farbdefinition des Uni-Blau %
+% \definecolor{diplaBlue}{cmyk}{1 0.8 0 0}%                "       schönes Blau %
+
+\usepackage{array}%     erweiterte Implementierung der array und tabular Umg. %
+\usepackage{tabularx}%     Ausdehnung von Tabellen auf eine definierte Breite %
+\usepackage{colortbl}%                     erlaubt farbige Zeilen und Spalten %
+\usepackage{booktabs}%               typographisch "schöne" Tabellen in LaTeX %
+\usepackage{longtable}%                                        lange Tabellen %
+\usepackage{setspace}%       Festlegung von unterschiedlichen Zeilenabständen %
+\usepackage{scrlayer-scrpage}%             Neuere Version der scrpage2 Klasse %
+\usepackage{xspace}%                definiert Befehle "that don't eat spaces" %
+\usepackage[german]{datenumber}%       Konvertierung zwischen Datum <--> Zahl %
+\usepackage[ngerman]{babel}
+
+\usepackage{xfrac} %               Typographisch korrekte Brüche im Fließtext %
+\usepackage{changes}
+
+\usepackage{ulem}% Durchstreichung %
+
+\usepackage[%
+   pdftex,%                                                     Backend Driver %
+   colorlinks          = true,%                   Färbung von Links und Ankern %
+  linkcolor           = black!70,%               Farbe für normale interne Links %
+%   anchorcolor         = black,%                          Farbe für Anker-Text %
+%   citecolor           = black,%           Farbe für Literaturhinweise im Text %
+%   filecolor           = black,%             Farbe für URLs zu lokalen Dateien %
+%   menucolor           = black,%               Farbe für Acrobat Menü-Einträge %
+%   pagecolor           = gray,%             Farbe für Links zu anderen Seiten %
+   urlcolor            = blue,%                        Farbe für verinkte URLs %
+   pdfstartview        = {FitH},%         Festlegung der Startup-Seitenansicht %
+   pdfpagelabels,%                                                             %
+   pdfpagelayout       = {SinglePage},%           Festlegung der Layoutansicht %
+   bookmarksopen       = true,%         Anzeige von Bookmarks, falls verwendet %
+   bookmarksopenlevel  = 1,%      Tiefe, bis zu der Bookmarks angezeigt werden %
+   bookmarksnumbered   = true,%                                                %
+   breaklinks,%                               Links »überstehen« Zeilenumbruch %
+   plainpages          = false,%     notwendig wg. der Seiten(neu)nummerierung %
+%                        von Vorspann und Haupttext, andernfalls pdf-Warnungen %
+]{hyperref}
+
+\usepackage{hypcap}%                              Legt den Anker für pdf-link %
+%                     auf den Anfang eines Bildes, nicht auf die Unterschrift %
+
+\usepackage[
+    printonlyused
+]{acronym}
+\usepackage[section]{placeins}
+
+
+\usepackage[titles]{tocloft}%              individuelle Formatierungen am TOC %
+
+%-----------------------------------------------------------------------------%
+%              andere Schriftauswahl statt der Standardschriften, siehe dazu: %
+%                                       http://home.vr-web.de/~was/fonts.html %
+%------------------------------------------------------------------------------
+\usepackage{mathptmx}%                 Times als Grund- und Mathematikschrift %
+%\usepackage{mathpazo}%              Palatino als Grund- und Mathematikschrift %
+\usepackage[scaled=0.9]{helvet}%   Helvetica (psnfss) als serifenlose Schrift %
+\renewcommand{\bfdefault}{b}%
+\usepackage[scaled=0.9]{beramono}%              freie Bitstream-Familie Bera, %
+%                                daraus die Monospaced als Typewriter-Schrift %
+%-----------------------------------------------------------------------------%
+%     diverse Pakete, z.B. microtype für pdfTeXs micro-typographic extensions %
+%-----------------------------------------------------------------------------%
+\usepackage[stretch=15,shrink=15,step=5]{microtype}
+\usepackage{dirtree, ellipsis, fixltx2e, mparhack}
+%-----------------------------------------------------------------------------%
+%                                Einheitliche Formatierung für Unterschriften %
+%-----------------------------------------------------------------------------%
+\usepackage[
+	format        = hang,
+	justification = RaggedRight,
+	position      = below,
+	width         = .9\textwidth
+]{caption}
+\usepackage{subcaption}%       Neueres Paket zur Unterstützung von Subfigures %
+
+%-----------------------------------------------------------------------------%
+%                                                    Quelltext-Formatierungen %
+%-----------------------------------------------------------------------------%
+\usepackage{listings}
+\lstset{
+    language=c++,         % Sourcecode language ist C++
+    numbers=none,            % No linenumbers
+%    stepnumber=1,            % Every line got his own number.
+    numbersep=5pt,           % 5pt distance to Sourcecode
+    numberstyle=\tiny,       % tiny numbers.
+    breaklines=true,         % break lines if it has to do.
+    breakautoindent=true,    % Nach dem Zeilenumbruch Zeile einrücken.
+    postbreak=\space,        % Bei Leerzeichen umbrechen.
+    tabsize=2,               % Tabulatorsize 2
+    basicstyle=\ttfamily\footnotesize, % Nichtproportionale Schrift, klein für den Quellcode
+    showspaces=false,        % Leerzeichen nicht anzeigen.
+    showstringspaces=false,  % Leerzeichen auch in Strings ('') nicht anzeigen.
+    extendedchars=true,      % Alle Zeichen vom Latin1 Zeichensatz anzeigen.
+    backgroundcolor=\color{black!5}, % Hintergrundfarbe des Quellcodes setzen.
+    captionpos=b,         % Caption unter und nicht über das Listing schreiben
+    frame = lines,
+	floatplacement = tb,
+	morekeywords = {foreach},
+    %rulesepcolor=\color{darkgrey}
+} 
+%-----------------------------------------------------------------------------%
+%                                                        Schrifteinstellungen %
+%------------------------------------------------------------------------------
+%\linespread{1.25}\selectfont%                                    mehr Abstand %
+\linespread{1.10}\selectfont%                                    mehr Abstand %
+
+%   Redefinition Typewriter-Befehls: kleinere Schrift, Silbentrennungszeichen %
+\renewcommand\texttt[1]{% 
+\small\ttfamily\hyphenchar\font=\defaulthyphenchar#1{}\normalsize\rmfamily\hyphenchar\font=\defaulthyphenchar}
+
+\setkomafont{sectioning}{%        Abschnittsüberschriften serifenlos und fett %
+\sffamily\bfseries}
+
+\addtokomafont{caption}{%                            Bildunterschriften klein %
+\normalfont\normalcolor\small}
+
+\addtokomafont{captionlabel}{\small\bfseries}%             Bezeichnungen fett %
+
+
+%------------------------------------------------------------------------------
+%                             individuelle Formatierungen an TOC, LOF und LOT %
+%------------------------------------------------------------------------------
+\renewcommand{\cftchapfont}{%
+\sffamily\bfseries}%                       Kapitelbezeichnung fett & serifenlos
+\renewcommand{\cftchappagefont}{\sffamily
+\bfseries}%                                     Kapitelnummer fett & serifenlos
+\setlength{\cftbeforesecskip}{1.5pt}%           vert. Abstand vor Abschnittsbez.
+\setlength{\cftbeforesubsecskip}{1pt}%     vert. Abstand vor Unterabschnittsbez.
+\cftsetindents{chapter}{0em}{1.3em}%                         Einzug für Kapitel
+\cftsetindents{section}{1.3em}{2em}%                      Einzug für Abschnitte
+\cftsetindents{subsection}{3.3em}{2.7em}%            Einzug für Unterabschnitte
+\cftsetindents{subsubsection}{6em}{3.3em}%           Einzug für Unterabschnitte
+
+
+\setlength{\cftbeforetabskip}{1.5pt}%   vert. Abstand vor Tabellenbezeichnungen
+\cftsetindents{table}{0em}{2.5em}%            Einzüge für Tabellenbezeichnungen
+\renewcommand{\cfttabpresnum}{\hfill}%
+\renewcommand{\cfttabaftersnum}{\hspace*{0.6em}}%
+
+\setlength{\cftbeforefigskip}{1.5pt}%             Abstand vor Bildbezeichnungen
+% \setlength{\cftbeforesubfigskip}{0.5pt}%     Abstand vor Unterbildbezeichnungen
+% \cftsetindents{figure}{0em}{2.5em}%               Einzüge für Bildbezeichnungen
+% \cftsetindents{subfigure}{2.5em}{1.8em}%     Einzüge für Unterbildbezeichnungen
+% \renewcommand{\cftfigpresnum}{\hfill}%
+\renewcommand{\cftfigaftersnum}{\hspace*{0.6em}}%
+
+%-----------------------------------------------------------------------------%
+%                                 Einstellung bestimmter Längen und Parameter %
+%-----------------------------------------------------------------------------%
+%\parindent0mm%                     KEIN Einzug bei neuem Absatz, statt dessen %
+%\parskip2mm plus1.5pt minus1.5pt%              Abstand zwischen zwei Absätzen %
+%\parindent5mm%                                        Einzug bei neuem Absatz %
+
+%                 zusätzlicher vertikaler Abstand vor und nach Gleitobjekten, %
+%                                    die mit der Option "h" eingefügt werden: %
+\setlength{\intextsep}{1.5\baselineskip plus 2pt minus 2pt}%
+
+%                           zusätzlicher vertikaler Abstand für Gleitobjekte, %
+%                         die mit den Optionen "t" bzw. "b" eingefügt werden: %
+\setlength{\textfloatsep}{1.5\baselineskip plus 2pt minus 2pt}
+
+%\setcapwidth[c]{.8\textwidth}%    Abbildungsbeschriftungen 80% der Textbreite %
+
+\addtolength{\footnotesep}{2pt}%      mehr Abstand zwischen Fußnoten und Text %
+
+\pagestyle{scrheadings}%               Seitenstil mit lebenden Kolumnentiteln %
+\clearpairofpagestyles
+\ohead[]{\headmark}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
+% \setheadsepline{0.08em}%    Einstellungen der Dicke der Kopfzeilen-Trennlinie %
+
+\setcounter{secnumdepth}{3}%                               Nummerierungstiefe %
+\setcounter{tocdepth}{2}%                  Inhaltsverzeichnis bis zur Tiefe 2 %
+\setcounter{lofdepth}{2}%               Abbildungsverzeichnis bis zur Tiefe 2 %
+
+\renewcommand{\topfraction}{0.9}%      Anteile der Seite, die maximal/minimal %
+\renewcommand{\bottomfraction}{0.9}%    von Abbildungen bzw. Text eingenommen %
+\renewcommand{\textfraction}{0.1}%                              werden können %
+
+
+%------------------------------------------------------------------------------
+%                  Einstellungen für den Zeilenumbruchsalgorithmus, siehe dazu:
+%           --> http://www.jr-x.de/publikationen/latex/tipps/zeilenumbruch.html
+%------------------------------------------------------------------------------
+\emergencystretch 1.5em%
+\clubpenalty = 10000%
+\widowpenalty = 10000%
+\displaywidowpenalty = 10000
+\doublehyphendemerits = 10000%
+\tolerance=500
+
+\hfuzz 0.25pt%                     Grenze, ab der "overfull hbox" gemeldet wird
+\vfuzz \hfuzz%                     Grenze, ab der "overfull vbox" gemeldet wird
+
+%------------------------------------------------------------------------------
+%                              Einstellungen des Satzspiegels mit den Vorgaben:
+%                  Rand innen: 35mm, Rand außen 25 mm, Rand oben/(unten) ~25 mm
+%------------------------------------------------------------------------------
+
+%%\paperwidth    597.50787pt%                            597,50787 pt = 210,00 mm
+%%\paperheight   845.04684pt%                            845,04684 pt = 297,00 mm
+%%\paperwidth    210mm
+%%\paperheight   297mm
+%%\textwidth     426.79135pt%       210 - 35 - 25 mm  =  426,79135 pt = 150,00 mm
+%\textwidth 140mm
+%%\textheight    638.40076pt%        41 Zeilen           621,07825 pt = 218,28 mm
+%%\oddsidemargin  27.31465pt%                             27,31465 pt =   9,60 mm
+%%\evensidemargin -1.13811pt%                              1,13811 pt =  -0,40 mm
+%%\oddsidemargin  10mm
+%%\evensidemargin 8.5mm
+%\topmargin      -8.53583pt%                              8,53583 pt =  -3,00 mm
+%\headheight     17.07165pt%                             17,07165 pt =   6,00 mm
+%\headsep        19.91692pt%                             19,91692 pt =   7,00 mm
+%\footskip       45.52440pt%                             45,52440 pt =  16,00 mm
+%\marginparwidth 59.75079pt%                             59,75079 pt =  21,00 mm
+%\marginparsep    8.53583pt%                              8,53583 pt =   3,00 mm
+%\skip\footins  10.8pt plus 4.0pt minus 2.0pt
+%%\hoffset 0.0pt%
+%%\voffset 0.0pt%
+
+\usepackage{todonotes}
+
+% FOM-"Standard"
+% \usepackage[style=verbose-trad2, backend=biber]{biblatex}
+% \counterwithout*{footnote}{chapter}
+% \AtEveryCitekey{%
+% \clearfield{url}%
+% \clearfield{isbn}%
+% \clearfield{doi}%
+% }
+% Stern (IEEE)
+\usepackage[style=ieee, mincitenames=1, maxcitenames=2, backend=biber]{biblatex}
+\usepackage{xurl}%      URLs werden so auch im Literaturverzeichnis umgebrochen %
+
+% \citetitle: Titel mit deutschen Anführungszeichen
+\DeclareFieldFormat*{citetitle}{\glqq#1\grqq}
+
+% "et al." für die Abkürzung mehrerer Autoren verwenden
+\DefineBibliographyStrings{german}{%
+  andothers = {\emph{et al}\adddot}
+}
+
+% Hier die entsprechende .bib-Datei eintragen
+\addbibresource{seminar-lit.bib}
+
+% Keine Warnung für geteilte Bibliographien
+\BiblatexSplitbibDefernumbersWarningOff

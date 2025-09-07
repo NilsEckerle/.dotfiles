@@ -1,0 +1,222 @@
+\chapter{Kapitel 2 mit besonders langem Titel}
+\label{sec:Kapitel2}
+
+Hier kommt eine Übersicht des zweiten Kapitels hin.
+
+\section{Abschnitt im Kapitel zwei...}
+\label{sec:abschnitt2.1}
+
+\section{Abschnitt im Kapitel zwei...}
+%
+%	z.B. Text des zweiten Autors
+%
+
+\section{Weitere Kommandos}
+Dieser Abschnitt befasst sich mit weiteren nützlichen \LaTeX-Kommandos.
+
+\subsection{Literaturzitate}
+\label{sec:literaturzitate}
+
+Im Lehrbuch \autocite{Schukat-Talamazzini1995}
+finden sich Hinweise auf einschlägige Verfahren der automatischen Spracherkennung.
+
+Das Literaturverwaltungsprogramm JabRef \autocite{Kopp2018} ist für viele Plattformen verfügbar und unterstützt bei der Literaturrecherche. Es ist prädestiniert dazu, mit {\LaTeX} in Kombination mit {Bib\TeX} zusammenzuarbeiten.
+
+Über die Literaturrecherche haben Sie Zugriff auf das Buch "`Das Textverarbeitungssystem LaTeX"' \autocite[15]{Oechsner2015}. Hierzu können Sie auch direkt den DOI-Link im Literaturverzeichnis anklicken.
+
+\citeauthor{TyrinMultiAgent2012} beschreiben in \autocite{TyrinMultiAgent2012} etwas über Multi-Agenten Systeme. 
+
+\citeauthor{Ghazali2012} beschreiben in \autocite{Ghazali2012} eine Gleichung aus \autocite{moore2007basic}.
+
+Ein Experteninterview wird als Quelle verwendet. \citeauthor{Interviewpartnerin2021} hat gesagt, dass... \autocite[Aussage-Nr]{Interviewpartnerin2021}
+
+In \autocite{Mamache2022} beschreiben \citeauthor{Mamache2022} dies und das...
+
+Im aktuellen Artikel \autocite{Schaible2023} wird etwas beschrieben...
+
+In ihrem Artikel \autocite[S. 18]{Oechsner2015} schreiben \citeauthor{Oechsner2015} dies und das.
+% \autocite[Vgl.][S. 18]{Oechsner2015} // Vgl. nur bei nicht-IEEE...
+
+
+\subsection{Einbinden von Bildern}
+
+Sie können mit der Anweisung \lstinline|\includegraphics{datei}| eine Grafikdatei einbinden. Diese kann im PDF-, JPG- oder PNG-Format vorliegen. Grafiken werden üblicherweise in die float-Umgebung \lstinline|figure| gekapselt. Der Assistent in TeXstudio \autocite{vanderZander2018} tut dies automatisch, wenn das Verhalten nicht explizit abgeschaltet wird. \textit{Jede eingebundene Grafik muss vom Text aus referenziert werden.} Die textuelle Referenz hat \textit{vor} der Grafik zu erfolgen. Ein eingebundenes PDF ist in \autoref{fig:AufbauMustererkennungssystem} zu sehen. Eine weitere Grafik ist in \autoref{fig:my_label}.
+
+\begin{figure}
+\centering
+\includegraphics [width=0.5\linewidth] {images/bildchen.pdf}
+\caption [Aufbau eines Mustererkennungssystems]{Aufbau eines Mustererkennungssystems und das Beispiel einer sehr langen Bildbeschreibung, die sehr ausführlich auf die Inhalte des Bildes zu sprechen kommt. \autocite{Oechsner2015}}
+\label{fig:AufbauMustererkennungssystem}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth] {images/GrafikEinfuegen.png}
+    \caption{Hier die Bildunterschrift}
+    \label{fig:my_label}
+\end{figure}
+
+Auch andere Grafikformate werden unterstützt. Verwenden Sie den Assistenten in TeXstudio, um komfortabel Grafiken einzufügen. Siehe dazu \autoref{fig:GrafikEinfuegen}. Die Grafiken finden sich nicht notwendigerweise direkt am Einfüge-Ort. Das Textsatzsystem richtet es so ein, dass es gut aussieht.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{images/GrafikEinfuegen}
+\caption{Verwendung des Assistenten in \TeX studio, um eine Grafik einzufügen.}
+\label{fig:GrafikEinfuegen}
+\end{figure}
+
+\subsection{Mehrere Bilder in einer Abbildung}
+
+Manchmal ist es notwendig, mehrere Bilder in eine einzige Abbildung zu packen. Dazu kann man die \lstinline|subfigure|-Umgebung nutzen. Ein Beispiel dafür ist in \autoref{fig:subfigures} mit den Unterbildern \autoref{fig:subfig_1} und \autoref{fig:subfig_2} zu sehen. Der dazugehörige Code ist in der Vorlage und in \autoref{lst:subfigure} zu finden.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \missingfigure[figwidth=\textwidth]{Missing}
+        \caption{Unterbild 1}
+        \label{fig:subfig_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \missingfigure[figwidth=\textwidth]{Missing}
+        \caption{Unterbild 2}
+        \label{fig:subfig_2}
+    \end{subfigure}
+    \caption{Gesamtbeschreibung der Unterbilder}
+    \label{fig:subfigures}
+\end{figure}
+
+\begin{lstlisting}[language=TeX, float, caption={\LaTeX-Code für subfigures}, label={lst:subfigure}]
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \missingfigure[figwidth=\textwidth]{Missing}
+        \caption{Unterbild 1}
+        \label{fig:subfig_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \missingfigure[figwidth=\textwidth]{Missing}
+        \caption{Unterbild 2}
+        \label{fig:subfig_2}
+    \end{subfigure}
+    \caption{Gesamtbeschreibung der Unterbilder}
+    \label{fig:subfigures}
+\end{figure}
+\end{lstlisting}
+
+\section{Einbinden von Codeausschnitten}
+Zur Verdeutlichung von Programmabläufen kann es hilfreich sein, Codeausschnitte darzustellen. In \LaTeX geht das über die \lstinline|lstlisting|-Umgebung des \lstinline|listings| Pakets:
+\lstinputlisting[language={[LaTeX]TeX},nolol]{latex/lstlisting.tex}
+\input{latex/lstlisting}
+Die Ausgabe des gezeigten Codeabschnitts ist in \autoref{lst:python} zu sehen.
+
+\section{Abkürzungen}
+\label{sec:Abkuerzungen}
+Abkürzungen werden mit \lstinline|\ac{...}| in den Text geschrieben. Beispiel der ersten Verwendung: \ac{JSON}
+Und ab der zweiten Verwendung: \ac{JSON}
+
+Generell gilt: Abkürzungen nur dann verwenden, wenn dadurch die \emph{Lesbarkeit erhöht} wird.
+
+
+\subsection{Querverweise}\label{sec:querverweise}
+Verwenden Sie unter TeXstudio die rechte Maustaste in der Strukturübersicht, um für einen Abschnitt ein Label zu erzeugen, auf das Sie Bezug nehmen können (siehe \autoref{fig:LabelErzeugen}).
+
+\begin{figure}
+\centering
+\includegraphics[width=0.4\linewidth]{images/LabelErzeugen}
+\caption{Automatische Erzeugung eines Labels für Querverweise}
+\label{fig:LabelErzeugen}
+\end{figure}
+
+Es wird ein Eintrag \verb|\label{key}| erzeugt, auf den man beispielsweise mit
+\verb|\autoref{key}| verweisen kann. Verwendet man \verb|\autoref|, wird der Typ des Objekts
+(z.\,B. Abbildung, Tabelle, etc.) mit ausgegeben. Verwendet man nur \verb|\ref|,
+so wird nur die Nummerierung des Objekts ausgegeben. In den Anhang kann man darüber genauso verweisen: \autoref{sec:ThemaDesErstenAnhangs}, \autoref{fig:my_label_im_anhang}.
+
+\subsection{Erstellen von Tabellen}
+
+Das Volk hat gesprochen. Siehe \autoref{tab:tabular}. Auch hier kommt ein float zum Einsatz, jedoch mit dem Positionierungs-Hinweis \verb|[h]|. Jedes float sollte mit einem Label versehen werden, und es sollte im Text darauf verwiesen werden, da sich die Position ändern kann.
+
+\begin{table}[h]
+\centering
+\begin{tabular} {|llc||r|}
+	\hline
+	Name & Rang & Fraktion & Stimmenanteil \\
+	\hline
+	Mobutu & General & CDU & 57\% \\
+	Tsvangirai & Oberst & CSU & 63\% \\
+	\hline
+\end{tabular}
+\caption {Bundestagswahl in Simbabwe}
+\label{tab:tabular}
+\end{table}
+
+\autoref{tab:booktab} verwendet keine vertikalen Linien und entspricht dem üblicherweise in Büchern verwenden Stil. Derartige Tabellen sind deutlich ansehnlicher.
+
+\begin{table}[h]
+\centering
+\begin{tabular} {llcr}
+	\toprule
+	Name & Rang & Fraktion & Stimmenanteil \\
+	\midrule
+	Mobutu & General & CDU & 57\% \\
+	Tsvangirai & Oberst & CSU & 63\% \\
+	\bottomrule
+\end{tabular}
+\caption {Bundestagswahl in Simbabwe}
+\label{tab:booktab}
+\end{table}
+
+\subsection{Listen und Aufzählungen}
+
+Listen und Aufzählungen werden in einer Umgebung angelegt (umschlossen von \verb|begin| und \verb|end|.). \verb|\begin{itemize}| leitet eine Liste ein und \verb|\begin{enumerate}| eine Aufzählung. Die Einträge werden jeweils mit \verb|\item| begonnen. Folgend zwei Beispiele.
+
+Itemize:
+\begin{itemize}
+\item Test
+\item Test
+\item Test
+\end{itemize}
+
+Enumerate:
+\begin{enumerate}
+\item Test
+\item Test
+\item Test
+\end{enumerate}
+
+\subsection{Mathematische Formeln}
+
+Mathematische Formeln werden mittels \verb|\(...\)|
+in den Fließtext eingebaut
+--- zum Beispiel \( E=mc^2 \) und:
+sei \(V\) ein Vektorraum über \(\mathbb{R}\)
+und \(\mathcal{M}\) eine Indexmenge
+---
+oder aber mittels \verb|\[...\]|
+abgesetzt und zentriert dargestellt:
+	\[
+	\pmb{x} = \sqrt[3]{\frac{a^2-b^2}{a^2+b^2}}
+		~~~~~ \text{versus} ~~~~~
+	\boldsymbol{x} = \sqrt[3]{\frac{a^2-b^2}{a^2+b^2}}
+	\]
+
+
+\subsection{Silbentrennung}
+Vertrauen Sie bitte nie einer automatischen Silbentrennung (auch nicht der von Microsoft Word \& Co.). In folgendem Test-Absatz ist das Wort "`Spracherkennung"' falsch getrennt.
+
+Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzei Spracherkennung.
+
+Sie können LaTeX die richtige Trennung mit \verb|\hyphenation{...}| mitteilen. Man tut das üblicherweise noch vor \verb|\begin{document}|.
+
+\hyphenation{Sprach-er-ken-nung}	% hier jetzt zu Demonstrationszwecken im Text
+Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzeile Testzei Spracherkennung.
+
+
+
+\section{Abschnitt im Kapitel zwei...}

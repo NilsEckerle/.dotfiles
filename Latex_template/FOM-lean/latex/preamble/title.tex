@@ -1,0 +1,115 @@
+\newlength{\logoWidth}
+\newlength{\spalteEins}
+\newlength{\spalteZwei}
+
+\settowidth{\logoWidth}{\fbox{\normalsize\daStudiengang}}
+\addtolength{\logoWidth}{-1ex}
+
+%-----------------------------------------------------------------------------%
+\begin{titlepage}%                                Formatierung der Titelseite %
+%-----------------------------------------------------------------------------%
+\begin{center}
+  \sffamily
+  \pdfbookmark{Titel}{title}%
+  \href{\daUniURL}{\includegraphics[width=\logoWidth]{images/FOM.jpg}} \\ %
+%  \vspace{\stretch{1}}
+%  \href{\daFakultaetURL}{\normalsize \daFakultaet} \\%
+%  \href{\daInstitutURL}{\normalsize \daInstitut} \\%
+%  \href{\daFachgebietURL}{\normalsize \daFachgebiet} \\%
+%  {\normalsize \daUniAdresse} \\%
+%  {\normalsize \daUniPLZ~\daUniOrt}\\%
+  \vspace{\stretch{12}}%
+  \hrule
+  \begin{spacing}{1.8}%
+	\vspace{\stretch{5}} %
+    {\sffamily\bfseries\LARGE\daTitelEins}\\ %
+    {\sffamily\bfseries\LARGE\daTitelZwei}\\ %
+    {\sffamily\bfseries\LARGE\daTitelDrei}\\ %
+	\vspace{\stretch{4}} %
+	{\sffamily\LARGE\daAutor}\\ %	    
+	\vspace{\stretch{3}} %
+	{\sffamily\large Matrikelnummer: \daMatrikelnummer}\\ %	    
+	\vspace{\stretch{3}} %
+  \end{spacing}%
+  \hrule
+  \vspace{\stretch{10}}%
+  \begin{spacing}{1.1}
+    {\sffamily\bfseries\Large Abschlussarbeit}\\ % Zu ersetzen!
+    \vspace{\stretch{3}}%
+    {\large zur Erlangung des akademischen Grades}\\
+    \vspace{\stretch{3}}%
+    {\large\bfseries Bachelor of Science (B.Sc.)}\\
+%    \vspace{\stretch{3}}%
+%    {\large der Fakultät}\\
+    \vspace{\stretch{3}}%
+  	{\large im Studiengang {\large \daStudiengang}} \\%
+    \vspace{\stretch{3}}%
+  	{\large der \href{\daUniURL}{FOM Hochschule für Oekonomie \& Management}} \\%
+    \vspace{\stretch{8}}%
+    {\normalsize\daAutor}\\%
+    {\normalsize\daAutorAdresse}\\%
+    {\normalsize\daAutorPLZ~\daAutorOrt}\\%
+    \vspace{\stretch{8}}%
+    {\small vorgelegt bei}\\%
+    \vspace{\stretch{2}}%
+    {\normalsize\daGutachterEins}\par%
+%    \vspace{\stretch{2}}%
+%    {\small und}\\%
+%    \vspace{\stretch{2}}%
+%    {\normalsize\daGutachterZwei}\par
+  \end{spacing}
+% \enlargethispage{1em}
+  \vspace{\stretch{8}}%
+  {\normalsize \daAutorOrt, \daDate}
+\end{center}
+
+\settowidth{\spalteEins}{\fbox{Mündliche Prüfung:}}
+\setlength{\spalteZwei}{\textwidth}
+\addtolength{\spalteZwei}{-\spalteEins}
+
+%-----------------------------------------------------------------------------%
+\clearpage%                                   Formatierung der Titelrückseite %
+%-----------------------------------------------------------------------------%
+\thispagestyle{empty}%
+\noindent%
+%\pdfbookmark[1]{Autor, Gutachter und Betreuer}{aut}%
+%\href{\daUniURL}{\daUniLogo{width=\logoWidth}}\\%
+%\href{\daFakultaetURL}{\daFakultaet} \\%
+%\href{\daInstitutURL}{\daInstitut} \\%
+%\href{\daFachgebietURL}{\daFachgebiet} \\%
+%\daUniAdresse \\%
+%\daUniPLZ~\daUniOrt \\%
+%\vfill %
+%\begin{tabular}{@{}p{\spalteEins}@{}p{\spalteZwei}@{}}
+%  Verfasser: & \daAutor \\
+%             & \daAutorAdresse \\
+%             & \daAutorPLZ~\daAutorOrt \\[2ex]
+%  Gutachter: & \daGutachterEins \\[0.5ex]
+%             & \daGutachterZwei \\[2ex]
+%  Mündliche Prüfung: & TBD \\[2ex]
+%  Stand vom: & \thedateday.~\datemonthname~\thedateyear\\[6ex]
+%\end{tabular}%
+%\par%
+%\vfill%
+%\enlargethispage{2em}%
+
+%\copyright~\thedateyear~\daAutor
+%\daRevision
+
+%-----------------------------------------------------------------------------%
+\end{titlepage}
+%-----------------------------------------------------------------------------%
+
+%\thispagestyle{\chapterpagestyle}
+%\vspace*{2.4\baselineskip}
+%%-----------------------------------------------------------------------------%
+%{\sffamily\bfseries\LARGE Erklärung}\par
+%%-----------------------------------------------------------------------------%
+%\vspace{1.725\baselineskip plus .115\baselineskip minus .192\baselineskip}
+%Hiermit versichere ich, dass ich die vorliegende wissenschaftliche Arbeit selbständig und ohne Hilfe Dritter verfasst, keine anderen als die angegebenen Quellen und Hilfsmittel verwendet sowie alle wörtlichen oder sinngemäßen Entlehnungen unter Angabe der Quelle deutlich als solche gekennzeichnet habe.
+%
+%Diese Arbeit hat in gleicher oder ähnlicher Form meines Wissens noch keiner Prüfungsbehörde vorgelegen oder ist von dieser als Teil einer Prüfungsleistung angenommen worden.
+%
+%\vspace*{12ex}
+%
+%\daAutorOrt, \datedate

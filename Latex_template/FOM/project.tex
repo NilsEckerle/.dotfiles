@@ -1,0 +1,107 @@
+\documentclass[%
+  pdftex,%            Weiterreichen des gewählten Backend-Treibers für pdfTeX %
+  a4paper,
+  11pt,%                                          Größe der Grundschrift 11pt %
+  oneside,%                                                zweiseitiger Druck %
+  BCOR = 1cm,%                                                 Bindekorrektur %
+  cleardoublepage=plain,%               Kapitelanfang immer auf rechter Seite %
+  fleqn,%                                       Gleichungen links, eingerückt %
+  numbers=noenddot,%                         Kapitel-Nummerierung ohne Punkte %
+  headings=normal,%                                 normalgroße Überschriften %
+  bibliography=totocnumbered,%                  Literaturverszeichnis ins TOC %
+  listof=numbered,%               Abbildungs- und Tabellenverzeichnis ins Toc %
+  ngerman,%             Weiterreichen "Neue Rechtschreibung" an weiter Pakete %
+  headsepline=0.08em,%
+]{scrbook}%                   DiplA aufgebaut auf der Koma-Script Buch-Klasse %
+
+\input{latex/preamble/layout.tex}
+\defbibheading{bibintoc}[\bibname]{%
+  \addchap{#1}}
+\input{latex/preamble/commands.tex}
+
+\AtBeginDocument{%
+  \renewcommand*{\subsectionautorefname}{\sectionautorefname}%
+  \renewcommand*{\subsubsectionautorefname}{\subsectionautorefname}%
+  \renewcommand*{\paragraphautorefname}{\subsubsectionautorefname}%
+  \renewcommand*{\subparagraphautorefname}{\paragraphautorefname}%
+  \renewcommand*{\lstlistlistingname}{Quellcodeverzeichnis}%
+}
+% \newcommand{\todo}[1]{\marginpar{\color{red}#1}}
+\newcommand{\todotext}[1]{\todo[inline]{#1}}
+\newcommand{\note}[1]{\todo{{#1}}}
+
+\hyphenation{}
+\begin{document}
+
+\frontmatter
+
+\input{latex/preamble/title}
+
+\input{latex/00-Zusammenfassung}
+
+\input{latex/vorwort}
+
+\cleardoublepage
+\pdfbookmark{\contentsname}{Inhaltsverzeichnis}
+\tableofcontents
+
+%-----------------------------------------------------------------------------%
+% Verzeichnisse. Bitte leere Verzeichnisse auskommentieren.                   %
+%-----------------------------------------------------------------------------%
+\listoffigures
+\listoftables
+%\lstlistoflistings
+\input{latex/abkuerzungen}
+%-----------------------------------------------------------------------------%
+% Sperrvermerk. Bitte möglichst nicht verwenden.                              %
+%-----------------------------------------------------------------------------%
+%\input{latex/Sperrvermerk}
+
+
+%-----------------------------------------------------------------------------%
+% Hauptteil                                                                   %
+%-----------------------------------------------------------------------------%
+\mainmatter
+
+% Alle Abkürzungen zurücksetzen, damit Abkürzungen, die im Abstract verwendet wurden
+% nochmal formal eingeführt werden.
+\acresetall
+
+\input{latex/01-Einleitung}
+
+\input{latex/02-Kapitel2}
+
+\input{latex/03-Kapitel3}
+
+\input{latex/08-ZusammenfassungUndAusblick}
+
+
+
+%-----------------------------------------------------------------------------%
+% Anhang                                                                      %
+%-----------------------------------------------------------------------------%
+\appendix
+
+\input{latex/anhang}
+
+\backmatter
+%-----------------------------------------------------------------------------%
+% Literaturverzeichnis                                                        %
+%-----------------------------------------------------------------------------%
+\cleardoublepage
+% \printbibliography
+% Hier kann das Literaturverzeichnis noch getrennt werden.
+% Dafür ist zwingend biblatex notwendig!
+\ohead[]{Literatur}
+\printbibliography[nottype=misc]
+
+\printbibliography[type=misc,notkeyword=Experteninterview,title={Sonstige Quellen}]
+
+\printbibliography[type=misc,keyword=Experteninterview,title={Experteninterviews}]
+
+\cleardoublepage
+\ohead[]{\headmark}
+\input{latex/ee}
+
+
+\end{document}

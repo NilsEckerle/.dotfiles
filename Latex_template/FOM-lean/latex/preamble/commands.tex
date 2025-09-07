@@ -1,0 +1,557 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%               commands.tex - eigene Befehle für diverse Dinge               %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-----------------------------------------------------------------------------%
+%                                                   Grundlegende Definitionen %
+%-----------------------------------------------------------------------------%
+\author{Vorname Nachname}
+\newcommand{\daAutor}{Nils Eckerle}
+\newcommand{\daMatrikelnummer}{}
+\newcommand{\daTitel}{Title}
+\newcommand{\daTitelEins}{Ein besonderes}
+\newcommand{\daTitelZwei}{Thema-das-interessant-ist}
+\newcommand{\daTitelDrei}{und über drei Zeilen geht}
+\newcommand{\daUnternehmen}{}
+
+\newcommand{\daUniURL}{http://www.fom.de}
+\newcommand{\daUniLogo}[1]{\includegraphics[#1]{./images/FOM}}
+\newcommand{\daStudiengang}{Bachelor Informatik}
+
+\newcommand{\daAutorAdresse}{}
+\newcommand{\daAutorPLZ}{}
+\newcommand{\daAutorOrt}{}
+
+\newcommand{\daDate}{dd.mm.YYYY}
+
+
+\newcommand{\daGutachterEins}{Dr. Prof. Gutachter Name}
+
+%-----------------------------------------------------------------------------%
+%                                                   einige Mathe-Definitionen %
+%-----------------------------------------------------------------------------%
+\newcommand{\CoG}{\operatorname{CoG}}
+
+%-----------------------------------------------------------------------------%
+%                                                  Befehl für das BibTeX-Logo %
+%-----------------------------------------------------------------------------%
+\makeatletter
+\DeclareRobustCommand{\BibTeX}{B\hbox{\check@mathfonts
+\fontsize\sf@size\z@
+\math@fontsfalse\selectfont
+IB}\kern-.08em
+\TeX}
+\makeatother
+
+%-----------------------------------------------------------------------------%
+%      Punktereihe mit größerem Abstand zwischen den Punkten als bei \dotfill %
+%-----------------------------------------------------------------------------%
+\makeatletter
+\def\punktfill{\cleaders\hbox{$\m@th \mkern4mu . \mkern4mu$}\hfill}
+\makeatother
+
+%-----------------------------------------------------------------------------%
+%                                    Makros zur Festlegung von PDF-Attributen %
+%-----------------------------------------------------------------------------%
+\newcommand{\setPDFCreationDate}{%               CreationDate ist Abgabedatum %
+\pdfinfo{%
+/CreationDate (D:%
+\thedateyear%
+\ifnum\value{datemonth}<10 0\fi%
+\thedatemonth%
+\ifnum\value{dateday}<10 0\fi%
+\thedateday%
+010000+01'00')}%
+}
+%-----------------------------------------------------------------------------%
+\newcommand{\setPDFModDateToCreationDate}{% ModDate ist ebenfalls Abgabedatum %
+\pdfinfo{/CreationDate (D:\thedateyear%
+\ifnum\value{datemonth}<10 0\fi\thedatemonth%
+\ifnum\value{dateday}<10 0\fi\thedateday010000+01'00')}}
+%-----------------------------------------------------------------------------%
+
+
+\gdef\twodigits#1{\ifnum#1<10 0\fi\the#1}
+%-----------------------------------------------------------------------------%
+\newcommand{\setPDFModDateToCurrentDate}{%        ModDate ist aktuelles Datum
+\begingroup
+\count0=\time \divide\count0 by 60
+\edef\x{\twodigits{\count0}}%
+\multiply\count0 by 60
+\count1=\time \advance\count1 by -\count0
+\edef\x{\x\twodigits{\count1}}%
+\edef\x{/ModDate (D:\the\year 
+\twodigits\month \twodigits\day \x 00+01'00')}%
+\expandafter\endgroup
+\expandafter\pdfinfo\expandafter{\x}%
+}
+
+%-----------------------------------------------------------------------------%
+%                  Titel, Thema, Author, Schlüsselwörter und Erzeugerprogramm %
+%-----------------------------------------------------------------------------%
+\newcommand{\daHyperSetup}{%
+\hypersetup{%
+pdftitle    = {\protect{\daTitel}},%
+pdfsubject  = {Diplomarbeit an der Universität Paderborn},%
+pdfauthor   = {\protect{\daAutor}},%
+pdfkeywords = {\daPDFKeywords},%
+pdfcreator = {LaTeX2e mit {\frqq KOMA-Script\flqq} Book-Klasse und {\frqq hyperref\flqq}-Package}}
+}
+%-----------------------------------------------------------------------------%
+%          Befehle für bestimmte deutsche Abkürzungen mit passenden Abständen %
+%                                         (kein Anspruch auf Vollständigkeit) %
+%-----------------------------------------------------------------------------%
+\newlength{\abkz}
+\setlength{\abkz}{1pt}
+\newcommand{\abkrz}{\hspace{\abkz}}
+
+\newcommand{\bzw}{bzw.\@\xspace}
+\newcommand{\bzgl}{bezüglich\@\xspace}
+\newcommand{\ca}{ca.\@\xspace}
+\newcommand{\dah}{\mbox{d.{\abkrz}h.}\@\xspace}
+\newcommand{\Dah}{D.{\abkrz}h.\@\xspace}
+\newcommand{\ds}{d.{\abkrz}s.\@\xspace}
+\newcommand{\evtl}{evtl.\@\xspace}
+\newcommand{\etc}{etc.\@\xspace}
+\newcommand{\ua}{u.{\abkrz}a.\@\xspace}
+\newcommand{\Ua}{U.{\abkrz}a.\@\xspace}
+\newcommand{\usw}{usw.\@\xspace}
+\newcommand{\va}{v.{\abkrz}a.\@\xspace}
+\newcommand{\vgl}{vgl.\@\xspace}
+\newcommand{\zB}{\mbox{z.{\abkrz}B.}\@\xspace}
+\newcommand{\ZB}{Zum Beispiel\xspace}
+\newcommand{\zT}{z.{\abkrz}T.\@\xspace}
+\newcommand{\ZT}{Zum Teil\xspace}
+\newcommand{\zZ}{zur Zeit\xspace}
+\newcommand{\sa}{s.{\abkrz}a.\@\xspace}
+\newcommand{\ia}{i.{\abkrz}a.\@\xspace}
+\newcommand{\uU}{u.{\abkrz}U.\@\xspace}
+\newcommand{\bspw}{beispielsweise\@\xspace}
+\newcommand{\Bspw}{Beispielsweise\@\xspace}
+\newcommand{\ggf}{gegebenenfalls\@\xspace}
+\newcommand{\sog}{sogenannte\@\xspace}
+\newcommand{\soger}{sogenannter\@\xspace}
+\newcommand{\sogen}{sogenannten\@\xspace}
+\newcommand{\soges}{sogenanntes\@\xspace}
+\newcommand{\og}{o.\,g.\@\xspace}
+
+%-----------------------------------------------------------------------------%
+%        erzeugt eingeklammerten, kursiven Begriff mit dem Wort "engl." davor %
+%-----------------------------------------------------------------------------%
+\newcommand{\engl}[1]{%
+(engl. \emph{#1})\@\xspace}%
+
+%-----------------------------------------------------------------------------%
+%                    Befehle für das Verzeichnis der Akronyme und Abkürzungen %
+%-----------------------------------------------------------------------------%
+\newlength{\acronWidth}
+\newcommand{\acron}[2]{%
+\protect\hyperdef{acDef}{#1}{\rule{0pt}{1pt}}\\[-3ex]%
+\makebox[\acronWidth][l]{#1}~~{#2}\par%
+}
+\newcommand{\acronShort}[1]{\protect\hyperlink{acDef.#1}{#1}}
+\newcommand{\acronShortPlural}[1]{\protect\hyperlink{acDef.#1}{#1{s}}}
+
+
+%-----------------------------------------------------------------------------%
+%                         Neudefinition der Referenzierungs-Befehle (kleiner) %
+%-----------------------------------------------------------------------------%
+%\makeatletter\renewcommand{\@cite}[2]{[{\small #1\if@tempswa , #2\fi}]}\makeatother
+%\makeatletter\renewcommand{\@biblabel}[1]{[{\small #1}]}\makeatother
+
+%-----------------------------------------------------------------------------%
+%   Gestaltung des Datei-Verweises zur CD-ROM, falls BibTeX-Item cdlink = {1} %
+%                                         (siehe dazu die BibTeX-Style-Datei) %
+%-----------------------------------------------------------------------------%
+\newcommand{\CDLink}[1]{%
+~\mbox{$\rightarrow$ {\itshape\footnotesize %
+Auf beiliegender CD:}~~\href{file:./literatur/#1}{%
+\raisebox{-0.5pt}{\includegraphics[height=7.5pt]{cdIconBlue}}%
+\textcolor{diplaBlue}{\ttfamily\footnotesize/literatur/#1.pdf}}}}
+
+%-----------------------------------------------------------------------------%
+\newcommand{\blindtext}{%                                eigener Blindtext ;) %
+%-----------------------------------------------------------------------------%
+Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und 
+Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in 
+Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. 
+Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt 
+sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, 
+in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal 
+von der allmächtigen Interpunktion werden die Blindtexte 
+beherrscht -- ein geradezu unorthographisches Leben. 
+
+Eines Tages aber beschloß eine kleine Zeile Blindtext, 
+ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. 
+Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, 
+wilden Fragezeichen und hinterhältigen Semikola, doch das Blindtextchen 
+ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich 
+sein Initial in den Gürtel und machte sich auf den Weg. 
+Als es die ersten Hügel des Kursivgebirges erklommen hatte, warf es 
+einen letzten Blick zurück auf die Skyline seiner Heimatstadt Buchstabhausen, 
+die Headline von Alphabetdorf und die Subline seiner eigenen Straße, 
+der Zeilengasse. Wehmütig lief ihm eine rhetorische Frage über die Wange, 
+dann setzte es seinen Weg fort. Unterwegs traf es eine Copy. Die Copy 
+warnte das Blindtextchen, da, wo sie her käme wäre sie zigmal umgeschrieben 
+worden und alles, was von ihrem Ursprung noch übrig wäre, sei das Wort "`und"' 
+und das Blindtextchen solle umkehren und wieder in sein eigenes, sicheres Land 
+zurückkehren. Doch alles Gut zureden konnte es nicht überzeugen und so dauerte 
+es nicht lange, bis ihm ein paar heimtückische Werbetexter auflauerten, es mit 
+Langue und Parole betrunken machten und es dann in ihre Agentur schleppten, 
+wo sie es für ihre Projekte wieder und wieder mißbrauchten. Und wenn es nicht 
+umgeschrieben wurde, dann benutzen sie es immer noch.%
+}
+
+
+
+%=============================================================================%
+%                                 Befehle zum Setzen eines Verzeichnis-Baumes %
+%=============================================================================%
+\newcounter{dirCounter}
+\newcommand{\cdIcon}[1]{%
+\raisebox{-2pt}{\includegraphics[width=10pt]{cdIcon}}~%
+{\ttfamily\bfseries\itshape\small #1}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                     Befehle für Ordner/Dateien auf 1. Ebene %
+%-----------------------------------------------------------------------------%
+%                                offener Order mit mit Folgemuster:  E        %
+%-----------------------------------------------------------------------------%
+\newcommand{\oEm}[2][21]{%
+\begin{picture}(12,6)
+  \linethickness{.6pt}
+  \put(5,-6){\line(0,1){#1}}
+  \put(5,3){\line(1,0){5}}
+  \put(5,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                          geschlossener Order mit mit Folgemuster:  E        %
+%-----------------------------------------------------------------------------%
+\newcommand{\oEp}[2][21]{%
+\begin{picture}(12,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(5,3){\line(1,0){5}}
+  \put(5,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  L        %
+%-----------------------------------------------------------------------------%
+\newcommand{\oLm}[2][13]{%
+\begin{picture}(12,6)
+  \linethickness{.6pt}
+  \put(5,3){\line(0,1){#1}}
+  \put(5,3){\line(1,0){5}}
+  \put(5,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  L        %
+%-----------------------------------------------------------------------------%
+\newcommand{\oLp}[2][13]{%
+\begin{picture}(12,6)
+  \linethickness{.6pt}
+  \put(5,3){\line(0,1){#1}}
+  \put(5,3){\line(1,0){5}}
+  \put(5,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                                          Datei auf 1. Ebene %
+%-----------------------------------------------------------------------------%
+\newcommand{\dI}[3][21]{%
+\begin{picture}(12,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+\end{picture}{\ttfamily\footnotesize #2}~\punktfill~{\small #3}}
+%-----------------------------------------------------------------------------%
+
+%-----------------------------------------------------------------------------%
+%                                 Befehle für Ordner/Dateien auf der 2. Ebene %
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I  E     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIEm}[2][21]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+  \end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I  E     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIEp}[2][21]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+  \end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I  L     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oILm}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,3){\line(0,1){\value{dirCounter}}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I  L     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oILp}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,3){\line(0,1){\value{dirCounter}}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:     E     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oXEm}[2][21]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(17,-5){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+  \end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:     E     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oXEp}[2][21]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(17,-5){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+  \end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:     L     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oXLm}[2][13]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(17,3){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:     L     %
+%-----------------------------------------------------------------------------%
+\newcommand{\oXLp}[2][13]{%
+\begin{picture}(24,6)
+  \linethickness{.6pt}
+  \put(17,3){\line(0,1){#1}}
+  \put(17,3){\line(1,0){5}}
+  \put(17,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                            Datei mit Folgemuster:  I        %
+%-----------------------------------------------------------------------------%
+\newcommand{\dII}[3][23]{%
+\begin{picture}(23,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+\end{picture}~%
+\texttt{\footnotesize #2}~\punktfill~{\small #3}}
+%-----------------------------------------------------------------------------%
+%                                            Datei mit Folgemuster:           %
+%-----------------------------------------------------------------------------%
+\newcommand{\dXI}[3][23]{%
+\begin{picture}(23,6)
+  \linethickness{.6pt}
+  \put(17,-5){\line(0,1){#1}}
+\end{picture}~%
+\texttt{\footnotesize #2}~\punktfill~{\small #3}}
+%-----------------------------------------------------------------------------%
+%                                 Befehle für Ordner/Dateien auf der 3. Ebene %
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I  I  L  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIILm}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(29,3){\line(0,1){\value{dirCounter}}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I  I  L  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIILp}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(29,3){\line(0,1){\value{dirCounter}}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I  I  E  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIIE}[2][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(29,-5){\line(0,1){#1}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=10pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I  I  E  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIIEp}[2][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(29,-5){\line(0,1){#1}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I     L  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIXLp}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(29,3){\line(0,1){\value{dirCounter}}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=10pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I     L  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIXLm}[2][21]{%
+\setcounter{dirCounter}{#1}
+\addtocounter{dirCounter}{-8}
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(29,3){\line(0,1){\value{dirCounter}}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=10pt]{oOrdner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                              geschlossener Order mit Folgemuster:  I     E  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIXEp}[2][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(29,-5){\line(0,1){#1}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{plus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=12pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%-----------------------------------------------------------------------------%
+%                                    offener Order mit Folgemuster:  I     E  %
+%-----------------------------------------------------------------------------%
+\newcommand{\oIXE}[2][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(29,-5){\line(0,1){#1}}
+  \put(29,3){\line(1,0){5}}
+  \put(29,3){\makebox(0,0){\includegraphics[width=5pt]{minus}}}
+\end{picture}%
+\raisebox{-0.5pt}{\includegraphics[width=10pt]{ordner}}~%
+{\ttfamily\bfseries\itshape\footnotesize #2}\@\xspace
+}
+%------------------------------------------------------------------------------
+\newcommand{\dIII}[3][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+  \put(29,-5){\line(0,1){#1}}
+\end{picture}{\ttfamily\footnotesize #2}~\punktfill~{\small #3}}
+%------------------------------------------------------------------------------
+\newcommand{\dIIx}[3][21]{%
+\begin{picture}(36,6)
+  \linethickness{.6pt}
+  \put(5,-5){\line(0,1){#1}}
+  \put(17,-5){\line(0,1){#1}}
+\end{picture}{\ttfamily\footnotesize #2}~\punktfill~{\small #3}}
+%------------------------------------------------------------------------------
+
+
