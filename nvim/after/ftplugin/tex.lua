@@ -7,4 +7,6 @@ set.textwidth = 80
 set.formatoptions = "tcqjn"
 -- set.spell = true
 -- set.spelllang = "en_us"
--- -- Hallo welt
+
+set.makeprg = "pdflatex project.tex"
+vim.keymap.set("n", "<leader>make", "<cmd>:make<cr>", { buffer = true })

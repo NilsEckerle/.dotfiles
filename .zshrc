@@ -119,7 +119,8 @@ alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a
 alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ----- Tmux Auto-Start ----- #
 ##############################
@@ -136,5 +137,3 @@ fi
 # Created by `pipx` on 2025-08-10 12:51:36
 export PATH="$PATH:/home/nils/.local/bin"
 
-xset -dpms
-xset s off
