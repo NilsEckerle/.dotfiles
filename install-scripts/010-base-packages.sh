@@ -107,6 +107,12 @@ create_symlinks() {
   # Create .local/bin directory if it doesn't exist
   mkdir -p "$HOME/.local/bin"
 
+  # Check if SYMLINKS array is empty or unset
+  if [ ${#SYMLINKS[@]} -eq 0 ]; then
+    log_info "No symlinks to create (SYMLINKS array is empty)"
+    return 0
+  fi
+
   # Define config mappings: source_path:target_path
   local configs=$SYMLINKS
 
