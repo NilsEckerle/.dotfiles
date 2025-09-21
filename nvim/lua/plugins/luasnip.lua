@@ -17,6 +17,17 @@ return {
       delete_check_events = "TextChanged",
       enable_autosnippets = true,
     },
+    config = function(_, opts)
+      local luasnip = require("luasnip")
+      luasnip.setup(opts)
+      require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+
+      -- keymaps
+      local map = vim.keymap.set
+      map("i", "<C-h>", function() luasnip.expand() end, { silent = true })
+      map("i", "<C-J>", function() luasnip.jump(1) end, { silent = true })
+      map("i", "<C-K>", function() luasnip.jump(-1) end, { silent = true })
+    end
   },
 }
 -- return {

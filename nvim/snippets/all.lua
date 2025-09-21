@@ -14,4 +14,3 @@ return {
   snippet({trig = "Oe", wordTrig = false}, text_node("Ö")),
   snippet({trig = "Ue", wordTrig = false}, text_node("Ü")),
 }
--- Hallo welt
