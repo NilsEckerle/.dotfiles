@@ -3,6 +3,32 @@
 # Debian 12 Dotfiles Setup Script with Profile Selection
 # Run this script from your ~/.dotfiles directory
 
+DOTFILES_DIR=$HOME/.dotfiles
+SYMLINKS=(
+    "i3:$HOME/.config/i3"
+    "nvim:$HOME/.config/nvim"
+    "kitty:$HOME/.config/kitty"
+    "alacritty:$HOME/.config/alacritty"
+    "tmux:$HOME/.config/tmux"
+    "yazi:$HOME/.config/yazi"
+    "vimrc:$HOME/.vimrc"
+    "vim:$HOME/.vim"
+    ".tmux.conf:$HOME/.tmux.conf"
+    ".zshrc:$HOME/.zshrc"
+    ".luarc.json:$HOME/.luarc.json"
+    "scripts:$HOME/scripts"
+    "rofi:$HOME/.config/rofi"
+    ".xprofile:$HOME/.xprofile"
+    ".themes:$HOME/.themes"
+    "gtk-3.0:$HOME/.config/gtk-3.0"
+    "wallpaper:$HOME/wallpaper"
+    "mutt:$HOME/.config/mutt"
+    "feh:$HOME/.config/feh"
+    "i3/rofi-calculator.desktop:$HOME/.local/share/applications/rofi-calculator.desktop"
+    "systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
+    "conky:$HOME/.config/conky"
+  )
+
 set -e  # Exit on any error
 
 # Colors for output
@@ -60,8 +86,6 @@ if [ ! -f "README.md" ] || [ ! -d "nvim" ] || [ ! -d "setup-scripts" ]; then
   exit 1
 fi
 
-DOTFILES_DIR=$(pwd)
-log_info "Dotfiles directory: $DOTFILES_DIR"
 
 # Function to check if command exists
 command_exists() {
@@ -76,31 +100,7 @@ create_symlinks() {
   mkdir -p "$HOME/.local/bin"
 
   # Define config mappings: source_path:target_path
-  local configs=(
-    "i3:$HOME/.config/i3"
-    "nvim:$HOME/.config/nvim"
-    "kitty:$HOME/.config/kitty"
-    "alacritty:$HOME/.config/alacritty"
-    "tmux:$HOME/.config/tmux"
-    "yazi:$HOME/.config/yazi"
-    "vimrc:$HOME/.vimrc"
-    "vim:$HOME/.vim"
-    ".tmux.conf:$HOME/.tmux.conf"
-    ".zshrc:$HOME/.zshrc"
-    ".luarc.json:$HOME/.luarc.json"
-    "scripts:$HOME/scripts"
-    "rofi:$HOME/.config/rofi"
-    ".xprofile:$HOME/.xprofile"
-    ".themes:$HOME/.themes"
-    "gtk-3.0:$HOME/.config/gtk-3.0"
-    "wallpaper:$HOME/wallpaper"
-    "mutt:$HOME/.config/mutt"
-    "feh:$HOME/.config/feh"
-    "i3/rofi-calculator.desktop:$HOME/.local/share/applications/rofi-calculator.desktop"
-    "systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
-    "conky:$HOME/.config/conky"
-  )
-
+  local configs=$SYMLINKS
   # Add i3 config if i3 is being installed
   if [ "$INSTALL_I3" = true ]; then
     configs+=("i3:$HOME/.config/i3")
