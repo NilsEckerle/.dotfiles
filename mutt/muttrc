@@ -26,7 +26,6 @@ set smtp_url = "smtp://nilseckerle2001@protonmail.com@127.0.0.1:1025"
 set from = "nilseckerle2001@protonmail.com"
 set realname = "Nils Eckerle"
 
-
 source ~/.config/mutt/gruvbox/colors-gruvbox.muttrc
 
 set delete = no
@@ -37,7 +36,8 @@ set sort = "reverse-date"
 set editor = "nvim"
 set timeout = "5"
 set date_format = "%Y-%m-%d %H:%M"
-set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
+#set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
+set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-20.20L (%?l?%4l&%4c?) %s"
 set help = no
 set status_format = "?:Help q:Quit m:Mail - A:Archive d:Del u:Undel s:Save - r:Reply g:Group-reply t:Tag T:Tag-pattern f:Forward - a:Aliases Ctrl+G:Abort"
 set compose_format = "-- [msg size: %l]   [Atts: %a] -- (y:Send  q:Quit  s:Subject  a:Attach  e:Edit  f:From  t:To  c:Cc b:Bcc)"
