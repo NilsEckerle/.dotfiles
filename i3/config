@@ -323,6 +323,7 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 # for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="Tor Browser"] floating enable, resize set 1200 800, move position center
 
 # Media windows
 for_window [class="Eog|Sxiv|feh|mpv|Vlc|File-roller|Xarchiver"] floating enable
