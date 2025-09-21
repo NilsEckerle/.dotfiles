@@ -61,8 +61,6 @@ install_apt_packages() {
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
     sudo apt update
-    # Install essential tools first (needed for adding custom sources)
-    install_essential_tools
 
     for package in "${APT_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
