@@ -104,7 +104,7 @@ git commit -m \"feat(auth): add JWT token validation\"
 alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
 #useful
-alias lxt='latex_template.sh'
+alias ltxtemplate='latex_template.sh'
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
