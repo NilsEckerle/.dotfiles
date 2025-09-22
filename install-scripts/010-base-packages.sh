@@ -178,12 +178,17 @@ install_tpm() {
   log_warning "After tmux configuration is set up, press prefix + I to install plugins"
 }
 
+zsh_default_shell() {
+  chsh -s $(which zsh)
+}
+
 main() {
   install_apt_packages
   install_brew_packages
   install_oh_my_zsh
   install_tpm
   create_symlinks
+  zsh_default_shell
 }
 
 main
