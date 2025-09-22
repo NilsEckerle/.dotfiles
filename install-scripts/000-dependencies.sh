@@ -50,7 +50,7 @@ install_homebrew() {
   export NONINTERACTIVE=1
 
   # Install Homebrew with automatic yes responses
-  sudo apt install curl
+  sudo sudo apt install curl
   yes  | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
 
   # Add Homebrew to PATH for current session
@@ -72,14 +72,14 @@ install_apt_packages() {
 
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
-    apt update
+    sudo apt update
 
     for package in "${APT_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        apt install -y "$package"
+        sudo apt install -y "$package"
         log_success "$package installed"
       fi
     done

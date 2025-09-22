@@ -52,14 +52,14 @@ install_apt_packages() {
 
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
-    apt update
+    sudo apt update
 
     for package in "${APT_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        apt install -y "$package"
+        sudo apt install -y "$package"
         log_success "$package installed"
       fi
     done
