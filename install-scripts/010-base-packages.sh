@@ -111,9 +111,10 @@ create_symlinks() {
   # Define config mappings: source_path:target_path
   local configs=$SYMLINKS
 
+  echo $configs
   for config in "${configs[@]}"; do
     IFS=':' read -r source target <<< "$config"
-    echo $DOTFILES_DIR/$source
+    echo "$DOTFILES_DIR/$source -> $target"
     source_path="$DOTFILES_DIR/$source"
 
     # Skip if source doesn't exist
