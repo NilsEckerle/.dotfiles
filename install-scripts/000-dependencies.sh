@@ -34,13 +34,13 @@ BREW_PACKAGES=()
 
 SYMLINKS=()
 
+# Function to check if command exists
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
 # Function to install Homebrew
 install_homebrew() {
-  if [ ${#BREW_PACKAGES[@]} -eq 0 ]; then
-    log_info "No brew packages specified, skipping Homebrew installation"
-    return
-  fi
-
   if command_exists brew; then
     log_success "Homebrew is already installed"
     return
