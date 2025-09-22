@@ -110,7 +110,6 @@ create_symlinks() {
 
   for config in "${SYMLINKS[@]}"; do
     IFS=':' read -r source target <<< "$config"
-    echo "$DOTFILES_DIR/$source -> $target"
     source_path="$DOTFILES_DIR/$source"
 
     # Skip if source doesn't exist
