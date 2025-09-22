@@ -85,13 +85,21 @@ choose_option_config() {
     echo
     local desc=$(get_script_description "${options[0]}")
     echo "Step $order: ${options[0]} - $desc"
-    read -p "Include this step? (Y/n): " include
-    if [[ "$include" =~ ^[Nn]$ ]]; then
-      return
-    else
-      echo "${options[0]}"
-      return
-    fi
+    while true; do
+      read -p "Include this step? (Y/n): " include
+      case "$include" in
+        [Nn]*)
+          return 1
+          ;;
+        [Yy]*|"")
+          echo "${options[0]}"
+          return 0
+          ;;
+        *)
+          log_error "Please enter 'y' for yes or 'n' for no."
+          ;;
+      esac
+    done
   fi
 
   echo
@@ -106,10 +114,10 @@ choose_option_config() {
     read -p "Choose an option (0-${#options[@]}): " choice
 
     if [[ "$choice" == "0" ]]; then
-      return
+      return 1
     elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && [[ "$choice" -le "${#options[@]}" ]]; then
       echo "${options[$((choice-1))]}"
-      return
+      return 0
     else
       log_error "Invalid choice. Please enter a number between 0 and ${#options[@]}."
     fi
@@ -180,9 +188,7 @@ configure_installation() {
     IFS=' ' read -ra scripts <<< "$scripts_str"
 
     local chosen_script
-    chosen_script=$(choose_option_config "$order" "${scripts[@]}")
-
-    if [[ -n "$chosen_script" ]]; then
+    if chosen_script=$(choose_option_config "$order" "${scripts[@]}"); then
       selected_scripts+=("$chosen_script")
     fi
   done <<< "$script_data"
