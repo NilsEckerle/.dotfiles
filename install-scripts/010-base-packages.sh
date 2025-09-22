@@ -144,10 +144,46 @@ create_symlinks() {
   done
 }
 
+# Function to install Oh My Zsh
+install_oh_my_zsh() {
+  if [ -d "$HOME/.oh-my-zsh" ]; then
+    log_success "Oh My Zsh is already installed"
+    return
+  fi
+
+  log_info "Installing Oh My Zsh..."
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  log_success "Oh My Zsh installed"
+}
+
+# Function to install TPM (Tmux Plugin Manager)
+install_tpm() {
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+
+  if [ -d "$tpm_dir" ]; then
+    log_success "TPM (Tmux Plugin Manager) is already installed"
+    return
+  fi
+
+  log_info "Installing TPM (Tmux Plugin Manager)..."
+
+  # Create tmux plugins directory
+  mkdir -p "$HOME/.tmux/plugins"
+
+  # Clone TPM repository
+  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+
+  log_success "TPM installed"
+  log_info "TPM installed to $tmp_dir"
+  log_warning "After tmux configuration is set up, press prefix + I to install plugins"
+}
+
 main() {
   install_apt_packages
   install_brew_packages
   create_symlinks
+  install_oh_my_zsh
+  install_tpm
 }
 
 main
