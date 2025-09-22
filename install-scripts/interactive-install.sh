@@ -82,11 +82,11 @@ choose_option_config() {
   local options=("$@")
 
   if [[ ${#options[@]} -eq 1 ]]; then
-    echo
+    echo >&2
     local desc=$(get_script_description "${options[0]}")
-    echo "Step $order: ${options[0]} - $desc"
+    echo "Step $order: ${options[0]} - $desc" >&2
     while true; do
-      read -p "Include this step? (Y/n): " include
+      read -p "Include this step? (Y/n): " include >&2
       case "$include" in
         [Nn]*)
           return 1
@@ -96,22 +96,22 @@ choose_option_config() {
           return 0
           ;;
         *)
-          log_error "Please enter 'y' for yes or 'n' for no."
+          echo "Please enter 'y' for yes or 'n' for no." >&2
           ;;
       esac
     done
   fi
 
-  echo
-  log_info "Multiple options found for step $order:"
+  echo >&2
+  echo "Multiple options found for step $order:" >&2
   for i in "${!options[@]}"; do
     local desc=$(get_script_description "${options[$i]}")
-    echo "  $((i+1)). ${options[$i]} - $desc"
+    echo "  $((i+1)). ${options[$i]} - $desc" >&2
   done
-  echo "  0. Skip this step"
+  echo "  0. Skip this step" >&2
 
   while true; do
-    read -p "Choose an option (0-${#options[@]}): " choice
+    read -p "Choose an option (0-${#options[@]}): " choice >&2
 
     if [[ "$choice" == "0" ]]; then
       return 1
@@ -119,7 +119,7 @@ choose_option_config() {
       echo "${options[$((choice-1))]}"
       return 0
     else
-      log_error "Invalid choice. Please enter a number between 0 and ${#options[@]}."
+      echo "Invalid choice. Please enter a number between 0 and ${#options[@]}." >&2
     fi
   done
 }
@@ -178,10 +178,11 @@ configure_installation() {
   local script_data="$1"
   local -a selected_scripts=()
 
-  log_info "=== CONFIGURATION PHASE ==="
-  echo "Select which scripts you want to run. You can configure everything now"
-  echo "and then let the installation run unattended."
-  echo
+  # Interactive prompts go to stderr so they're not captured by redirection
+  echo "=== CONFIGURATION PHASE ===" >&2
+  echo "Select which scripts you want to run. You can configure everything now" >&2
+  echo "and then let the installation run unattended." >&2
+  echo >&2
 
   # Process each order group for configuration
   while IFS=':' read -r order scripts_str; do
@@ -194,28 +195,28 @@ configure_installation() {
   done <<< "$script_data"
 
   # Show summary of selected scripts
-  echo
-  log_info "=== INSTALLATION SUMMARY ==="
+  echo >&2
+  echo "=== INSTALLATION SUMMARY ===" >&2
   if [[ ${#selected_scripts[@]} -eq 0 ]]; then
-    log_warning "No scripts selected for installation."
+    echo "No scripts selected for installation." >&2
     return 1
   fi
 
-  echo "The following scripts will be executed:"
+  echo "The following scripts will be executed:" >&2
   for i in "${!selected_scripts[@]}"; do
     local script="${selected_scripts[$i]}"
     local desc=$(get_script_description "$script")
-    echo "  $((i+1)). $script - $desc"
+    echo "  $((i+1)). $script - $desc" >&2
   done
 
-  echo
+  echo >&2
   read -p "Proceed with this configuration? (y/N): " confirm
   if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    log_info "Installation cancelled."
+    echo "Installation cancelled." >&2
     return 1
   fi
 
-  # Return selected scripts (one per line)
+  # Return selected scripts (one per line) to stdout
   printf '%s\n' "${selected_scripts[@]}"
   return 0
 }
