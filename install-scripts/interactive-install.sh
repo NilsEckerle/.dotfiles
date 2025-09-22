@@ -314,12 +314,10 @@ main() {
 
   echo
 
-  # Configuration phase
-  local selected_scripts
-  selected_scripts=$(configure_installation "$script_data")
-  local config_result=$?
-  
-  if [[ $config_result -ne 0 ]]; then
+  # Configuration phase - using a temporary file to avoid subshell issues
+  local temp_file=$(mktemp)
+  if ! configure_installation "$script_data" > "$temp_file"; then
+    rm -f "$temp_file"
     exit 0
   fi
 
@@ -327,7 +325,8 @@ main() {
   local -a scripts_array
   while IFS= read -r script; do
     [[ -n "$script" ]] && scripts_array+=("$script")
-  done <<< "$selected_scripts"
+  done < "$temp_file"
+  rm -f "$temp_file"
 
   echo
   read -p "Press Enter to start the installation, or Ctrl+C to cancel..."
