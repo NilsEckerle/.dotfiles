@@ -26,24 +26,29 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Check if running as root
-if [ "${EUID:-$(id -u)}" -eq 0 ]; then
-  log_error "This script should NOT be run as root!"
-  log_error "It will install dotfiles in the wrong location (/root instead of your user home)"
-  log_error ""
-  log_error "If your user is not in sudo group, run this as root first:"
-  log_error "  usermod -aG sudo your-username"
-  log_error ""
-  log_error "Then log out/in and run this script as your regular user."
-  exit 1
-fi
-
 # Check if user has sudo privileges
 if ! groups "$USER" | grep -q '\bsudo\b'; then
   log_error "User $USER is not in sudo group. Please run as root first:"
   log_error "  usermod -aG sudo $USER"
   log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
   log_error "Then log out/in and run this script as $USER"
+  exit 1
+fi
+
+# Check if running with sudo
+if [ "${EUID:-$(id -u)}" -ne 0 ]; then
+  log_error "This script must be run with sudo!"
+  log_error "Run it as: sudo $0"
+  log_error ""
+  log_error "Note: This will install dotfiles in the correct user location"
+  log_error "using \$SUDO_USER environment variable."
+  exit 1
+fi
+
+# Ensure we have the original user information
+if [ -z "$SUDO_USER" ]; then
+  log_error "SUDO_USER environment variable not found!"
+  log_error "Please run this script with 'sudo' command, not as root directly."
   exit 1
 fi
 
