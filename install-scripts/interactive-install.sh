@@ -26,15 +26,6 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Check if user has sudo privileges
-if ! groups "$USER" | grep -q '\bsudo\b'; then
-  log_error "User $USER is not in sudo group. Please run as root first:"
-  log_error "  usermod -aG sudo $USER"
-  log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
-  log_error "Then log out/in and run this script as $USER"
-  exit 1
-fi
-
 # Check if running with sudo
 if [ "${EUID:-$(id -u)}" -ne 0 ]; then
   log_error "This script must be run with sudo!"
