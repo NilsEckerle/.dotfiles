@@ -100,7 +100,7 @@ git add src/auth.js src/middleware/auth.js
 git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
-**Git Status and Diff**:" && echo "" && gs && gd) | xclip -selection clipboard'
+**Git Status and Diff**:" && echo "" && gs && gd) | wl-copy'
 alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
 #useful
