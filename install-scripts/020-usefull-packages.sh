@@ -29,11 +29,11 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  zsh-autosuggestions,
-  ripgrep,
-  kitty,
-  tealdeer,
-  feh,
+  zsh-autosuggestions
+  ripgrep
+  kitty
+  tealdeer
+  feh
 )
 
 BREW_PACKAGES=()

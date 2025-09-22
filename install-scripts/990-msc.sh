@@ -28,8 +28,7 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-APT_PACKAGES=(
-)
+APT_PACKAGES=()
 
 BREW_PACKAGES=()
 

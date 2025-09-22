@@ -29,17 +29,17 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  i3,
-  i3blocks,
-  i3status,
-  i3lock,
-  dmenu,
-  rofi,
-  nitrogen,
-  scrot,
-  xorg,
-  picom,
-  conky-all,
+  i3
+  i3blocks
+  i3status
+  i3lock
+  dmenu
+  rofi
+  nitrogen
+  scrot
+  xorg
+  picom
+  conky-all
 )
 
 BREW_PACKAGES=()

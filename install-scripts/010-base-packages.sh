@@ -29,16 +29,16 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  sudo,
-  zsh,
-  tmux,
-  vim,
-  curl,
-  wget,
-  git,
-  build-essential,
-  fzf,
-  xclip,
+  sudo
+  zsh
+  tmux
+  vim
+  curl
+  wget
+  git
+  build-essential
+  fzf
+  xclip
 )
 
 BREW_PACKAGES=()

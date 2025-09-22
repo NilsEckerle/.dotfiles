@@ -29,7 +29,7 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  nemo,
+  nemo
 )
 
 BREW_PACKAGES=()

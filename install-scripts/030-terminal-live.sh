@@ -29,14 +29,14 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  neomutt,
-  zoxide,
-  fonts-firacode,
-  fonts-noto-color-emoji,
+  neomutt
+  zoxide
+  fonts-firacode
+  fonts-noto-color-emoji
 )
 
 BREW_PACKAGES=(
-  neovim,
+  neovim
 )
 
 SYMLINKS=(

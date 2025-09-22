@@ -29,7 +29,7 @@ log_error() {
 }
 
 APT_PACKAGES=(
-  thunar,
+  thunar
 )
 
 BREW_PACKAGES=()
