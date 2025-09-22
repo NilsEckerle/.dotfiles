@@ -102,9 +102,6 @@ install_brew_packages() {
 create_symlinks() {
   log_info "Creating symlinks..."
 
-  # Create .local/bin directory if it doesn't exist
-  mkdir -p "$HOME/.local/bin"
-
   # Check if SYMLINKS array is empty or unset
   if [ ${#SYMLINKS[@]} -eq 0 ]; then
     log_info "No symlinks to create (SYMLINKS array is empty)"
@@ -116,6 +113,7 @@ create_symlinks() {
 
   for config in "${configs[@]}"; do
     IFS=':' read -r source target <<< "$config"
+    echo $DOTFILES_DIR/$source
     source_path="$DOTFILES_DIR/$source"
 
     # Skip if source doesn't exist
