@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DOTFILES_DIR=$(./get-dotfiles-dir.sh)
-
 set -e  # Exit on any error
 
 # Colors for output
@@ -28,13 +26,125 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-APT_PACKAGES=()
-BREW_PACKAGES=()
-SYMLINKS=()
+# Check if user has sudo privileges
+if ! groups "$USER" | grep -q '\bsudo\b'; then
+  log_error "User $USER is not in sudo group. Please run as root first:"
+  log_error "  usermod -aG sudo $USER"
+  log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
+  log_error "Then log out/in and run this script as $USER"
+  exit 1
+fi
 
-# Function to check if command exists
-command_exists() {
-  command -v "$1" >/dev/null 2>&1
+# Function to get script description from filename
+get_script_description() {
+  local filename="$1"
+  # Remove numbers and extension, replace hyphens with spaces, capitalize
+  echo "$filename" | sed 's/^[0-9]\{3\}-//; s/\.sh$//; s/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1'
+}
+
+# Function to find all install scripts and group them by order number
+find_and_group_scripts() {
+  local -A script_groups
+  local -a order_numbers
+
+  # Find all numbered scripts
+  for script in [0-9][0-9][0-9]-*.sh; do
+    if [[ -f "$script" && "$script" != "interactive-install.sh" ]]; then
+      # Extract order number (first two digits)
+      local order="${script:0:2}"
+      # Extract full prefix (first three digits)
+      local prefix="${script:0:3}"
+
+      # Add to script groups
+      if [[ -z "${script_groups[$order]}" ]]; then
+        script_groups[$order]="$script"
+        order_numbers+=("$order")
+      else
+        script_groups[$order]+=" $script"
+      fi
+    fi
+  done
+
+  # Sort order numbers
+  IFS=$'\n' order_numbers=($(sort -n <<<"${order_numbers[*]}"))
+  unset IFS
+
+  # Return the grouped scripts
+  for order in "${order_numbers[@]}"; do
+    echo "$order:${script_groups[$order]}"
+  done
+}
+
+# Function to choose from multiple options
+choose_option() {
+  local order="$1"
+  shift
+  local options=("$@")
+
+  if [[ ${#options[@]} -eq 1 ]]; then
+    echo "${options[0]}"
+    return
+  fi
+
+  echo
+  log_info "Multiple options found for step $order:"
+  for i in "${!options[@]}"; do
+    local desc=$(get_script_description "${options[$i]}")
+    echo "  $((i+1)). ${options[$i]} - $desc"
+  done
+  echo "  0. Skip this step"
+
+  while true; do
+    read -p "Choose an option (0-${#options[@]}): " choice
+
+      if [[ "$choice" == "0" ]]; then
+        echo ""
+        return
+      elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && [[ "$choice" -le "${#options[@]}" ]]; then
+        echo "${options[$((choice-1))]}"
+        return
+      else
+        log_error "Invalid choice. Please enter a number between 0 and ${#options[@]}."
+      fi
+    done
+  }
+
+# Function to execute a script
+execute_script() {
+  local script="$1"
+  local desc=$(get_script_description "$script")
+
+  log_info "Executing: $script - $desc"
+  echo "----------------------------------------"
+
+  if [[ -x "$script" ]]; then
+    if ./"$script"; then
+      log_success "Completed: $script"
+    else
+      log_error "Failed to execute: $script"
+      echo
+      read -p "Do you want to continue with the remaining scripts? (y/N): " continue_choice
+      if [[ ! "$continue_choice" =~ ^[Yy]$ ]]; then
+        log_error "Installation aborted."
+        exit 1
+      fi
+    fi
+  else
+    log_warning "Script $script is not executable. Making it executable..."
+    chmod +x "$script"
+    if ./"$script"; then
+      log_success "Completed: $script"
+    else
+      log_error "Failed to execute: $script"
+      echo
+      read -p "Do you want to continue with the remaining scripts? (y/N): " continue_choice
+      if [[ ! "$continue_choice" =~ ^[Yy]$ ]]; then
+        log_error "Installation aborted."
+        exit 1
+      fi
+    fi
+  fi
+  echo
 }
 
 # Pre-authenticate sudo and keep it alive
@@ -57,135 +167,77 @@ setup_sudo() {
   log_success "Sudo authentication configured"
 }
 
-# Function to install Homebrew
-install_homebrew() {
-  if command_exists brew; then
-    log_success "Homebrew is already installed"
-    return
-  fi
 
-  log_info "Installing Homebrew..."
-
-  # Export NONINTERACTIVE to avoid prompts
-  export NONINTERACTIVE=1
-
-  # Install Homebrew with automatic yes responses
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
-
-  # Add Homebrew to PATH for current session
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    # Add to shell profile for persistence
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-  fi
-
-  log_success "Homebrew installed"
-}
-
-# Function to install packages via apt
-install_apt_packages() {
-  if [ ${#APT_PACKAGES[@]} -eq 0 ]; then
-    log_info "No APT packages to install"
-    return
-  fi
-
-  log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
-
-    sudo apt update
-
-    for package in "${APT_PACKAGES[@]}"; do
-      if dpkg -l | grep -q "^ii  $package "; then
-        log_success "$package is already installed"
-      else
-        log_info "Installing $package..."
-        sudo apt install -y "$package"
-        log_success "$package installed"
-      fi
-    done
-  }
-
-# Function to install packages via Homebrew
-install_brew_packages() {
-  if [ ${#BREW_PACKAGES[@]} -eq 0 ]; then
-    log_info "No brew packages to install"
-    return
-  fi
-
-  log_info "Installing ${#BREW_PACKAGES[@]} Homebrew packages..."
-
-  # Ensure brew is in PATH
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  fi
-
-  for package in "${BREW_PACKAGES[@]}"; do
-    if brew list "$package" >/dev/null 2>&1; then
-      log_success "$package is already installed via brew"
-    else
-      log_info "Installing $package via brew..."
-      NONINTERACTIVE=1 brew install "$package"
-      log_success "$package installed via brew"
-    fi
-  done
-}
-
-# Function to create symlinks
-create_symlinks() {
-  log_info "Creating symlinks..."
-
-  # Create .local/bin directory if it doesn't exist
-  mkdir -p "$HOME/.local/bin"
-
-  # Check if SYMLINKS array is empty or unset
-  if [ ${#SYMLINKS[@]} -eq 0 ]; then
-    log_info "No symlinks to create (SYMLINKS array is empty)"
-    return 0
-  fi
-
-  # Define config mappings: source_path:target_path
-  local configs=$SYMLINKS
-
-  for config in "${configs[@]}"; do
-    IFS=':' read -r source target <<< "$config"
-    source_path="$DOTFILES_DIR/$source"
-
-    # Skip if source doesn't exist
-    if [ ! -e "$source_path" ]; then
-      log_warning "Source $source_path does not exist, skipping..."
-      continue
-    fi
-
-    # Create target directory if it doesn't exist
-    target_dir=$(dirname "$target")
-    if [ ! -d "$target_dir" ]; then
-      log_info "Creating directory $target_dir"
-      mkdir -p "$target_dir"
-    fi
-
-    # Remove existing target if it exists and is not a symlink to our source
-    if [ -e "$target" ]; then
-      if [ -L "$target" ] && [ "$(readlink "$target")" = "$source_path" ]; then
-        log_success "Symlink for $source already exists and is correct"
-        continue
-      else
-        log_warning "Removing existing $target"
-        rm -rf "$target"
-      fi
-    fi
-
-    # Create symlink
-    log_info "Creating symlink: $target -> $source_path"
-    ln -sf "$source_path" "$target"
-    log_success "Symlink created for $source"
-  done
-}
-
+# Main function
 main() {
+  log_info "Interactive Installation Script"
+  echo "==============================="
+  echo
+
+  # Check if we're in the right directory
+  if [[ ! -f "interactive-install.sh" ]]; then
+    log_error "Please run this script from the directory containing the install scripts."
+    exit 1
+  fi
+
+  # Find and group scripts
+  local script_data
+  script_data=$(find_and_group_scripts)
+
+  if [[ -z "$script_data" ]]; then
+    log_error "No installation scripts found."
+    exit 1
+  fi
+
+  # Show overview
+  log_info "Found installation scripts:"
+  local selected_scripts=()
+
+  while IFS=':' read -r order scripts_str; do
+    IFS=' ' read -ra scripts <<< "$scripts_str"
+
+    if [[ ${#scripts[@]} -eq 1 ]]; then
+      local desc=$(get_script_description "${scripts[0]}")
+      echo "  Step $order: ${scripts[0]} - $desc"
+      selected_scripts+=("${scripts[0]}")
+    else
+      echo "  Step $order: Multiple options available"
+      for script in "${scripts[@]}"; do
+        local desc=$(get_script_description "$script")
+        echo "    - $script - $desc"
+      done
+    fi
+  done <<< "$script_data"
+
+  echo
+  read -p "Do you want to proceed with the installation? (y/N): " proceed
+  if [[ ! "$proceed" =~ ^[Yy]$ ]]; then
+    log_info "Installation cancelled."
+    exit 0
+  fi
+
+  echo
+  log_info "Starting installation process..."
+  echo
   setup_sudo
-  install_homebrew
-  install_apt_packages
-  install_brew_packages
-  create_symlinks
+
+  # Process each order group
+  while IFS=':' read -r order scripts_str; do
+    IFS=' ' read -ra scripts <<< "$scripts_str"
+
+    local chosen_script
+    chosen_script=$(choose_option "$order" "${scripts[@]}")
+
+    if [[ -n "$chosen_script" ]]; then
+      execute_script "$chosen_script"
+    else
+      log_warning "Skipped step $order"
+      echo
+    fi
+  done <<< "$script_data"
+
+  log_success "Installation process completed!"
 }
 
-main
+# Run main function
+main "$@"
