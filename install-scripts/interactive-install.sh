@@ -310,7 +310,10 @@ main() {
 
   # Configuration phase
   local selected_scripts
-  if ! selected_scripts=$(configure_installation "$script_data"); then
+  selected_scripts=$(configure_installation "$script_data")
+  local config_result=$?
+  
+  if [[ $config_result -ne 0 ]]; then
     exit 0
   fi
 
