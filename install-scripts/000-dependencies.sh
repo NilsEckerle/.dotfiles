@@ -50,7 +50,8 @@ install_homebrew() {
   export NONINTERACTIVE=1
 
   # Install Homebrew with automatic yes responses
-  yes  | /bin/bash -c "$(wget -qO- https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
+  sudo apt install curl
+  yes  | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
 
   # Add Homebrew to PATH for current session
   if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
