@@ -33,6 +33,7 @@ APT_PACKAGES=(
     wofi
     waybar
     fonts-font-awesome
+    wl-clipboard
   )
 
 BREW_PACKAGES=()
@@ -52,14 +53,14 @@ install_apt_packages() {
 
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
-    apt update
+    sudo apt update
 
     for package in "${APT_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        apt install -y "$package"
+        sudo apt install -y "$package"
         log_success "$package installed"
       fi
     done
@@ -176,7 +177,7 @@ deb_sid_instructions() {
       
       # Update package lists
       log_info "Updating package lists..."
-      sudo apt update
+      sudo sudo apt update
       log_success "Package lists updated"
       ;;
     *)
