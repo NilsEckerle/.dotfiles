@@ -86,7 +86,8 @@ choose_option_config() {
     local desc=$(get_script_description "${options[0]}")
     echo "Step $order: ${options[0]} - $desc" >&2
     while true; do
-      read -p "Include this step? (Y/n): " include >&2
+      echo -n "Include this step? (Y/n): " >&2
+      read include
       case "$include" in
         [Nn]*)
           return 1
@@ -111,7 +112,8 @@ choose_option_config() {
   echo "  0. Skip this step" >&2
 
   while true; do
-    read -p "Choose an option (0-${#options[@]}): " choice >&2
+    echo -n "Choose an option (0-${#options[@]}): " >&2
+    read choice
 
     if [[ "$choice" == "0" ]]; then
       return 1
@@ -210,7 +212,8 @@ configure_installation() {
   done
 
   echo >&2
-  read -p "Proceed with this configuration? (y/N): " confirm
+  echo -n "Proceed with this configuration? (y/N): " >&2
+  read confirm
   if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
     echo "Installation cancelled." >&2
     return 1
