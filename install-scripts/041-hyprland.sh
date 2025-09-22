@@ -28,11 +28,20 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-APT_PACKAGES=()
+APT_PACKAGES=(
+    hyprland
+    wofi
+    waybar
+    fonts-font-awesome
+  )
 
 BREW_PACKAGES=()
 
-SYMLINKS=()
+# "i3:$HOME/.config/i3"
+SYMLINKS=(
+    "hypr:$HOME/.config/hypr"
+    "waybar:$HOME/.config/waybar"
+  )
 
 # Function to install packages via apt
 install_apt_packages() {
@@ -94,10 +103,7 @@ create_symlinks() {
     return 0
   fi
 
-  # Define config mappings: source_path:target_path
-  local configs=$SYMLINKS
-
-  for config in "${configs[@]}"; do
+  for config in "${SYMLINKS[@]}"; do
     IFS=':' read -r source target <<< "$config"
     source_path="$DOTFILES_DIR/$source"
 
@@ -132,7 +138,56 @@ create_symlinks() {
   done
 }
 
+deb_sid_instructions() {
+  # Check if already on Debian sid main
+  if grep -q "deb.*sid main" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    log_success "Debian sid main repository is already configured"
+    return 0
+  fi
+  
+  # Check if we're on Debian (not Ubuntu or other distros)
+  if ! grep -q "^ID=debian" /etc/os-release 2>/dev/null; then
+    log_warning "This system doesn't appear to be Debian. Skipping sid repository setup."
+    return 0
+  fi
+  
+  # Warn user about sid (unstable)
+  log_warning "Debian sid (unstable) repository is not currently configured."
+  log_warning "Debian sid is the unstable branch and may contain broken packages."
+  log_warning "Only proceed if you understand the risks and have researched Debian sid."
+  
+  # Ask for user confirmation
+  echo -n "Do you want to enable Debian sid main repository? (y/N): "
+  read -r response
+  
+  case "$response" in
+    [yY]|[yY][eE][sS])
+      log_info "Adding Debian sid main repository..."
+      
+      # Backup current sources.list
+      if [ -f /etc/apt/sources.list ]; then
+        sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup.$(date +%Y%m%d_%H%M%S)
+        log_info "Backed up /etc/apt/sources.list"
+      fi
+      
+      # Add sid repository
+      echo "deb http://deb.debian.org/debian sid main" | sudo tee -a /etc/apt/sources.list
+      log_success "Added Debian sid main repository to sources.list"
+      
+      # Update package lists
+      log_info "Updating package lists..."
+      sudo apt update
+      log_success "Package lists updated"
+      ;;
+    *)
+      log_info "Debian sid repository setup skipped by user"
+      ;;
+  esac
+}
+
 main() {
+  deb_sid_instructions
+
   install_apt_packages
   install_brew_packages
   create_symlinks

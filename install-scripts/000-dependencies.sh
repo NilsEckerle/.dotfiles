@@ -29,9 +29,7 @@ log_error() {
 }
 
 APT_PACKAGES=()
-
 BREW_PACKAGES=()
-
 SYMLINKS=()
 
 # Function to check if command exists
@@ -47,11 +45,19 @@ install_homebrew() {
   fi
 
   log_info "Installing Homebrew..."
-  yes  | /bin/bash -c "$(wget -qO- https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # Export NONINTERACTIVE to avoid prompts
+  export NONINTERACTIVE=1
+
+  # Install Homebrew with automatic yes responses
+  sudo apt install curl
+  yes  | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
 
   # Add Homebrew to PATH for current session
   if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    # Add to shell profile for persistence
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
   fi
 
   log_success "Homebrew installed"
@@ -98,7 +104,7 @@ install_brew_packages() {
       log_success "$package is already installed via brew"
     else
       log_info "Installing $package via brew..."
-      yes  | brew install "$package"
+      NONINTERACTIVE=1 brew install "$package"
       log_success "$package installed via brew"
     fi
   done
@@ -117,10 +123,7 @@ create_symlinks() {
     return 0
   fi
 
-  # Define config mappings: source_path:target_path
-  local configs=$SYMLINKS
-
-  for config in "${configs[@]}"; do
+  for config in "${SYMLINKS[@]}"; do
     IFS=':' read -r source target <<< "$config"
     source_path="$DOTFILES_DIR/$source"
 

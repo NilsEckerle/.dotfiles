@@ -102,19 +102,13 @@ install_brew_packages() {
 create_symlinks() {
   log_info "Creating symlinks..."
 
-  # Create .local/bin directory if it doesn't exist
-  mkdir -p "$HOME/.local/bin"
-
   # Check if SYMLINKS array is empty or unset
   if [ ${#SYMLINKS[@]} -eq 0 ]; then
     log_info "No symlinks to create (SYMLINKS array is empty)"
     return 0
   fi
 
-  # Define config mappings: source_path:target_path
-  local configs=$SYMLINKS
-
-  for config in "${configs[@]}"; do
+  for config in "${SYMLINKS[@]}"; do
     IFS=':' read -r source target <<< "$config"
     source_path="$DOTFILES_DIR/$source"
 
@@ -149,10 +143,51 @@ create_symlinks() {
   done
 }
 
+# Function to install Oh My Zsh
+install_oh_my_zsh() {
+  if [ -d "$HOME/.oh-my-zsh" ]; then
+    log_success "Oh My Zsh is already installed"
+    return
+  fi
+
+  log_info "Installing Oh My Zsh..."
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  log_success "Oh My Zsh installed"
+}
+
+# Function to install TPM (Tmux Plugin Manager)
+install_tpm() {
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+
+  if [ -d "$tpm_dir" ]; then
+    log_success "TPM (Tmux Plugin Manager) is already installed"
+    return
+  fi
+
+  log_info "Installing TPM (Tmux Plugin Manager)..."
+
+  # Create tmux plugins directory
+  mkdir -p "$HOME/.tmux/plugins"
+
+  # Clone TPM repository
+  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+
+  log_success "TPM installed"
+  log_info "TPM installed to $tmp_dir"
+  log_warning "After tmux configuration is set up, press prefix + I to install plugins"
+}
+
+zsh_default_shell() {
+  chsh -s $(which zsh)
+}
+
 main() {
   install_apt_packages
   install_brew_packages
+  install_oh_my_zsh
+  install_tpm
   create_symlinks
+  zsh_default_shell
 }
 
 main
