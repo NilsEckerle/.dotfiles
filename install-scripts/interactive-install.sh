@@ -77,6 +77,8 @@ find_and_group_scripts() {
 
 # Function to choose from multiple options during configuration
 choose_option_config() {
+  echo choose_option
+  return
 }
 
 # Function to execute a script
@@ -130,6 +132,8 @@ setup_sudo() {
 
 # Configuration phase - select all scripts to run
 configure_installation() {
+  echo config_installation
+  return
 }
 
 # Execution phase - run all selected scripts unattended
