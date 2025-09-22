@@ -77,53 +77,6 @@ find_and_group_scripts() {
 
 # Function to choose from multiple options during configuration
 choose_option_config() {
-  local order="$1"
-  shift
-  local options=("$@")
-
-  if [[ ${#options[@]} -eq 1 ]]; then
-    echo >&2
-    local desc=$(get_script_description "${options[0]}")
-    echo "Step $order: ${options[0]} - $desc" >&2
-    while true; do
-      echo -n "Include this step? (Y/n): " >&2
-      read include
-      case "$include" in
-        [Nn]*)
-          return 1
-          ;;
-        [Yy]*|"")
-          echo "${options[0]}"
-          return 0
-          ;;
-        *)
-          echo "Please enter 'y' for yes or 'n' for no." >&2
-          ;;
-      esac
-    done
-  fi
-
-  echo >&2
-  echo "Multiple options found for step $order:" >&2
-  for i in "${!options[@]}"; do
-    local desc=$(get_script_description "${options[$i]}")
-    echo "  $((i+1)). ${options[$i]} - $desc" >&2
-  done
-  echo "  0. Skip this step" >&2
-
-  while true; do
-    echo -n "Choose an option (0-${#options[@]}): " >&2
-    read choice
-
-    if [[ "$choice" == "0" ]]; then
-      return 1
-    elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && [[ "$choice" -le "${#options[@]}" ]]; then
-      echo "${options[$((choice-1))]}"
-      return 0
-    else
-      echo "Invalid choice. Please enter a number between 0 and ${#options[@]}." >&2
-    fi
-  done
 }
 
 # Function to execute a script
@@ -177,51 +130,6 @@ setup_sudo() {
 
 # Configuration phase - select all scripts to run
 configure_installation() {
-  local script_data="$1"
-  local -a selected_scripts=()
-
-  # Interactive prompts go to stderr so they're not captured by redirection
-  echo "=== CONFIGURATION PHASE ===" >&2
-  echo "Select which scripts you want to run. You can configure everything now" >&2
-  echo "and then let the installation run unattended." >&2
-  echo >&2
-
-  # Process each order group for configuration
-  while IFS=':' read -r order scripts_str; do
-    IFS=' ' read -ra scripts <<< "$scripts_str"
-
-    local chosen_script
-    if chosen_script=$(choose_option_config "$order" "${scripts[@]}"); then
-      selected_scripts+=("$chosen_script")
-    fi
-  done <<< "$script_data"
-
-  # Show summary of selected scripts
-  echo >&2
-  echo "=== INSTALLATION SUMMARY ===" >&2
-  if [[ ${#selected_scripts[@]} -eq 0 ]]; then
-    echo "No scripts selected for installation." >&2
-    return 1
-  fi
-
-  echo "The following scripts will be executed:" >&2
-  for i in "${!selected_scripts[@]}"; do
-    local script="${selected_scripts[$i]}"
-    local desc=$(get_script_description "$script")
-    echo "  $((i+1)). $script - $desc" >&2
-  done
-
-  echo >&2
-  echo -n "Proceed with this configuration? (y/N): " >&2
-  read confirm
-  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    echo "Installation cancelled." >&2
-    return 1
-  fi
-
-  # Return selected scripts (one per line) to stdout
-  printf '%s\n' "${selected_scripts[@]}"
-  return 0
 }
 
 # Execution phase - run all selected scripts unattended
@@ -317,20 +225,6 @@ main() {
   done <<< "$script_data"
 
   echo
-
-  # Configuration phase - using a temporary file to avoid subshell issues
-  local temp_file=$(mktemp)
-  if ! configure_installation "$script_data" > "$temp_file"; then
-    rm -f "$temp_file"
-    exit 0
-  fi
-
-  # Convert to array
-  local -a scripts_array
-  while IFS= read -r script; do
-    [[ -n "$script" ]] && scripts_array+=("$script")
-  done < "$temp_file"
-  rm -f "$temp_file"
 
   echo
   read -p "Press Enter to start the installation, or Ctrl+C to cancel..."
