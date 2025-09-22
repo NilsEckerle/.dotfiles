@@ -47,6 +47,7 @@ install_homebrew() {
   fi
 
   log_info "Installing Homebrew..."
+  sudo apt update
   yes  | /bin/bash -c "$(wget -qO- https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Add Homebrew to PATH for current session
