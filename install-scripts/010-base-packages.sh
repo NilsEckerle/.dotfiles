@@ -181,9 +181,9 @@ install_tpm() {
 main() {
   install_apt_packages
   install_brew_packages
-  create_symlinks
   install_oh_my_zsh
   install_tpm
+  create_symlinks
 }
 
 main
