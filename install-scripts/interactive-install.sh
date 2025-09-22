@@ -27,13 +27,15 @@ log_error() {
 }
 
 # Check if user has sudo privileges
-if ! groups "$USER" | grep -q '\bsudo\b'; then
-  log_error "User $USER is not in sudo group. Please run as root first:"
-  log_error "  usermod -aG sudo $USER"
-  log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
-  log_error "Then log out/in and run this script as $USER"
-  exit 1
-fi
+check_sudo() {
+  if ! groups "$USER" | grep -q '\bsudo\b'; then
+    log_error "User $USER is not in sudo group. Please run as root first:"
+    log_error "  usermod -aG sudo $USER"
+    log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
+    log_error "Then log out/in and run this script as $USER"
+    exit 1
+  fi
+}
 
 # Function to get script description from filename
 get_script_description() {
@@ -52,9 +54,7 @@ find_and_group_scripts() {
     if [[ -f "$script" && "$script" != "interactive-install.sh" ]]; then
       # Extract order number (first two digits)
       local order="${script:0:2}"
-      # Extract full prefix (first three digits)
-      local prefix="${script:0:3}"
-
+      
       # Add to script groups
       if [[ -z "${script_groups[$order]}" ]]; then
         script_groups[$order]="$script"
@@ -75,15 +75,23 @@ find_and_group_scripts() {
   done
 }
 
-# Function to choose from multiple options
-choose_option() {
+# Function to choose from multiple options during configuration
+choose_option_config() {
   local order="$1"
   shift
   local options=("$@")
 
   if [[ ${#options[@]} -eq 1 ]]; then
-    echo "${options[0]}"
-    return
+    echo
+    local desc=$(get_script_description "${options[0]}")
+    echo "Step $order: ${options[0]} - $desc"
+    read -p "Include this step? (Y/n): " include
+    if [[ "$include" =~ ^[Nn]$ ]]; then
+      return
+    else
+      echo "${options[0]}"
+      return
+    fi
   fi
 
   echo
@@ -97,17 +105,16 @@ choose_option() {
   while true; do
     read -p "Choose an option (0-${#options[@]}): " choice
 
-      if [[ "$choice" == "0" ]]; then
-        echo ""
-        return
-      elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && [[ "$choice" -le "${#options[@]}" ]]; then
-        echo "${options[$((choice-1))]}"
-        return
-      else
-        log_error "Invalid choice. Please enter a number between 0 and ${#options[@]}."
-      fi
-    done
-  }
+    if [[ "$choice" == "0" ]]; then
+      return
+    elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && [[ "$choice" -le "${#options[@]}" ]]; then
+      echo "${options[$((choice-1))]}"
+      return
+    else
+      log_error "Invalid choice. Please enter a number between 0 and ${#options[@]}."
+    fi
+  done
+}
 
 # Function to execute a script
 execute_script() {
@@ -122,12 +129,7 @@ execute_script() {
       log_success "Completed: $script"
     else
       log_error "Failed to execute: $script"
-      echo
-      read -p "Do you want to continue with the remaining scripts? (y/N): " continue_choice
-      if [[ ! "$continue_choice" =~ ^[Yy]$ ]]; then
-        log_error "Installation aborted."
-        exit 1
-      fi
+      return 1
     fi
   else
     log_warning "Script $script is not executable. Making it executable..."
@@ -136,15 +138,11 @@ execute_script() {
       log_success "Completed: $script"
     else
       log_error "Failed to execute: $script"
-      echo
-      read -p "Do you want to continue with the remaining scripts? (y/N): " continue_choice
-      if [[ ! "$continue_choice" =~ ^[Yy]$ ]]; then
-        log_error "Installation aborted."
-        exit 1
-      fi
+      return 1
     fi
   fi
   echo
+  return 0
 }
 
 # Pre-authenticate sudo and keep it alive
@@ -167,6 +165,105 @@ setup_sudo() {
   log_success "Sudo authentication configured"
 }
 
+# Configuration phase - select all scripts to run
+configure_installation() {
+  local script_data="$1"
+  local -a selected_scripts=()
+
+  log_info "=== CONFIGURATION PHASE ==="
+  echo "Select which scripts you want to run. You can configure everything now"
+  echo "and then let the installation run unattended."
+  echo
+
+  # Process each order group for configuration
+  while IFS=':' read -r order scripts_str; do
+    IFS=' ' read -ra scripts <<< "$scripts_str"
+
+    local chosen_script
+    chosen_script=$(choose_option_config "$order" "${scripts[@]}")
+
+    if [[ -n "$chosen_script" ]]; then
+      selected_scripts+=("$chosen_script")
+    fi
+  done <<< "$script_data"
+
+  # Show summary of selected scripts
+  echo
+  log_info "=== INSTALLATION SUMMARY ==="
+  if [[ ${#selected_scripts[@]} -eq 0 ]]; then
+    log_warning "No scripts selected for installation."
+    return 1
+  fi
+
+  echo "The following scripts will be executed:"
+  for i in "${!selected_scripts[@]}"; do
+    local script="${selected_scripts[$i]}"
+    local desc=$(get_script_description "$script")
+    echo "  $((i+1)). $script - $desc"
+  done
+
+  echo
+  read -p "Proceed with this configuration? (y/N): " confirm
+  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    log_info "Installation cancelled."
+    return 1
+  fi
+
+  # Return selected scripts (one per line)
+  printf '%s\n' "${selected_scripts[@]}"
+  return 0
+}
+
+# Execution phase - run all selected scripts unattended
+execute_installation() {
+  local -a selected_scripts=("$@")
+  
+  log_info "=== EXECUTION PHASE ==="
+  echo "Starting unattended installation of ${#selected_scripts[@]} scripts..."
+  echo "You can now leave this running - it will complete without user interaction."
+  echo
+
+  setup_sudo
+
+  local failed_scripts=()
+  local successful_scripts=()
+
+  # Execute each selected script
+  for script in "${selected_scripts[@]}"; do
+    if execute_script "$script"; then
+      successful_scripts+=("$script")
+    else
+      failed_scripts+=("$script")
+      log_error "Script $script failed. Continuing with remaining scripts..."
+    fi
+  done
+
+  # Final summary
+  echo
+  log_info "=== INSTALLATION COMPLETE ==="
+  
+  if [[ ${#successful_scripts[@]} -gt 0 ]]; then
+    log_success "Successfully completed ${#successful_scripts[@]} scripts:"
+    for script in "${successful_scripts[@]}"; do
+      echo "  ✓ $script"
+    done
+  fi
+
+  if [[ ${#failed_scripts[@]} -gt 0 ]]; then
+    echo
+    log_error "Failed scripts (${#failed_scripts[@]}):"
+    for script in "${failed_scripts[@]}"; do
+      echo "  ✗ $script"
+    done
+    echo
+    log_warning "Some scripts failed. Please review the output above for details."
+    return 1
+  else
+    echo
+    log_success "All selected scripts completed successfully!"
+    return 0
+  fi
+}
 
 # Main function
 main() {
@@ -180,6 +277,9 @@ main() {
     exit 1
   fi
 
+  # Check sudo privileges
+  check_sudo
+
   # Find and group scripts
   local script_data
   script_data=$(find_and_group_scripts)
@@ -190,16 +290,13 @@ main() {
   fi
 
   # Show overview
-  log_info "Found installation scripts:"
-  local selected_scripts=()
-
+  log_info "Available installation scripts:"
   while IFS=':' read -r order scripts_str; do
     IFS=' ' read -ra scripts <<< "$scripts_str"
 
     if [[ ${#scripts[@]} -eq 1 ]]; then
       local desc=$(get_script_description "${scripts[0]}")
       echo "  Step $order: ${scripts[0]} - $desc"
-      selected_scripts+=("${scripts[0]}")
     else
       echo "  Step $order: Multiple options available"
       for script in "${scripts[@]}"; do
@@ -210,33 +307,24 @@ main() {
   done <<< "$script_data"
 
   echo
-  read -p "Do you want to proceed with the installation? (y/N): " proceed
-  if [[ ! "$proceed" =~ ^[Yy]$ ]]; then
-    log_info "Installation cancelled."
+
+  # Configuration phase
+  local selected_scripts
+  if ! selected_scripts=$(configure_installation "$script_data"); then
     exit 0
   fi
 
+  # Convert to array
+  local -a scripts_array
+  while IFS= read -r script; do
+    [[ -n "$script" ]] && scripts_array+=("$script")
+  done <<< "$selected_scripts"
+
   echo
-  log_info "Starting installation process..."
-  echo
-  setup_sudo
+  read -p "Press Enter to start the installation, or Ctrl+C to cancel..."
 
-  # Process each order group
-  while IFS=':' read -r order scripts_str; do
-    IFS=' ' read -ra scripts <<< "$scripts_str"
-
-    local chosen_script
-    chosen_script=$(choose_option "$order" "${scripts[@]}")
-
-    if [[ -n "$chosen_script" ]]; then
-      execute_script "$chosen_script"
-    else
-      log_warning "Skipped step $order"
-      echo
-    fi
-  done <<< "$script_data"
-
-  log_success "Installation process completed!"
+  # Execution phase
+  execute_installation "${scripts_array[@]}"
 }
 
 # Run main function
