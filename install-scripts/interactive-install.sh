@@ -76,9 +76,32 @@ find_and_group_scripts() {
 }
 
 # Function to choose from multiple options during configuration
-choose_option_config() {
-  echo choose_option
-  return
+choose_option() {
+  local -a options=("$@")
+  local choice
+  
+  echo
+  echo "Multiple options available:"
+  for i in "${!options[@]}"; do
+    local desc=$(get_script_description "${options[$i]}")
+    printf "  %d) %s - %s\n" $((i+1)) "${options[$i]}" "$desc"
+  done
+  
+  while true; do
+    echo
+    read -p "Please select an option (1-${#options[@]}), or 's' to skip this step: " choice
+    
+    if [[ "$choice" == "s" || "$choice" == "S" ]]; then
+      echo "Skipping this step."
+      return 1
+    elif [[ "$choice" =~ ^[0-9]+$ ]] && [[ "$choice" -ge 1 && "$choice" -le ${#options[@]} ]]; then
+      echo "Selected: ${options[$((choice-1))]}"
+      echo "${options[$((choice-1))]}"
+      return 0
+    else
+      log_error "Invalid choice. Please enter a number between 1 and ${#options[@]}, or 's' to skip."
+    fi
+  done
 }
 
 # Function to execute a script
@@ -132,8 +155,61 @@ setup_sudo() {
 
 # Configuration phase - select all scripts to run
 configure_installation() {
-  echo config_installation
-  return
+  local script_data="$1"
+  local -a selected_scripts=()
+  
+  log_info "=== CONFIGURATION PHASE ==="
+  echo "Please select which scripts to run for each step."
+  echo
+  
+  while IFS=':' read -r order scripts_str; do
+    IFS=' ' read -ra scripts <<< "$scripts_str"
+    
+    echo "Step $order:"
+    
+    if [[ ${#scripts[@]} -eq 1 ]]; then
+      # Only one script in this group, auto-select it
+      local desc=$(get_script_description "${scripts[0]}")
+      echo "  → ${scripts[0]} - $desc (auto-selected)"
+      selected_scripts+=("${scripts[0]}")
+    else
+      # Multiple scripts, let user choose
+      echo "  Multiple options available for this step:"
+      for script in "${scripts[@]}"; do
+        local desc=$(get_script_description "$script")
+        echo "    - $script - $desc"
+      done
+      
+      if selected_script=$(choose_option "${scripts[@]}"); then
+        selected_scripts+=("$selected_script")
+      fi
+    fi
+    echo
+  done <<< "$script_data"
+  
+  # Show summary of selected scripts
+  echo
+  log_info "=== INSTALLATION SUMMARY ==="
+  if [[ ${#selected_scripts[@]} -eq 0 ]]; then
+    log_warning "No scripts selected for installation."
+    exit 0
+  fi
+  
+  echo "The following scripts will be executed:"
+  for i in "${!selected_scripts[@]}"; do
+    local desc=$(get_script_description "${selected_scripts[$i]}")
+    printf "  %d. %s - %s\n" $((i+1)) "${selected_scripts[$i]}" "$desc"
+  done
+  echo
+  
+  read -p "Proceed with installation? (y/N): " confirm
+  if [[ ! "$confirm" =~ ^[yY]$ ]]; then
+    log_info "Installation cancelled."
+    exit 0
+  fi
+  
+  # Return selected scripts as a space-separated string
+  printf "%s\n" "${selected_scripts[@]}"
 }
 
 # Execution phase - run all selected scripts unattended
@@ -230,11 +306,12 @@ main() {
 
   echo
 
-  echo
-  read -p "Press Enter to start the installation, or Ctrl+C to cancel..."
+  # Configuration phase
+  local -a selected_scripts_array
+  readarray -t selected_scripts_array < <(configure_installation "$script_data")
 
   # Execution phase
-  execute_installation "${scripts_array[@]}"
+  execute_installation "${selected_scripts_array[@]}"
 }
 
 # Run main function
