@@ -23,8 +23,8 @@ window#waybar.hidden {
 #workspaces {
     background: rgba(60, 56, 54, 0.8); /* #3c3836 */
     margin: 2px;
-    padding: 0px 5px;
-    border-radius: 5px;
+    padding: 0px 0px;
+    border-radius: 0px;
 }
 
 #workspaces button {
