@@ -10,33 +10,18 @@
       "hyprland/workspaces",
     ],
     "modules-center": [
-      "hyprland/window"
     ],
     "modules-right": [
-    "pulseaudio",
-    "cpu",
-    "memory",
-    "temperature",
-    "keyboard-state",
-    "hyprland/language",
     "clock",
-    "tray",
+    "tray"
     ],
     // Modules configuration
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "warp-on-scroll": false,
-        "format": "{name}: {icon}",
-        "format-icons": {
-            "1": "",
-            "6": "",
-            "9": "",
-            "10": "",
-            "urgent": "",
-            "active": "",
-            "default": ""
-        }
+        "format": "{name}",
+        "format-icons": {}
     },
     "keyboard-state": {
       "numlock": true,
@@ -100,8 +85,9 @@
     },
     "clock": {
       // "timezone": "America/New_York",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-      "format-alt": "{:%Y-%m-%d}"
+      // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+      // "format-alt": "{:%Y-%m-%d}"
+      "format": "{:%Y-%m-%d - %H:%M}"
     },
     "cpu": {
       "format": "CPU: {usage}%",
