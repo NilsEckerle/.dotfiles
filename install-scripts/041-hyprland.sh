@@ -34,6 +34,8 @@ APT_PACKAGES=(
     waybar
     fonts-font-awesome
     wl-clipboard
+    swaylock
+    hyprpaper
   )
 
 BREW_PACKAGES=()
@@ -42,6 +44,7 @@ BREW_PACKAGES=()
 SYMLINKS=(
     "hypr:$HOME/.config/hypr"
     "waybar:$HOME/.config/waybar"
+    "wallpaper:$HOME/wallpaper"
   )
 
 # Function to install packages via apt
