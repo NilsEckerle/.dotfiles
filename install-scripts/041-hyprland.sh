@@ -45,6 +45,7 @@ SYMLINKS=(
     "hypr:$HOME/.config/hypr"
     "waybar:$HOME/.config/waybar"
     "wallpaper:$HOME/wallpaper"
+    "wofi:$HOME/.config/wofi"
   )
 
 # Function to install packages via apt
