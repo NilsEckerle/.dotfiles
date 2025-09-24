@@ -1,13 +1,10 @@
-// -*- mode: jsonc -*-
-{
-  // "layer": "top", // Waybar at top layer
+{ // -*- mode: jsonc -*-
   "position": "bottom", // Waybar position (top|bottom|left|right)
-  "height": 16, // Waybar height (to be removed for auto height)
-                // "width": 1280, // Waybar width
+  "height": 16,
   "spacing": 0,
 
   "modules-left": [ "hyprland/workspaces" ],
-  "modules-center": [ ],
+  "modules-center": [],
   "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "tray" ],
 
   // Modules configuration
@@ -16,22 +13,22 @@
     "format": "{:%Y-%m-%d - %H:%M}"
   },
   "pulseaudio": {
-      "format": "{icon}  {volume}%",
-      "format-muted": "",
-      "format-icons": {
-          "default": ["", "", " "]
-      },
-      "on-click": "pavucontrol"
+    "format": "{icon}  {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", " "]
+    },
+    "on-click": "pavucontrol"
   },
   "hyprland/workspaces": {
-      "disable-scroll": true,
-      "warp-on-scroll": false,
-      "format": "{name}",
-      "format-icons": {}
+    "disable-scroll": true,
+    "warp-on-scroll": false,
+    "format": "{name}",
+    "format-icons": {}
   },
   "tray": {
     "icon-size": 21,
-    "spacing": 1,
+    "spacing": 1
     // "icons": {
     //   "blueman": "bluetooth",
     //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
@@ -44,5 +41,12 @@
   "memory": {
     "format": "RAM: {}%"
   },
+  "keyboard-status": {
+    "format": " {name}",
+    "format-alt": " {variant}",
+    "tooltip": true,
+    "tooltip-format": "Layout: {name}\nVariant: {variant}",
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+    "on-click-right": "your-keyboard-settings-app"
+  }
 }
-
