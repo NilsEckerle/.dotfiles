@@ -105,6 +105,7 @@ alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
 #useful
 alias ltxtemplate='latex_template.sh'
+alias kb=hyprland-switch-kb-map.sh
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
