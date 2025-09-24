@@ -12,6 +12,8 @@
     "modules-center": [
     ],
     "modules-right": [
+    "cpu",
+    "memory",
     "clock",
     "tray"
     ],
