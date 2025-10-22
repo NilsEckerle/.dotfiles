@@ -37,6 +37,10 @@ system_PACKAGES=(
     swaylock
     hyprpaper
     picom
+    papirus-icon-theme
+    hyprpicker
+    grim
+    slurp
   )
 
 # "i3:$HOME/.config/i3"
@@ -46,6 +50,58 @@ SYMLINKS=(
     "wallpaper:$HOME/wallpaper"
     "wofi:$HOME/.config/wofi"
   )
+
+create_color_picker_desktop_file() {
+  local desktop_file="$HOME/.local/share/applications/hyprpicker.desktop"
+
+  # Create directory if it doesn't exist
+  mkdir -p "$HOME/.local/share/applications"
+
+  log_info "Creating Hyprpicker desktop file at $desktop_file"
+
+  # Create the desktop file
+  echo "[Desktop Entry]
+Type=Application
+Name=Hyprpicker
+Comment=Wayland color picker for Hyprland
+Exec=hyprpicker -a
+Icon=color-select
+Terminal=false
+Categories=Utility;Graphics;
+Keywords=color;picker;select;copy;
+StartupNotify=false" > "$desktop_file"
+
+  # Make it executable
+  chmod +x "$desktop_file"
+
+  log_info "Hyprpicker desktop file created successfully."
+}
+
+create_grim_slurp_screenshot_desktop_file() {
+  local desktop_file="$HOME/.local/share/applications/grim_slurp_screenshot.desktop"
+
+  # Create directory if it doesn't exist
+  mkdir -p "$HOME/.local/share/applications"
+
+  log_info "Creating grim slurp screenshot desktop file at $desktop_file"
+
+  # Create the desktop file
+  echo "[Desktop Entry]
+Type=Application
+Name=WScreenshot
+Comment=Wayland screenshot tool for Hyprland
+Exec=$(HOME)/scripts/wayland-screenshot.sh
+Icon=/usr/share/icons/Papirus/32x32/apps/accessories-screenshot.svg
+Terminal=false
+Categories=Utility;Graphics;
+Keywords=screenshot;picker;select;copy;
+StartupNotify=false" > "$desktop_file"
+
+  # Make it executable
+  chmod +x "$desktop_file"
+
+  log_info "Hyprpicker desktop file created successfully."
+}
 
 # Function to install packages via system
 install_system_packages() {
@@ -119,6 +175,8 @@ create_symlinks() {
 main() {
   install_system_packages
   create_symlinks
+  create_color_picker_desktop_file
+  create_grim_slurp_screenshot_desktop_file
 }
 
 main
