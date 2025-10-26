@@ -41,6 +41,7 @@ system_PACKAGES=(
     hyprpicker
     grim
     slurp
+    picom
   )
 
 # "i3:$HOME/.config/i3"
