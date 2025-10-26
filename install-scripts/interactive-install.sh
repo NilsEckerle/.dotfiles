@@ -28,13 +28,7 @@ log_error() {
 
 # Check if user has sudo privileges
 check_sudo() {
-  if ! groups "$USER" | grep -q '\bsudo\b'; then
-    log_error "User $USER is not in sudo group. Please run as root first:"
-    log_error "  usermod -aG sudo $USER"
-    log_error "  echo \"$USER ALL=(ALL:ALL) ALL\" >> /etc/sudoers.d/$USER"
-    log_error "Then log out/in and run this script as $USER"
-    exit 1
-  fi
+  return 0
 }
 
 # Function to get script description from filename

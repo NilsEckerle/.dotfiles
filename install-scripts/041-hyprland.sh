@@ -28,17 +28,16 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-APT_PACKAGES=(
+system_PACKAGES=(
     hyprland
     wofi
     waybar
-    fonts-font-awesome
+    otf-font-awesome
     wl-clipboard
     swaylock
     hyprpaper
+    picom
   )
-
-BREW_PACKAGES=()
 
 # "i3:$HOME/.config/i3"
 SYMLINKS=(
@@ -48,52 +47,26 @@ SYMLINKS=(
     "wofi:$HOME/.config/wofi"
   )
 
-# Function to install packages via apt
-install_apt_packages() {
-  if [ ${#APT_PACKAGES[@]} -eq 0 ]; then
-    log_info "No APT packages to install"
+# Function to install packages via system
+install_system_packages() {
+  if [ ${#system_PACKAGES[@]} -eq 0 ]; then
+    log_info "No system packages to install"
     return
   fi
 
-  log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
+  log_info "Installing ${#system_PACKAGES[@]} APT packages..."
 
-    sudo apt update
 
-    for package in "${APT_PACKAGES[@]}"; do
+    for package in "${system_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        sudo apt install -y "$package"
+        yes | ~/.dotfiles/install-scripts/install.sh "$package"
         log_success "$package installed"
       fi
     done
   }
-
-# Function to install packages via Homebrew
-install_brew_packages() {
-  if [ ${#BREW_PACKAGES[@]} -eq 0 ]; then
-    log_info "No brew packages to install"
-    return
-  fi
-
-  log_info "Installing ${#BREW_PACKAGES[@]} Homebrew packages..."
-
-  # Ensure brew is in PATH
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  fi
-
-  for package in "${BREW_PACKAGES[@]}"; do
-    if brew list "$package" >/dev/null 2>&1; then
-      log_success "$package is already installed via brew"
-    else
-      log_info "Installing $package via brew..."
-      yes  | brew install "$package"
-      log_success "$package installed via brew"
-    fi
-  done
-}
 
 # Function to create symlinks
 create_symlinks() {
@@ -143,58 +116,8 @@ create_symlinks() {
   done
 }
 
-deb_sid_instructions() {
-  # Check if already on Debian sid main
-  if grep -q "deb.*sid main" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-    log_success "Debian sid main repository is already configured"
-    return 0
-  fi
-  
-  # Check if we're on Debian (not Ubuntu or other distros)
-  if ! grep -q "^ID=debian" /etc/os-release 2>/dev/null; then
-    log_warning "This system doesn't appear to be Debian. Skipping sid repository setup."
-    return 0
-  fi
-  
-  # Warn user about sid (unstable)
-  log_warning "Debian sid (unstable) repository is not currently configured."
-  log_warning "Debian sid is the unstable branch and may contain broken packages."
-  log_warning "Only proceed if you understand the risks and have researched Debian sid."
-  
-  # Ask for user confirmation
-  echo -n "Do you want to enable Debian sid main repository? (y/N): "
-  read -r response
-  
-  case "$response" in
-    [yY]|[yY][eE][sS])
-      log_info "Adding Debian sid main repository..."
-      
-      # Backup current sources.list
-      if [ -f /etc/apt/sources.list ]; then
-        sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup.$(date +%Y%m%d_%H%M%S)
-        log_info "Backed up /etc/apt/sources.list"
-      fi
-      
-      # Add sid repository
-      echo "deb http://deb.debian.org/debian sid main" | sudo tee -a /etc/apt/sources.list
-      log_success "Added Debian sid main repository to sources.list"
-      
-      # Update package lists
-      log_info "Updating package lists..."
-      sudo sudo apt update
-      log_success "Package lists updated"
-      ;;
-    *)
-      log_info "Debian sid repository setup skipped by user"
-      ;;
-  esac
-}
-
 main() {
-  deb_sid_instructions
-
-  install_apt_packages
-  install_brew_packages
+  install_system_packages
   create_symlinks
 }
 

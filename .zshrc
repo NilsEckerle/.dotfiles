@@ -24,7 +24,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion) # Autosuggestions configuration
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # Source the plugin
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh  Source the plugin
 bindkey '^Y' autosuggest-accept # Bind Ctrl+Y to accept suggestion
 
 # Custom Prompt ----- #
@@ -124,7 +124,7 @@ alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a
 alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ----- Tmux Auto-Start ----- #

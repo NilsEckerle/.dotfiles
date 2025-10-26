@@ -37,34 +37,8 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
-# Function to install Homebrew
-install_homebrew() {
-  if command_exists brew; then
-    log_success "Homebrew is already installed"
-    return
-  fi
-
-  log_info "Installing Homebrew..."
-
-  # Export NONINTERACTIVE to avoid prompts
-  export NONINTERACTIVE=1
-
-  # Install Homebrew with automatic yes responses
-  sudo sudo apt install curl
-  yes  | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
-
-  # Add Homebrew to PATH for current session
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    # Add to shell profile for persistence
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-  fi
-
-  log_success "Homebrew installed"
-}
-
-# Function to install packages via apt
-install_apt_packages() {
+# Function to install packages via system
+install_system_packages() {
   if [ ${#APT_PACKAGES[@]} -eq 0 ]; then
     log_info "No APT packages to install"
     return
@@ -72,43 +46,16 @@ install_apt_packages() {
 
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
-    sudo apt update
-
     for package in "${APT_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        sudo apt install -y "$package"
+        ~/.dotfiles/install-scrips/install.sh "$package"
         log_success "$package installed"
       fi
     done
   }
-
-# Function to install packages via Homebrew
-install_brew_packages() {
-  if [ ${#BREW_PACKAGES[@]} -eq 0 ]; then
-    log_info "No brew packages to install"
-    return
-  fi
-
-  log_info "Installing ${#BREW_PACKAGES[@]} Homebrew packages..."
-
-  # Ensure brew is in PATH
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  fi
-
-  for package in "${BREW_PACKAGES[@]}"; do
-    if brew list "$package" >/dev/null 2>&1; then
-      log_success "$package is already installed via brew"
-    else
-      log_info "Installing $package via brew..."
-      NONINTERACTIVE=1 brew install "$package"
-      log_success "$package installed via brew"
-    fi
-  done
-}
 
 # Function to create symlinks
 create_symlinks() {
@@ -159,9 +106,7 @@ create_symlinks() {
 }
 
 main() {
-  install_homebrew
-  install_apt_packages
-  install_brew_packages
+  install_system_packages
   create_symlinks
 }
 

@@ -28,67 +28,38 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-APT_PACKAGES=(
+system_PACKAGES=(
   zsh-autosuggestions
   ripgrep
   kitty
-  tealdeer
+  tldr
   feh
 )
-
-BREW_PACKAGES=()
 
 SYMLINKS=(
     "kitty:$HOME/.config/kitty"
     "feh:$HOME/.config/feh"
   )
 
-# Function to install packages via apt
-install_apt_packages() {
-  if [ ${#APT_PACKAGES[@]} -eq 0 ]; then
-    log_info "No APT packages to install"
+# Function to install packages via system
+install_system_packages() {
+  if [ ${#system_PACKAGES[@]} -eq 0 ]; then
+    log_info "No system packages to install"
     return
   fi
 
-  log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
+  log_info "Installing ${#system_PACKAGES[@]} APT packages..."
 
-    sudo apt update
-
-    for package in "${APT_PACKAGES[@]}"; do
+    for package in "${system_PACKAGES[@]}"; do
       if dpkg -l | grep -q "^ii  $package "; then
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        sudo apt install -y "$package"
+        yes | ~/.dotfiles/install-scripts/install.sh "$package"
         log_success "$package installed"
       fi
     done
   }
-
-# Function to install packages via Homebrew
-install_brew_packages() {
-  if [ ${#BREW_PACKAGES[@]} -eq 0 ]; then
-    log_info "No brew packages to install"
-    return
-  fi
-
-  log_info "Installing ${#BREW_PACKAGES[@]} Homebrew packages..."
-
-  # Ensure brew is in PATH
-  if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  fi
-
-  for package in "${BREW_PACKAGES[@]}"; do
-    if brew list "$package" >/dev/null 2>&1; then
-      log_success "$package is already installed via brew"
-    else
-      log_info "Installing $package via brew..."
-      yes  | brew install "$package"
-      log_success "$package installed via brew"
-    fi
-  done
-}
 
 # Function to create symlinks
 create_symlinks() {
@@ -139,8 +110,7 @@ create_symlinks() {
 }
 
 main() {
-  install_apt_packages
-  install_brew_packages
+  install_system_packages
   create_symlinks
 }
 
