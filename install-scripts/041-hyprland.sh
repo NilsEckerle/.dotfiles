@@ -91,7 +91,7 @@ create_grim_slurp_screenshot_desktop_file() {
 Type=Application
 Name=WScreenshot
 Comment=Wayland screenshot tool for Hyprland
-Exec=$(HOME)/scripts/wayland-screenshot.sh
+Exec=$HOME/scripts/wayland-screenshot.sh
 Icon=/usr/share/icons/Papirus/32x32/apps/accessories-screenshot.svg
 Terminal=false
 Categories=Utility;Graphics;
