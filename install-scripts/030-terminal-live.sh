@@ -34,6 +34,7 @@ APT_PACKAGES=(
   ttf-firacode-nerd
   noto-fonts-emoji
   neovim
+  lazygit
 )
 
 SYMLINKS=(
