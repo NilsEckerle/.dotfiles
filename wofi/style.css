@@ -100,6 +100,13 @@ window {
   color: @blue;
 }
 
+#entry image {
+  margin-right: 8px;
+  /* Optionally set a specific size */
+  /* min-width: 24px;
+     min-height: 24px; */
+}
+
 /* Selected Entry */
 #entry:selected {
   /* border: 1px solid @yellow; */
