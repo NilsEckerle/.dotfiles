@@ -50,6 +50,8 @@ SYMLINKS=(
     "waybar:$HOME/.config/waybar"
     "wallpaper:$HOME/wallpaper"
     "wofi:$HOME/.config/wofi"
+    "gtk-3.0:$HOME/.config/gtk-3.0"
+    ".themes:$HOME/.themes"
   )
 
 create_color_picker_desktop_file() {
