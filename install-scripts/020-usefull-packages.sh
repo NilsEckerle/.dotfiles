@@ -34,6 +34,7 @@ system_PACKAGES=(
   kitty
   tldr
   feh
+  firefox
 )
 
 SYMLINKS=(
