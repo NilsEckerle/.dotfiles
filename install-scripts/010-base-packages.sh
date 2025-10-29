@@ -37,6 +37,7 @@ APT_PACKAGES=(
   wget
   git
   fzf
+  man-db
 )
 
 BREW_PACKAGES=()
