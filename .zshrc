@@ -102,6 +102,7 @@ git commit -m \"feat(auth): add JWT token validation\"
 
 **Git Status and Diff**:" && echo "" && gs && gd) | wl-copy'
 alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
+alias gpuinfo='glxinfo | grep "Device\|OpenGL renderer"'
 
 #useful
 alias ltxtemplate='latex_template.sh'

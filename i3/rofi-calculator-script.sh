@@ -34,7 +34,7 @@ main() {
     expression="$1"
   else
     # Show rofi prompt for calculation
-    expression=$(rofi -dmenu -p "Calculator" -mesg "Examples: 16e6/1024, sin(pi/2), sqrt(144), log(100), 2**8")
+    expression=$(wofi -dmenu -p "Calculator" -mesg "Examples: 16e6/1024, sin(pi/2), sqrt(144), log(100), 2**8")
 
     # If user cancels (Escape) or provides empty input, exit
     if [ -z "$expression" ]; then
@@ -49,7 +49,7 @@ main() {
   result=$(calculate "$expression")
 
   if [ -z "$result" ] || [ "$result" = "0" ] && [ "$expression" != "0" ]; then
-    rofi -e "Error: Invalid expression '$expression'"
+    wofi -e "Error: Invalid expression '$expression'"
     exit 1
   fi
 
@@ -57,7 +57,7 @@ main() {
   formatted_result=$(echo "$result" | sed 's/\.0$//' | sed 's/\(.\.\)0$/\1/' | sed 's/\.$//') 
 
   # Copy to clipboard
-  echo "$formatted_result" | xclip -selection clipboard
+  echo "$formatted_result" | wl-copy
 
   # Show result notification
   notify-send "Calculator" "$expression = $formatted_result" -t 3000

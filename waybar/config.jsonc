@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "tray" ],
+  "modules-right": [ "cpu", "custom/gpu", "memory", "pulseaudio", "clock", "tray" ],
 
   // Modules configuration
   "clock": {
@@ -36,6 +36,12 @@
   },
   "cpu": {
     "format": "CPU: {usage}%",
+    "tooltip": false
+  },
+  "custom/gpu": {
+    "exec": "cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo 'N/A'",
+    "format": "GPU: {}%",
+    "interval": 2,
     "tooltip": false
   },
   "memory": {
