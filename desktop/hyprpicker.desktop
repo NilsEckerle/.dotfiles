@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Hyprpicker
+Comment=Wayland color picker for Hyprland
+Exec=hyprpicker -an
+Icon=color-select
+Terminal=false
+Categories=Utility;Graphics;
+Keywords=color;picker;select;copy;
+StartupNotify=false

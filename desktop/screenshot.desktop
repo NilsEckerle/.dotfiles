@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot
+Comment=Wayland screenshot tool for Hyprland
+Exec=/home/nils/scripts/wayland-screenshot.sh
+Icon=accessories-screenshot
+Terminal=false
+Categories=Utility;Graphics;
+Keywords=screenshot;capture;screen;
+StartupNotify=false
+NoDisplay=false
