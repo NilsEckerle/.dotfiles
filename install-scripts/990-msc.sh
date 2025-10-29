@@ -53,7 +53,7 @@ install_system_packages() {
         log_success "$package is already installed"
       else
         log_info "Installing $package..."
-        yes | ~/.dotfiles/install-scripts/install.sh "$package"
+        ~/.dotfiles/install-scripts/install.sh "$package"
         log_success "$package installed"
       fi
     done

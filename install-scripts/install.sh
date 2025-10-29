@@ -1,2 +1,2 @@
 #/bin/sh
-sudo pacman -Syu $@ --needed
+sudo pacman -Syu $@ --needed --noconfirm

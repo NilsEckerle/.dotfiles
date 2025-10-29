@@ -58,15 +58,9 @@ install_system_packages() {
 
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
-    for package in "${APT_PACKAGES[@]}"; do
-      if dpkg -l | grep -q "^ii  $package "; then
-        log_success "$package is already installed"
-      else
         log_info "Installing $package..."
-        yes | ~/.dotfiles/install-scripts/install.sh "$package"
+        ~/.dotfiles/install-scripts/install.sh "$package"
         log_success "$package installed"
-      fi
-    done
   }
 
 # Function to create symlinks
@@ -149,7 +143,7 @@ install_tpm() {
 }
 
 zsh_default_shell() {
-  chsh -s $(which zsh)
+  chsh -s $(chsh -l | grep "zsh" | head -1)
 }
 
 main() {
