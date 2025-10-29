@@ -1,16 +1,16 @@
 -- lua/plugins/lsp/clangd.lua
 return function(capabilities)
-	require("lspconfig").clangd.setup({
+	vim.lsp.config.clangd = {
 		cmd = { "clangd" },
 		filetypes = { "c", "cpp", "objc", "objcpp" },
-		root_dir = require("lspconfig.util").root_pattern(
+		root_markers = {
 			".clangd",
 			".clang-tidy",
 			".clang-format",
 			"compile_commands.json",
 			"compile_flags.txt",
 			"build"
-		),
+		},
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			-- Enable inlay hints if supported
@@ -29,5 +29,6 @@ return function(capabilities)
 				fallbackFlags = { "-std=c17" },
 			},
 		},
-	})
+	}
+	vim.lsp.enable("clangd")
 end

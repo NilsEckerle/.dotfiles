@@ -1,6 +1,9 @@
 -- lua/plugins/lsp/lua-ls.lua
 return function(capabilities)
-	require("lspconfig").lua_ls.setup({
+	vim.lsp.config.lua_ls = {
+		cmd = { "lua-language-server" },
+		filetypes = { "lua" },
+		root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
 		capabilities = capabilities,
 		settings = {
 			Lua = {
@@ -16,5 +19,6 @@ return function(capabilities)
 				},
 			},
 		},
-	})
+	}
+	vim.lsp.enable("lua_ls")
 end
