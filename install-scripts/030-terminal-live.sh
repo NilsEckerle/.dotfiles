@@ -113,6 +113,9 @@ create_symlinks() {
 
 main() {
   install_system_packages
+
+  sudo ln -sf "$DOTFILES_DIR/ly/config.ini" "/etc/ly/config.ini"
+
   create_symlinks
 }
 
