@@ -35,6 +35,7 @@ APT_PACKAGES=(
   noto-fonts-emoji
   neovim
   lazygit
+  pulsemixer
 )
 
 SYMLINKS=(

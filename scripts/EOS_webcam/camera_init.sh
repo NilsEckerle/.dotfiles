@@ -1,17 +1,16 @@
 #!/bin/bash
 
-# Camera Virtual Setup Script
+# Camera Virtual Setup Script for Arch Linux
 # Sets up a physical camera as a virtual camera device using gphoto2 and v4l2loopback
 
 set -e  # Exit on any error
 
-# Package list
+# Package list for Arch Linux
 PACKAGES=(
 	"gphoto2"
 	"ffmpeg"
 	"v4l2loopback-dkms"
-	"v4l2loopback-utils"
-	"linux-headers-$(uname -r)"
+	"linux-lts-headers"
 	"vlc"
 )
 
@@ -46,13 +45,10 @@ check_root() {
 install_dependencies() {
 	print_status "Checking and installing dependencies..."
 
-	# Update package list
-	sudo apt update
-
 	for package in "${PACKAGES[@]}"; do
-		if ! dpkg -l | grep -q "^ii  $package "; then
+		if ! pacman -Qi "$package" &> /dev/null; then
 			print_status "Installing $package..."
-			sudo apt install -y "$package"
+			sudo pacman -S --noconfirm "$package"
 		else
 			print_status "$package is already installed"
 		fi
@@ -122,7 +118,7 @@ setup_virtual_camera() {
 
 # Main execution
 main() {
-	print_status "Starting Camera Virtual Setup Script"
+	print_status "Starting Camera Virtual Setup Script (Arch Linux)"
 
 	# Check if running as root
 	check_root
@@ -149,4 +145,3 @@ main() {
 }
 
 main
-
