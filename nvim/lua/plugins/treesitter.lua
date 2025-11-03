@@ -13,6 +13,8 @@ return {
 					"vimdoc",
 					"query",
 					"markdown",
+					"markdown_inline",
+          "latex",
 					"javascript",
 					"html",
 				},
@@ -32,4 +34,3 @@ return {
 		end,
 	},
 }
--- Hallo welt
