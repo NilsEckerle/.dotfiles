@@ -1,12 +1,15 @@
+#version 320 es
+
 precision mediump float;
-varying vec2 v_texcoord;
+in vec2 v_texcoord;
 uniform sampler2D tex;
+out vec4 fragColor;
 
 void main() {
-  vec4 pixColor = texture2D(tex, v_texcoord);
+  vec4 pixColor = texture(tex, v_texcoord);
 
   // Convert to grayscale using luminance formula
   float gray = dot(pixColor.rgb, vec3(0.299, 0.587, 0.114));
 
-  gl_FragColor = vec4(vec3(gray), pixColor.a);
+  fragColor = vec4(vec3(gray), pixColor.a);
 }
