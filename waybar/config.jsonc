@@ -18,7 +18,7 @@
     "format-icons": {
       "default": ["", "", " "]
     },
-    "on-click": "pavucontrol"
+    "on-click": "kitty pulsemixer"
   },
   "hyprland/workspaces": {
     "disable-scroll": true,
