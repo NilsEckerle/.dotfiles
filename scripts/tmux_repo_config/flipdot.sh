@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 repo_path=$1
 tmux_session=$2
 echo $repo_path

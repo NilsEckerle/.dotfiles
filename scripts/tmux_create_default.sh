@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 tmux_session="Default"
 if tmux has-session -t "$tmux_session" 2>/dev/null; then
   # Attach to the tmux session if not already in tmux

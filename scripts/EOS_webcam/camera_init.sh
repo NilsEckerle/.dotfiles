@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Camera Virtual Setup Script for Arch Linux
 # Sets up a physical camera as a virtual camera device using gphoto2 and v4l2loopback

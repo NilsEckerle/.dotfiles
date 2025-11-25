@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 mkdir -p /tmp
 
 echo "Starting GPU monitor using radeontop..."

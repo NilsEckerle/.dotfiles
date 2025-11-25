@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$(./get-dotfiles-dir.sh)
 
@@ -36,12 +36,10 @@ system_PACKAGES=(
     wl-clipboard
     swaylock
     hyprpaper
-    picom
     papirus-icon-theme
     hyprpicker
     grim
     slurp
-    picom
     satty
   )
 

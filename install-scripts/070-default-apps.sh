@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$(./get-dotfiles-dir.sh)
 
@@ -157,7 +157,11 @@ setup_default_apps() {
   update-desktop-database ~/.local/share/applications
 
   log_info "Setting default applications..."
+
+  # default browser
+  xdg-mime default firefox.desktop x-scheme-handler/https
   
+
   # Set Neovim for text files
   xdg-mime default nvim.desktop text/plain
   xdg-mime default nvim.desktop text/x-python

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 mkdir -p ~/.config/hypr/scripts
 
 current_shader=$(hyprctl getoption decoration:screen_shader | grep "str:" | sed 's/.*str: //')

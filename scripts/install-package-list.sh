@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Debian 12 Dotfiles Setup Script with Package File Selection
 # Run this script from your ~/.dotfiles directory

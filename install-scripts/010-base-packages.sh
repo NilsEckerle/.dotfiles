@@ -1,4 +1,4 @@
-#sudo apt install -y!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$(./get-dotfiles-dir.sh)
 

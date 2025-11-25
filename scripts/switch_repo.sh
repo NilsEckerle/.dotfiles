@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function repo_tmux {
   filter_params=""
   dirs_to_find_in=("$HOME/Documents" "/media/nils/storage/Documents/" "$HOME/.dotfiles" "$HOME/vm-share")

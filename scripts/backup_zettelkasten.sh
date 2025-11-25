@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 DISPLAY=:0
 cd ~/Documents/Zettelkasten && {
   git add . &&

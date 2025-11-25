@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Rofi Calculator
 # Handles scientific notation and copies result to clipboard
 

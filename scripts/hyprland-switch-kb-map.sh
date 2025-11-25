@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 KEYMAP=$1
 HYPRLAND_CONFIG=$HOME/.config/hypr/hyprland.conf

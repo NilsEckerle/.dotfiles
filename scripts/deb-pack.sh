@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Debian package management.
 # This tool can install and uninstall packages in apt and brew while

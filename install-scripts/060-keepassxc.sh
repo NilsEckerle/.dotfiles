@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$(./get-dotfiles-dir.sh)
 
@@ -102,6 +102,8 @@ create_symlinks() {
 main() {
   install_system_packages
   create_symlinks
+  systemctl --user enable syncthing.service
+  systemctl --user start syncthing.service
 }
 
 main

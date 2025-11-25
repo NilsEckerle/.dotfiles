@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DOTFILES_DIR=$(./get-dotfiles-dir.sh)
 
@@ -41,7 +41,7 @@ APT_PACKAGES=(
 SYMLINKS=(
     "nvim:$HOME/.config/nvim"
     "mutt:$HOME/.config/mutt"
-    "systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
+    #"systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
   )
 
 # Function to install packages via system

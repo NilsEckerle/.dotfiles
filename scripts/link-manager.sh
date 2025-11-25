@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Package manager wrapper script
 # Supports apt and brew with package lists and configuration tracking
