@@ -10,7 +10,7 @@ return {
 		-- Set up compiler options with build directory
 		vim.g.vimtex_compiler_latexmk = {
 			aux_dir = "build",
-			out_dir = ".",
+			out_dir = "build", -- change to build
 			callback = 1,
 			continuous = 1,
 			executable = "latexmk",
@@ -88,4 +88,3 @@ return {
 		})
 	end,
 }
--- Hallo welt
