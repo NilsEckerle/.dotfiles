@@ -5,12 +5,13 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "tray" ],
+  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "custom/uxplay", "tray" ],
 
   // Modules configuration
   "clock": {
     // "timezone": "America/New_York",
-    "format": "{:%Y-%m-%d - %H:%M}"
+    "format": "{:%Y-%m-%d - %H:%M}",
+    "on-click": "firefox --new-window \"https://calendar.proton.me/\""
   },
   "pulseaudio": {
     "format": "{icon}  {volume}%",
@@ -35,11 +36,11 @@
     // }
   },
   "cpu": {
-    "format": "CPU: {usage}%",
+    "format": "\uf2db  {usage}%",
     "tooltip": false
   },
   "memory": {
-    "format": "RAM: {}%"
+    "format": "\uf538  {}%"
   },
   "keyboard-status": {
     "format": " {name}",
@@ -48,5 +49,16 @@
     "tooltip-format": "Layout: {name}\nVariant: {variant}",
     "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
     "on-click-right": "your-keyboard-settings-app"
+  },
+  "custom/uxplay": {
+    "exec": "pgrep -x uxplay > /dev/null && echo '<span color=\"#8ec07c\">󰡁</span>' || echo '<span color=\"#928374\">\uf8e8</span>'",
+    "interval": 2,
+    "format": "{}",
+    "class": "custom_uxplay",
+    "tooltip": true,
+    "tooltip-format": "UxPlay: Left click to start, right click to stop",
+    "on-click": "uxplay > /dev/null 2>&1 &",
+    "on-click-right": "killall uxplay && pkill -RTMIN+8 waybar",
+    "signal": 8
   }
 }
