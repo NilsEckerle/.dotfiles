@@ -3,6 +3,8 @@ local mason_ensure_installed = {
   "stylua",
   "shfmt",
   "clangd",
+  "gopls",
+  "rust-analyzer",
   "basedpyright",
   "omnisharp",
 }
