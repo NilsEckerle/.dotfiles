@@ -142,3 +142,9 @@ fi
 # Created by `pipx` on 2025-08-10 12:51:36
 export PATH="$PATH:/home/nils/.local/bin"
 
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/nils/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/nils/.config/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
