@@ -2,12 +2,6 @@ return {
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_format = true,
-			},
-		},
 		config = function()
 			require("conform").setup({
 				formatters_by_ft = {
@@ -24,8 +18,19 @@ return {
 							"--style=file", -- use .clang-format file
 							"--fallback-style=LLVM", -- FALLBACK if no .clang-format found
 						},
+            condition = function(self, ctx)
+              -- Only format if .clang-format exists in project root
+              return vim.fs.find({
+                ".clang-format",
+                "_clang-format",
+              }, { path = ctx.filename, upward = true })[1] ~= nil
+            end,
 					},
 				},
+        format_on_save = {
+          timeout_ms = 500,
+          lsp_format = true,
+        },
 			})
 
 			local function format()
@@ -40,4 +45,3 @@ return {
 		end,
 	},
 }
--- Hallo welt
