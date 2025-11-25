@@ -8,4 +8,3 @@ return {
 		opt = ...,
 	},
 }
--- Hallo welt

@@ -39,4 +39,3 @@ require("lazy").setup({
 		},
 	},
 })
--- Hallo welt

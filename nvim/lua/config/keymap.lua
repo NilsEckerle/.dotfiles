@@ -26,14 +26,13 @@ map("x", "<leader>p", '"_dP', { desc = "replace while keeping p register" })
 map("n", "<leader>p", "p", { desc = "replace while keeping p register" })
 
 map("n", "<leader>o", function()
-  local file_dir = vim.fn.expand("%:p:h")
-  vim.fn.jobstart({"nemo", file_dir}, {
-    detach = true,
-    on_exit = function(_, code)
-      if code ~= 0 then
-        vim.notify("Failed to open Nemo", vim.log.levels.ERROR)
-      end
-    end
-  })
+	local file_dir = vim.fn.expand("%:p:h")
+	vim.fn.jobstart({ "nemo", file_dir }, {
+		detach = true,
+		on_exit = function(_, code)
+			if code ~= 0 then
+				vim.notify("Failed to open Nemo", vim.log.levels.ERROR)
+			end
+		end,
+	})
 end, { desc = "Open current file directory in Nemo" })
--- Hallo welt

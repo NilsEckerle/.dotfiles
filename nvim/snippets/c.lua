@@ -31,16 +31,16 @@ end
 -- Helper function to get author (you can customize this)
 -- Helper function to get author from git config
 local function get_author()
-  -- Try to get git user name first
-  local git_name = vim.fn.system("git config --get user.name"):gsub("\n", "")
-  
-  -- If git command succeeded and returned a name
-  if vim.v.shell_error == 0 and git_name ~= "" then
-    return git_name
-  end
-  
-  -- Fallback to system username or default
-  return vim.fn.expand("$USER") or "Author Name"
+	-- Try to get git user name first
+	local git_name = vim.fn.system("git config --get user.name"):gsub("\n", "")
+
+	-- If git command succeeded and returned a name
+	if vim.v.shell_error == 0 and git_name ~= "" then
+		return git_name
+	end
+
+	-- Fallback to system username or default
+	return vim.fn.expand("$USER") or "Author Name"
 end
 
 return {
@@ -134,5 +134,3 @@ return {
 		)
 	),
 }
-
--- Hallo welt

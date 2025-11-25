@@ -242,4 +242,3 @@ return {
 		vim.api.nvim_create_user_command("ObsidianToggleWordLimit", toggle_word_limit, {})
 	end,
 }
--- Hallo welt
