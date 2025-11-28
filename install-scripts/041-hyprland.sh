@@ -41,6 +41,7 @@ system_PACKAGES=(
     grim
     slurp
     satty
+    dunst
   )
 
 # "i3:$HOME/.config/i3"
@@ -51,6 +52,7 @@ SYMLINKS=(
     "wofi:$HOME/.config/wofi"
     "gtk-3.0:$HOME/.config/gtk-3.0"
     ".themes:$HOME/.themes"
+    "dunst:$HOME/.config/dunst"
     "desktop/screenshot.desktop:$HOME/.local/share/applications/screenshot.desktop"
     "desktop/hyprpicker.desktop:$HOME/.local/share/applications/hyprpicker.desktop"
   )
@@ -66,13 +68,9 @@ install_system_packages() {
 
 
     for package in "${system_PACKAGES[@]}"; do
-      if dpkg -l | grep -q "^ii  $package "; then
-        log_success "$package is already installed"
-      else
-        log_info "Installing $package..."
-        ~/.dotfiles/install-scripts/install.sh "$package"
-        log_success "$package installed"
-      fi
+      log_info "Installing $package..."
+      ~/.dotfiles/install-scripts/install.sh "$package"
+      log_success "$package installed"
     done
   }
 
