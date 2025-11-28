@@ -1,0 +1,167 @@
+# After editing, reload with: killall dunst && dunst &
+
+[global]
+    ### Display ###
+    
+    # Follow the monitor with mouse focus
+    follow = mouse
+    
+    # Geometry: [{width}]x{height}[+/-{x}+/-{y}]
+    # Width will be ignored, notification width will be set to content width
+    # Height is for a single notification
+    # Position: top-right corner with 10px offset
+    width = (200, 400)
+    height = 300
+    origin = top-right
+    offset = 10x10
+    
+    # Scale factor (auto-detect if 0)
+    scale = 0
+    
+    # Maximum number of notifications
+    notification_limit = 5
+    
+    ### Progress bar ###
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+    progress_bar_corner_radius = 5
+    
+    ### Appearance ###
+    
+    # Transparency (0-100)
+    transparency = 0
+    
+    # Separator between notifications
+    separator_height = 2
+    separator_color = frame
+    
+    # Padding
+    padding = 12
+    horizontal_padding = 12
+    text_icon_padding = 12
+    
+    # Frame
+    frame_width = 1
+    frame_color = "#928374"
+    
+    # Gap between notifications
+    gap_size = 5
+    
+    # Rounded corners
+    corner_radius = 5
+    
+    ### Text ###
+    
+    font = JetBrainsMono Nerd Font 10
+    
+    # Spacing between lines
+    line_height = 0
+    
+    # Markup (full/strip/no)
+    markup = full
+    
+    # Message format
+    # %a - appname
+    # %s - summary
+    # %b - body
+    # %i - iconname (including its path)
+    # %I - iconname (without its path)
+    # %p - progress value (if set)
+    # %n - progress value no extra characters
+    # %% - literal %
+    format = "<b>%s</b>\n%b"
+    
+    # Alignment (left/center/right)
+    alignment = left
+    vertical_alignment = center
+    
+    # Show age of message if message is older than show_age_threshold seconds
+    show_age_threshold = 60
+    
+    # Split notifications into multiple lines
+    word_wrap = yes
+    
+    # Ignore newlines '\n' in notifications
+    ignore_newline = no
+    
+    ### Icons ###
+    
+    enable_recursive_icon_lookup = true
+    icon_theme = Papirus-Dark
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
+    icon_corner_radius = 5
+    
+    ### History ###
+    
+    # Sticky notifications stay on screen until dismissed
+    sticky_history = yes
+    
+    # Maximum amount of notifications kept in history
+    history_length = 20
+    
+    ### Misc ###
+    
+    # dmenu path
+    dmenu = /usr/bin/wofi --dmenu -p dunst:
+    
+    # Browser for opening urls
+    browser = /usr/bin/firefox --new-tab
+    
+    # Always run rule-defined scripts, even if the notification is suppressed
+    always_run_script = true
+    
+    # Mouse actions
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = close_current
+    mouse_right_click = close_all
+    
+    # Title and class of notification windows
+    title = Dunst
+    class = Dunst
+
+# Gruvbox color scheme for urgency levels
+
+[urgency_low]
+    background = "#32302f"
+    foreground = "#ebdbb2"
+    frame_color = "#928374"
+    timeout = 3
+    
+[urgency_normal]
+    background = "#32302f"
+    foreground = "#ebdbb2"
+    frame_color = "#928374"
+    timeout = 10
+    
+[urgency_critical]
+    background = "#32302f"
+    foreground = "#fbf1c7"
+    frame_color = "#fb4934"
+    timeout = 0
+    icon = dialog-error
+
+# Application-specific rules (examples)
+
+[spotify]
+    appname = Spotify
+    frame_color = "#b8bb26"
+    format = "<b>%s</b>\n%b"
+    
+[discord]
+    appname = discord
+    frame_color = "#83a598"
+
+[volume]
+    appname = "changeVolume"
+    format = "<b>%s</b>\n%b"
+    timeout = 2
+
+[brightness]
+    appname = "changeBrightness"
+    format = "<b>%s</b>\n%b"
+    timeout = 2
