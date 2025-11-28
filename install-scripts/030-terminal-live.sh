@@ -36,13 +36,15 @@ APT_PACKAGES=(
   neovim
   lazygit
   pulsemixer
+  isync
 )
 
 SYMLINKS=(
-    "nvim:$HOME/.config/nvim"
-    "mutt:$HOME/.config/mutt"
-    #"systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
-  )
+  "nvim:$HOME/.config/nvim"
+  "mutt:$HOME/.config/mutt"
+  ".isyncrc:$HOME/.config/isyncrc"
+  #"systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
+)
 
 # Function to install packages via system
 install_system_packages() {
@@ -54,13 +56,9 @@ install_system_packages() {
   log_info "Installing ${#APT_PACKAGES[@]} APT packages..."
 
     for package in "${APT_PACKAGES[@]}"; do
-      if dpkg -l | grep -q "^ii  $package "; then
-        log_success "$package is already installed"
-      else
-        log_info "Installing $package..."
-        yes | ~/.dotfiles/install-scripts/install.sh "$package"
-        log_success "$package installed"
-      fi
+      log_info "Installing $package..."
+      yes | ~/.dotfiles/install-scripts/install.sh "$package"
+      log_success "$package installed"
     done
   }
 
@@ -112,12 +110,51 @@ create_symlinks() {
   done
 }
 
+isync_setup() {
+  mkdir -p ~/Mail/{INBOX,Sent,Drafts,Trash,Archive}/{cur,new,tmp}
+
+  mkdir -p ~/.config/systemd/user/
+
+cat > ~/.config/systemd/user/mbsync.service << 'EOF'
+[Unit]
+Description=Mailbox synchronization service
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mbsync -a
+ExecStartPost=%h/.config/mutt/mbsync-notify.sh
+StandardOutput=journal
+StandardError=journal
+EOF
+
+cat > ~/.config/systemd/user/mbsync.timer << 'EOF'
+[Unit]
+Description=Mailbox synchronization timer
+
+[Timer]
+OnBootSec=2m
+OnUnitActiveSec=2m
+Unit=mbsync.service
+
+[Install]
+WantedBy=timers.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable mbsync.timer
+systemctl --user start mbsync.timer
+
+}
+
 main() {
   install_system_packages
 
   sudo ln -sf "$DOTFILES_DIR/ly/config.ini" "/etc/ly/config.ini"
 
   create_symlinks
+
+  isync_setup
 }
 
 main

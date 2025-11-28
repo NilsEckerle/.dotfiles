@@ -1,0 +1,37 @@
+IMAPAccount protonmail
+Host 127.0.0.1
+Port 1143
+User nilseckerle2001@protonmail.com
+PassCmd "grep imap_pass ~/.config/mutt/passwords.env | cut -d'\"' -f2"
+SSLType None
+Timeout 120
+
+IMAPStore protonmail-remote
+Account protonmail
+
+MaildirStore protonmail-local
+Path ~/Mail/
+Inbox ~/Mail/INBOX
+SubFolders Verbatim
+
+Channel protonmail-inbox
+Far :protonmail-remote:INBOX
+Near :protonmail-local:INBOX
+Create Both
+Expunge Both
+SyncState *
+
+Channel protonmail-sent
+Far :protonmail-remote:Sent
+Near :protonmail-local:Sent
+Create Both
+Expunge Both
+SyncState *
+
+Channel protonmail
+Far :protonmail-remote:
+Near :protonmail-local:
+Patterns * !INBOX !Sent
+Create Both
+Expunge Both
+SyncState *
