@@ -15,12 +15,8 @@ source ~/.config/mutt/aliases.env
 # *.local
 # *_local
 
-# ProtonMail IMAP settings
+# ProtonMail IMAP & SMTP settings
 set imap_user = "nilseckerle2001@protonmail.com"
-set folder = "imap://127.0.0.1:1143"
-set spoolfile = "+INBOX"
-
-# ProtonMail SMTP settings
 set smtp_url = "smtp://nilseckerle2001@protonmail.com@127.0.0.1:1025"
 
 set from = "nilseckerle2001@protonmail.com"
@@ -34,7 +30,6 @@ set move = no
 
 set sort = "reverse-date"
 set editor = "nvim"
-set timeout = "5"
 set date_format = "%Y-%m-%d %H:%M"
 #set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-15.15L (%?l?%4l&%4c?) %s"
 set index_format = "%4C %Z %{%Y-%m-%d %H:%M} %-20.20L (%?l?%4l&%4c?) %s"
@@ -47,11 +42,22 @@ set flag_chars = "*🔴🗑️  N    "
 set mailcap_path = "~/.config/mutt/mailcap"
 
 # ProtonMail folders (standard IMAP folders)
+# set record = "+Sent"
+# set postponed = "+Drafts"
+# set trash = "+Trash"
+# mailboxes "+INBOX" "+Archive" "+Sent" "+Drafts" "+Trash"
+
+# Switch to maildir format
+set mbox_type = Maildir
+set folder = "~/Mail"
+set spoolfile = "+INBOX"
 set record = "+Sent"
 set postponed = "+Drafts"
 set trash = "+Trash"
 mailboxes "+INBOX" "+Archive" "+Sent" "+Drafts" "+Trash"
-
+set mail_check = 60
+set timeout = 10
+set mark_old = no
 
 # Archive macro for ProtonMail
 macro index,pager A "<save-message>+Archive<enter>" "Archive message"
