@@ -68,6 +68,7 @@ button:hover {
 #network,
 #mode,
 #keyboard,
+#custom-mail,
 #custom-uxplay,
 #scratchpad {
   margin-top: 2px;
@@ -88,9 +89,21 @@ button:hover {
     border-bottom: 2px solid @overlay1;
 }
 
+#clock:hover {
+    background: inherit;
+    border-top: 2px solid @mauve;
+    border-bottom: none;
+}
+
 #pulseaudio {
     color: @overlay1;
     border-bottom: 2px solid @overlay1;
+}
+
+#pulseaudio:hover {
+    background: inherit;
+    border-top: 2px solid @mauve;
+    border-bottom: none;
 }
 
 #network {
@@ -102,9 +115,26 @@ button:hover {
     color: @overlay1;
 }
 
+#custom-mail {
+    color: @overlay1;
+    border-bottom: 2px solid @overlay1;
+}
+
+#custom-mail:hover {
+    background: inherit;
+    border-top: 2px solid @mauve;
+    border-bottom: none;
+}
+
 #custom-uxplay {
     border-bottom: 2px solid @overlay1;
     color: @overlay1;
+}
+
+#custom-uxplay:hover {
+    background: inherit;
+    border-top: 2px solid @mauve;
+    border-bottom: none;
 }
 
 #idle_inhibitor {

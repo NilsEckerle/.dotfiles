@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "custom/uxplay", "tray" ],
+  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "tray" ],
 
   // Modules configuration
   "clock": {
@@ -15,9 +15,9 @@
   },
   "pulseaudio": {
     "format": "{icon}  {volume}%",
-    "format-muted": "",
+    "format-muted": "",
     "format-icons": {
-      "default": ["", "", " "]
+      "default": ["", "", " "]
     },
     "on-click": "kitty pulsemixer"
   },
@@ -49,6 +49,10 @@
     "tooltip-format": "Layout: {name}\nVariant: {variant}",
     "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
     "on-click-right": "your-keyboard-settings-app"
+  },
+  "custom/mail": {
+    "format": "✉",
+    "on-click": "kitty neomutt"
   },
   "custom/uxplay": {
     "exec": "pgrep -x uxplay > /dev/null && echo '<span color=\"#8ec07c\">󰡁</span>' || echo '<span color=\"#928374\">\uf8e8</span>'",
