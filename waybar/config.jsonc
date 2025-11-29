@@ -19,7 +19,9 @@
     "format-icons": {
       "default": ["", "", " "]
     },
-    "on-click": "kitty pulsemixer"
+    "on-click": "kitty pulsemixer",
+    "on-click-right": "kitty sh -c 'tmux new-session rmpc'"
+
   },
   "hyprland/workspaces": {
     "disable-scroll": true,
