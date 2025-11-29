@@ -58,10 +58,10 @@ mailboxes "+INBOX" "+Archive" "+Sent" "+Drafts" "+Trash"
 set mail_check = 60
 set timeout = 10
 set mark_old = no
+shutdown-hook "exec mbsync -a"
 
 # Archive macro for ProtonMail
-macro index,pager A "<save-message>+Archive<enter>" "Archive message"
-
+macro index,pager A "<save-message>+Archive<enter><enter-command>set delete=yes<enter><delete-message><sync-mailbox><enter-command>set delete=no<enter>" "Archive message"
 # Vim-like keybindings
 # First disable conflicting bindings
 bind index g noop

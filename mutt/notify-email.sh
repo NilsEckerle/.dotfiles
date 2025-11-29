@@ -18,6 +18,11 @@ if [ -z "$FROM_EMAIL" ]; then
   FROM_EMAIL="$FROM"
 fi
 
+FROM_NAME=$(echo "$FROM" | sed -n 's/\b\([a-zA-Z ]*\) <.*/\1/p')
+if [ -z "$FROM_NAME" ]; then
+  FROM_NAME=""
+fi
+
 # Check if sender is in aliases
 IS_ALIAS=false
 if [ -f "$ALIASES_FILE" ]; then
@@ -71,7 +76,7 @@ if command -v mako >/dev/null 2>&1; then
       -a "Mutt" \
       -i "mail-unread" \
       $EXPIRE_TIME \
-      "New Email from$FROM_EMAIL" \
+      "New Email from $FROM_NAME$FROM_EMAIL" \
       "$SUBJECT"
 
     echo "$SUBJECT"
