@@ -37,12 +37,16 @@ APT_PACKAGES=(
   lazygit
   pulsemixer
   isync
+  mpd
+  rmpc
 )
 
 SYMLINKS=(
   "nvim:$HOME/.config/nvim"
   "mutt:$HOME/.config/mutt"
   ".isyncrc:$HOME/.config/isyncrc"
+  "rmpc:$HOME/.config/rmpc"
+  "mpd:$HOME/.config/mpd"
   #"systemd/user/protonmail-bridge.service:$HOME/.config/systemd/user/protonmail-bridge.service"
 )
 
