@@ -36,10 +36,12 @@ system_PACKAGES=(
   feh
   firefox
   cronie
+  alacritty
 )
 
 SYMLINKS=(
     "kitty:$HOME/.config/kitty"
+    "alacritty:$HOME/.config/alacritty"
     "feh:$HOME/.config/feh"
   )
 
