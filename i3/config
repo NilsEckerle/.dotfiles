@@ -39,7 +39,9 @@ exec --no-startup-id export GTK_THEME=Gruvbox-Orange-Dark
 #################
 
 # Start i3bar with i3status
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh || i3bar
+#exec_always --no-startup-id i3bar
+
+exec_always --no-startup-id setxkbmap -option caps:swapescape
 
 # Composite manager (picom/compton) - matching Hyprland's compositor feel
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
@@ -99,7 +101,7 @@ for_window [class="Nitrogen"] floating enable
 #####################
 
 # Terminal (matching Hyprland: $mainMod + Return)
-bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # Kill focused window (matching Hyprland: $mainMod + C)
 bindsym $mod+c kill
@@ -114,13 +116,13 @@ bindsym $mod+v floating toggle
 bindsym $mod+r exec --no-startup-id rofi -show drun -theme ~/.config/rofi/config.rasi
 
 # Lock screen (matching Hyprland: $mainMod + Shift + L with gruvbox colors)
-bindsym $mod+Shift+l exec --no-startup-id i3lock -c 282828 --inside-color=1d2021 --ring-color=3c3836 --keyhl-color=fe8019 --bshl-color=cc241d --text-color=ebdbb2
+bindsym $mod+Shift+esc exec --no-startup-id i3lock -c 282828 --inside-color=1d2021 --ring-color=3c3836 --keyhl-color=fe8019 --bshl-color=cc241d --text-color=ebdbb2
 
 # Fullscreen (matching Hyprland: $mainMod + F)
 bindsym $mod+f fullscreen toggle
 
 # Music player (matching Hyprland: $mainMod + M -> rmpc in tmux)
-bindsym $mod+m exec --no-startup-id kitty sh -c 'tmux new-session rmpc'
+bindsym $mod+m exec --no-startup-id alacritty --command rmpc
 
 # File manager
 bindsym $mod+e exec --no-startup-id nemo

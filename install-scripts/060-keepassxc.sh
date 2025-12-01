@@ -46,9 +46,11 @@ install_system_packages() {
 
   log_info "Installing ${#system_PACKAGES[@]} APT packages..."
 
-  log_info "Installing $package..."
-  ~/.dotfiles/install-scripts/install.sh "$package"
-  log_success "$package installed"
+  for package in "${system_PACKAGES[@]}"; do
+    log_info "Installing $package..."
+    ~/.dotfiles/install-scripts/install.sh "$package"
+    log_success "$package installed"
+  done
 }
 
 # Function to create symlinks
