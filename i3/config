@@ -54,7 +54,7 @@ exec --no-startup-id dunst
 exec --no-startup-id nm-applet
 
 # Start terminal on workspace 1 (matching Hyprland)
-exec --no-startup-id i3-msg 'workspace 1; exec kitty'
+exec --no-startup-id i3-msg 'workspace 1; exec alacritty'
 
 # Start Firefox on workspace 6 (matching Hyprland)
 exec --no-startup-id i3-msg 'workspace 6; exec firefox'
