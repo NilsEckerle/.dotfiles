@@ -89,9 +89,8 @@ alias gitclip='(echo "# Git Commit Analysis
 - Keep commit messages concise but descriptive (50 chars max for subject)
 
 **Output Format**:
-1. Brief analysis of what changes were detected
-2. Individual code blocks for each recommended commit with staging commands
-3. Final code block with all commands combined
+1. Nothing but Final code block with all commands combined
+2. Do not use chunk commits
 
 **Example Output**:
 \`\`\`bash
@@ -100,7 +99,7 @@ git add src/auth.js src/middleware/auth.js
 git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
-**Git Status and Diff**:" && echo "" && gs && gd) | wl-copy'
+**Git Status, Diff and Untracked**:" && echo "" && gs && gd && git_changes.sh) | wl-copy'
 alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
 
 #useful
