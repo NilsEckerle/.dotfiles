@@ -80,7 +80,7 @@ alias gamend='git commit --amend'
 alias lg='lazygit'
 alias gitclip='(echo "# Git Commit Analysis
 
-**Task**: Analyze the git status and diff below to create focused, atomic commits.
+**Task**: Create focused, atomic commits commands for the terminal.
 
 **Requirements**:
 - Each commit should address ONE specific change (atomic commits)
@@ -89,7 +89,7 @@ alias gitclip='(echo "# Git Commit Analysis
 - Keep commit messages concise but descriptive (50 chars max for subject)
 
 **Output Format**:
-1. Nothing but Final code block with all commands combined
+1. Nothing but a code block with all commands combined
 2. Do not use chunk commits
 
 **Example Output**:
@@ -99,8 +99,9 @@ git add src/auth.js src/middleware/auth.js
 git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
-**Git Status, Diff and Untracked**:" && echo "" && gs && gd && git_changes.sh) | wl-copy'
-alias gitclipai='gitclip && xdg-open "https://claude.ai/new"'
+**Git Status, Diff and Untracked**:" && echo "" && gs && git --no-pager diff && git_changes.sh)'
+alias gitclipai='gitclip | llm --no-prompt'
+alias llm=~/scripts/ollama-prompt.sh
 
 #useful
 alias ltxtemplate='latex_template.sh'
