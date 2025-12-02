@@ -10,7 +10,7 @@
     # Width will be ignored, notification width will be set to content width
     # Height is for a single notification
     # Position: top-right corner with 10px offset
-    width = (200, 400)
+    width = (200, 600)
     height = 300
     origin = top-right
     offset = 10x10
@@ -55,7 +55,7 @@
     
     ### Text ###
     
-    font = JetBrainsMono Nerd Font 10
+    font = JetBrainsMono Nerd Font 16
     
     # Spacing between lines
     line_height = 0
@@ -131,12 +131,14 @@
     foreground = "#ebdbb2"
     frame_color = "#928374"
     timeout = 3
+    script = ~/scripts/play-alert.sh
     
 [urgency_normal]
     background = "#32302f"
     foreground = "#ebdbb2"
     frame_color = "#928374"
     timeout = 10
+    script = ~/scripts/play-alert.sh
     
 [urgency_critical]
     background = "#32302f"
@@ -144,6 +146,7 @@
     frame_color = "#fb4934"
     timeout = 0
     icon = dialog-error
+    script = ~/scripts/play-alert.sh
 
 # Application-specific rules (examples)
 
@@ -165,3 +168,7 @@
     appname = "changeBrightness"
     format = "<b>%s</b>\n%b"
     timeout = 2
+
+[ollama]
+    appname = llm
+    script = ~/scripts/play-alert.sh
