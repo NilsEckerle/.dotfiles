@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "tray" ],
+  "modules-right": [ "cpu", "memory", "custom/gpu", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "tray" ],
 
   // Modules configuration
   "clock": {
@@ -39,10 +39,13 @@
   },
   "cpu": {
     "format": "\uf2db  {usage}%",
-    "tooltip": false
+    "tooltip": false,
+    "on-click": "kitty htop -s PERCENT_CPU"
   },
   "memory": {
-    "format": "\uf538  {}%"
+    "format": "\uf538  {}%",
+    "tooltip": false,
+    "on-click": "kitty htop -s PERCENT_MEM"
   },
   "keyboard-status": {
     "format": " {name}",
@@ -54,6 +57,7 @@
   },
   "custom/mail": {
     "format": "✉",
+    "tooltip": false,
     "on-click": "kitty neomutt"
   },
   "custom/uxplay": {
@@ -66,5 +70,12 @@
     "on-click": "uxplay > /dev/null 2>&1 &",
     "on-click-right": "killall uxplay && pkill -RTMIN+8 waybar",
     "signal": 8
+  },
+  "custom/gpu": {
+    "format": "󰭰   {}%",
+    "tooltip": false,
+    "exec": "~/scripts/gpu_ussage.sh",
+    "interval": 2,
+    "on-click": "kitty radeontop -b 3"
   }
 }
