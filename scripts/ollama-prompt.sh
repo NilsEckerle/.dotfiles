@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODEL="${OLLAMA_MODEL:-qwen2.5-coder:14b}"
+MODEL="${OLLAMA_MODEL:-deepseek-coder-v2:16b}"
 API_URL="${OLLAMA_API:-http://localhost:11434/api/chat}"
 TEMP_FILE="/tmp/ollama-prompt-$$.txt"
 PID_FILE="/tmp/llm-running.pid"
@@ -29,7 +29,7 @@ stop_llm() {
 
 run_async_llm() {
   local prompt="$1"
-  local outfile="/tmp/llm-response-$(date +%s)-$$.txt"
+  local outfile="/tmp/llm-response-$(date +%s)-$$.md"
 
   (
     response=$(send_prompt "$prompt")
@@ -122,7 +122,7 @@ send_prompt() {
   fi
 
   # Extract and print the message content
-  echo "$response" | jq -r '.message.content // .error // "Error: Unexpected response format"'
+  echo "$response" | jq -r '.message.content // .error // "Error: Unexpected response format"' | fold -s -w 80
 }
 
 show_help() {
