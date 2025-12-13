@@ -1,16 +1,18 @@
 -- lua/plugins/lsp.lua
 local mason_ensure_installed = {
-  "stylua",
-  "shfmt",
-  "clangd",
-  "gopls",
-  "rust-analyzer",
-  "basedpyright",
-  "omnisharp",
+	"stylua",
+	"shfmt",
+	"clangd",
+	"codelldb",
+	"gopls",
+	"rust-analyzer",
+	"basedpyright",
+	"omnisharp",
 }
 
 return {
-	{ "neovim/nvim-lspconfig",
+	{
+		"neovim/nvim-lspconfig",
 		dependencies = {
 			"saghen/blink.cmp",
 			{
@@ -28,39 +30,61 @@ return {
 		},
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
-			
+
 			-- Load individual language server configurations
 			require("plugins.lsp.lua-ls")(capabilities)
 			require("plugins.lsp.pyright")(capabilities)
 			require("plugins.lsp.clangd")(capabilities)
 			require("plugins.lsp.omnisharp")(capabilities)
-			
+
 			-- Global LSP keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {
 				desc = "LSP actions",
 				callback = function(event)
 					local buffer = event.buf
-					vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", 
-						{ buffer = buffer, desc = "Show hover information" })
-					vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", 
-						{ buffer = buffer, desc = "Go to definition" })
-					vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", 
-						{ buffer = buffer, desc = "Go to declaration" })
-					vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", 
-						{ buffer = buffer, desc = "Go to implementation" })
-					vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, 
-						{ buffer = buffer, desc = "LSP references" })
+					vim.keymap.set(
+						"n",
+						"K",
+						"<cmd>lua vim.lsp.buf.hover()<cr>",
+						{ buffer = buffer, desc = "Show hover information" }
+					)
+					vim.keymap.set(
+						"n",
+						"gd",
+						"<cmd>lua vim.lsp.buf.definition()<cr>",
+						{ buffer = buffer, desc = "Go to definition" }
+					)
+					vim.keymap.set(
+						"n",
+						"gD",
+						"<cmd>lua vim.lsp.buf.declaration()<cr>",
+						{ buffer = buffer, desc = "Go to declaration" }
+					)
+					vim.keymap.set(
+						"n",
+						"gi",
+						"<cmd>lua vim.lsp.buf.implementation()<cr>",
+						{ buffer = buffer, desc = "Go to implementation" }
+					)
+					vim.keymap.set(
+						"n",
+						"<leader>cr",
+						vim.lsp.buf.references,
+						{ buffer = buffer, desc = "LSP references" }
+					)
 				end,
 			})
 		end,
 	},
-	{ "williamboman/mason.nvim",
+	{
+		"williamboman/mason.nvim",
 		cmd = "Mason",
 		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		build = ":MasonUpdate",
 		opts_extend = { "ensure_installed" },
 		opts = {
-			ensure_installed = mason_ensure_installed},
+			ensure_installed = mason_ensure_installed,
+		},
 		config = function(_, opts)
 			require("mason").setup(opts)
 			local mr = require("mason-registry")
@@ -82,7 +106,8 @@ return {
 			end)
 		end,
 	},
-	{ "williamboman/mason-lspconfig.nvim",
+	{
+		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "omnisharp" },
@@ -90,7 +115,8 @@ return {
 			})
 		end,
 	},
-	{ "chrisgrieser/nvim-lsp-endhints",
+	{
+		"chrisgrieser/nvim-lsp-endhints",
 		event = "LspAttach",
 		opts = {},
 		config = function()
