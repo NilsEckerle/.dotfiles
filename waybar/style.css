@@ -71,6 +71,7 @@ button:hover {
 #keyboard,
 #custom-mail,
 #custom-uxplay,
+#custom-nightlight,
 #scratchpad {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -116,27 +117,21 @@ button:hover {
     color: @overlay1;
 }
 
+#custom-nightlight,
+#custom-uxplay,
 #custom-mail {
     color: @overlay1;
     border-bottom: 2px solid @overlay1;
 }
 
+#custom-nightlight:hover,
+#custom-uxplay:hover,
 #custom-mail:hover {
     background: inherit;
     border-top: 2px solid @mauve;
     border-bottom: none;
 }
 
-#custom-uxplay {
-    border-bottom: 2px solid @overlay1;
-    color: @overlay1;
-}
-
-#custom-uxplay:hover {
-    background: inherit;
-    border-top: 2px solid @mauve;
-    border-bottom: none;
-}
 
 #idle_inhibitor {
     margin-right: 12px;

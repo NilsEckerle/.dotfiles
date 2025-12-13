@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "custom/gpu", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "tray" ],
+  "modules-right": [ "cpu", "memory", "custom/gpu", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/nightlight", "tray" ],
 
   // Modules configuration
   "clock": {
@@ -77,5 +77,14 @@
     "exec": "~/scripts/gpu_ussage.sh",
     "interval": 2,
     "on-click": "kitty radeontop -b 3"
+  },
+  "custom/nightlight": {
+    "format": "{}",
+    "tooltip": true,
+    "tooltip-format": "Toggle nightlight",
+    "exec": "~/.config/hypr/scripts/get-nightlight-state-icon.sh",
+    "interval": 2,
+    "on-click": "~/.config/hypr/scripts/toggle-nightlight.sh",
+    "on-click-right": "~/.config/hypr/scripts/toggle-nightlight.sh"
   }
 }
