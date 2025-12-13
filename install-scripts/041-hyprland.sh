@@ -34,14 +34,17 @@ system_PACKAGES=(
     waybar
     otf-font-awesome
     wl-clipboard
-    swaylock
+    hyprlock
     hyprpaper
+    hypridle
     papirus-icon-theme
     hyprpicker
     grim
     slurp
     satty
     dunst
+    brightnessctl
+    hyprsunset
   )
 
 # "i3:$HOME/.config/i3"
