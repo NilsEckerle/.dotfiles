@@ -36,10 +36,11 @@ opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- fold via treesitter context 
 opt.foldcolumn = "0" -- disables fold column
 opt.foldtext = "" -- shows the code line in folded state
 
-opt.mouse = ""
+-- opt.mouse = ""
 
 opt.clipboard = "unnamedplus"
-opt.signcolumn = "no"
+-- opt.signcolumn = "no"
+vim.opt.signcolumn = "auto:1" -- Show only when needed, 1 column wide
 
 opt.ignorecase = true
 opt.smartcase = true
@@ -69,9 +70,9 @@ function vim.get_visual_selection()
 end
 
 -- Set .h files to be recognized as C instead of C++
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.h",
-  callback = function()
-    vim.bo.filetype = "c"
-  end,
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = "*.h",
+	callback = function()
+		vim.bo.filetype = "c"
+	end,
 })
