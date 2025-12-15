@@ -8,6 +8,8 @@ local mason_ensure_installed = {
 	"rust-analyzer",
 	"basedpyright",
 	"omnisharp",
+	"latexindent",
+	"texlab",
 }
 
 return {
@@ -36,6 +38,7 @@ return {
 			require("plugins.lsp.pyright")(capabilities)
 			require("plugins.lsp.clangd")(capabilities)
 			require("plugins.lsp.omnisharp")(capabilities)
+			require("plugins.lsp.texlab")(capabilities)
 
 			-- Global LSP keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {
