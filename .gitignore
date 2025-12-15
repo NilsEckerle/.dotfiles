@@ -10,3 +10,4 @@ mutt/aliases
 *.toml-*
 rofi/calc_history
 *.env
+mutt/.stfolder
