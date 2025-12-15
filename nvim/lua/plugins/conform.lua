@@ -11,26 +11,19 @@ return {
 					javascript = { "prettierd", "prettier", stop_after_first = true },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
+					tex = { "latexindent" },
+					plaintex = { "latexindent" },
 				},
-				formatters = {
-					clang_format = {
-						prepend_args = {
-							"--style=file", -- use .clang-format file
-							"--fallback-style=LLVM", -- FALLBACK if no .clang-format found
-						},
-            condition = function(self, ctx)
-              -- Only format if .clang-format exists in project root
-              return vim.fs.find({
-                ".clang-format",
-                "_clang-format",
-              }, { path = ctx.filename, upward = true })[1] ~= nil
-            end,
-					},
+				formatters = vim.tbl_extend(
+					"force",
+					{},
+					require("plugins.formatter.clang_format"),
+					require("plugins.formatter.latexindent")
+				),
+				format_on_save = {
+					timeout_ms = 500,
+					lsp_format = true,
 				},
-        format_on_save = {
-          timeout_ms = 500,
-          lsp_format = true,
-        },
 			})
 
 			local function format()
