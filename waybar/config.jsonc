@@ -5,9 +5,22 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "custom/gpu", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/nightlight", "tray" ],
+  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/nightlight", "tray" ],
 
   // Modules configuration
+  "battery": {
+    "bat": "BAT0",
+    "interval": 60,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "{icon}  {capacity}%",
+    "format-charging": "  {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{icon}  {time}",
+    "format-icons": ["", "", "", "", ""]
+},
   "clock": {
     // "timezone": "America/New_York",
     "format": "{:%Y-%m-%d - %H:%M}",
