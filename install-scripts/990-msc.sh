@@ -28,7 +28,9 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
-system_PACKAGES=()
+system_PACKAGES=(
+  libxcrypt-compat # latexindent dependency (nvim formatter)
+  )
 
 SYMLINKS=(
     "alacritty:$HOME/.config/alacritty"
