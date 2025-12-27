@@ -8,6 +8,8 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-calc",
 
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
@@ -15,6 +17,9 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+
+			-- Register nvim-cmp lsp capabilities
+			vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
 
 			-- Load snippets from friendly-snippets (optional)
 			require("luasnip.loaders.from_vscode").lazy_load()
@@ -38,16 +43,19 @@ return {
 					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<C-h>"] = cmp.mapping.confirm({ select = true }),
 					-- ["<C-Space>"] = cmp.mapping.complete(),
 					-- ["<C-e>"] = cmp.mapping.abort(),
-					-- ["<C-d>"] = cmp.mapping.scroll_docs(4),
-					-- ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
 				}),
 
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "path" },
 					{ name = "luasnip" },
+					{ name = "calc" },
+					{ name = "nvim_lsp_signature_help" },
 				}, {
 					{ name = "buffer" },
 				}),
@@ -66,8 +74,26 @@ return {
 				},
 
 				window = {
-					-- completion = cmp.config.window.bordered(),
-					-- documentation = cmp.config.window.bordered(),
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+
+					-- completion = {
+					-- 	-- border = "rounded", -- or 'single', 'double', 'shadow', etc.
+					-- 	-- winhighlight = "Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None",
+					-- 	maxheight = 20,
+					-- 	maxwidth = 60,
+					-- },
+					-- documentation = {
+					-- 	-- border = "rounded", -- or 'single', 'double', 'shadow', etc.
+					-- 	-- winhighlight = "Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None",
+					-- 	maxheight = 20,
+					-- 	maxwidth = 80,
+					-- },
+				},
+
+				-- Enable experimental ghost text (optional)
+				experimental = {
+					ghost_text = false,
 				},
 			})
 
@@ -103,5 +129,16 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		opts = {
+			bind = true,
+			handler_opts = {
+				border = "none",
+			},
+			hint_enable = false,
+		},
 	},
 }
