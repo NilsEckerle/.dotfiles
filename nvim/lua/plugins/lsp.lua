@@ -10,13 +10,14 @@ local mason_ensure_installed = {
 	"omnisharp",
 	"latexindent",
 	"texlab",
+	"cmakelang",
+	"cmakelint",
 }
 
 return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"saghen/blink.cmp",
 			{
 				"folke/lazydev.nvim",
 				ft = "lua", -- only load on lua files
@@ -31,12 +32,13 @@ return {
 			"j-hui/fidget.nvim",
 		},
 		config = function()
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- Load individual language server configurations
 			require("plugins.lsp.lua-ls")(capabilities)
 			require("plugins.lsp.pyright")(capabilities)
 			require("plugins.lsp.clangd")(capabilities)
+			require("plugins.lsp.neocmake")(capabilities)
 			require("plugins.lsp.omnisharp")(capabilities)
 			require("plugins.lsp.texlab")(capabilities)
 
