@@ -12,6 +12,7 @@ return {
 					c = { "clang_format" },
 					cpp = { "clang_format" },
 					tex = { "latexindent" },
+					latex = { "latexindent" },
 					plaintex = { "latexindent" },
 				},
 				formatters = vim.tbl_extend(
