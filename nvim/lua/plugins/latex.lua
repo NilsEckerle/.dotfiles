@@ -16,6 +16,7 @@ return {
 			executable = "latexmk",
 			options = {
 				"-pdf",
+				"-bibtex", -- Aktiviert bibtex/biber
 				"-verbose",
 				"-file-line-error",
 				"-synctex=1",
@@ -32,31 +33,6 @@ return {
 				local view_timer = vim.loop.new_timer()
 				local timer_running = false
 
-				-- Set up autocmd for cursor movement
-				-- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-				-- 	buffer = 0,
-				-- 	callback = function()
-				-- 		-- Cancel previous timer if it exists
-				-- 		if timer_running then
-				-- 			view_timer:stop()
-				-- 		end
-				--
-				-- 		-- Set a new timer (500ms delay - adjust as needed)
-				-- 		timer_running = true
-				-- 		view_timer:start(
-				-- 			500,
-				-- 			0,
-				-- 			vim.schedule_wrap(function()
-				-- 				-- Only execute VimtexView if the document has been compiled
-				-- 				if vim.fn.filereadable(vim.fn.expand("%:r") .. ".pdf") == 1 then
-				-- 					vim.cmd("VimtexView")
-				-- 				end
-				-- 				timer_running = false
-				-- 			end)
-				-- 		)
-				-- 	end,
-				-- })
-
 				-- Ensure we clean up the timer when buffer is unloaded
 				vim.api.nvim_create_autocmd("BufUnload", {
 					buffer = 0,
@@ -67,6 +43,7 @@ return {
 						end
 					end,
 				})
+
 				-- Keymappings
 				vim.api.nvim_buf_set_keymap(
 					0,
