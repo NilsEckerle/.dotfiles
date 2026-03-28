@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/nightlight", "tray" ],
+  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/idleinhibit", "custom/nightlight", "tray" ],
 
   // Modules configuration
   "battery": {
@@ -99,5 +99,14 @@
     "interval": 2,
     "on-click": "~/.config/hypr/scripts/toggle-nightlight.sh",
     "on-click-right": "~/.config/hypr/scripts/toggle-nightlight.sh"
+  },
+  "custom/idleinhibit": {
+      "format": "{}",
+      "exec": "~/scripts/game_tools/idle-inhibit-toggle.sh status",
+      "interval": 5,
+      "on-click": "~/scripts/game_tools/idle-inhibit-toggle.sh toggle",
+      "on-click-right": "~/scripts/game_tools/idle-inhibit-toggle.sh toggle",
+      "signal": 9,
+      "tooltip": false
   }
 }

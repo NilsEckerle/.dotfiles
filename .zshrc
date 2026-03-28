@@ -101,7 +101,7 @@ git commit -m \"feat(auth): add JWT token validation\"
 
 **Git Status, Diff and Untracked**:" && echo "" && gs && git --no-pager diff && git_changes.sh)'
 alias gitclipai='gitclip | llm --no-prompt'
-alias gitclipweb='gitclip | wl-copy && xdg-open https://claude.ai/new > /dev/null 2>&1'
+alias gitclipweb='gitclip | wl-copy -t text/plain && xdg-open https://claude.ai/new > /dev/null 2>&1'
 alias llm=~/scripts/ollama-prompt.sh
 
 #useful
@@ -149,3 +149,5 @@ export PATH="$PATH:/home/nils/.local/bin"
 [[ -f /home/nils/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/nils/.config/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+export PATH="$PATH:/home/nils/.dotnet/tools"
+export PATH=$PATH:/usr/lib/qt6/bin

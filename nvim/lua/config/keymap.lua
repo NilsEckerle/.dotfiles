@@ -36,3 +36,6 @@ map("n", "<leader>o", function()
 		end,
 	})
 end, { desc = "Open current file directory in Nemo" })
+
+map("n", "<leader>ai", "<CMD>CodeCompanionChat<CR>")
+map("v", "<leader>ai", "<CMD>CodeCompanion<CR>")

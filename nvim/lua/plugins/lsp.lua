@@ -6,12 +6,14 @@ local mason_ensure_installed = {
 	"codelldb",
 	"gopls",
 	"rust-analyzer",
-	"basedpyright",
+	"pyright",
+	-- "basedpyright",
 	"omnisharp",
 	"latexindent",
 	"texlab",
 	"cmakelang",
 	"cmakelint",
+	"r-languageserver",
 }
 
 return {
@@ -41,6 +43,7 @@ return {
 			require("plugins.lsp.neocmake")(capabilities)
 			require("plugins.lsp.omnisharp")(capabilities)
 			require("plugins.lsp.texlab")(capabilities)
+			require("plugins.lsp.r-languageserver")(capabilities)
 
 			-- Global LSP keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {

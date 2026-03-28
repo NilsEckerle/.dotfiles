@@ -13,6 +13,7 @@ return {
 
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
+			"olimorris/codecompanion.nvim",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -51,6 +52,7 @@ return {
 				}),
 
 				sources = cmp.config.sources({
+					{ name = "codecompanion" },
 					{ name = "nvim_lsp" },
 					{ name = "path" },
 					{ name = "luasnip" },

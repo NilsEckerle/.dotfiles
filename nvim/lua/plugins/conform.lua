@@ -11,6 +11,7 @@ return {
 					javascript = { "prettierd", "prettier", stop_after_first = true },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
+					cs = { "csharpier" },
 					tex = { "latexindent" },
 					latex = { "latexindent" },
 					plaintex = { "latexindent" },
@@ -19,7 +20,9 @@ return {
 					"force",
 					{},
 					require("plugins.formatter.clang_format"),
-					require("plugins.formatter.latexindent")
+					require("plugins.formatter.latexindent"),
+					require("plugins.formatter.csharpier"),
+					require("plugins.formatter.styler")
 				),
 				format_on_save = {
 					timeout_ms = 500,

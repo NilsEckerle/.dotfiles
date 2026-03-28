@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODEL="${OLLAMA_MODEL:-deepseek-coder-v2:16b}"
+MODEL="${OLLAMA_MODEL:-qwen2.5-coder:7b}"
 API_URL="${OLLAMA_API:-http://localhost:11434/api/chat}"
 TEMP_FILE="/tmp/ollama-prompt-$$.txt"
 PID_FILE="/tmp/llm-running.pid"

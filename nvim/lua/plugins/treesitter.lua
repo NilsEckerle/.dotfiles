@@ -11,6 +11,7 @@ return {
 					"cmake",
 					"lua",
 					"python",
+					"r",
 					"vim",
 					"vimdoc",
 					"query",

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Calculate
+Comment=Quick calculation to clipboard
+Exec=/home/nils/scripts/calculator/calc-wrapper.sh --dmenu
+Icon=/usr/share/icons/Papirus/48x48/apps/gnome-calculator.svg
+Terminal=false
+Type=Application
+Categories=Utility;Calculator;

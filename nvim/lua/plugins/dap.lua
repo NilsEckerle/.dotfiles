@@ -105,10 +105,36 @@ return {
 			-- ================================================================
 			dap.configurations.cpp = {
 				{
-					name = "Launch (GDB) - Auto-detect",
-					type = "gdb",
+					name = "Launch (LLDB)",
+					type = "lldb",
 					request = "launch",
-					program = find_executable,
+					program = function()
+						return vim.fn.input({
+							prompt = "Path to executable: ",
+							default = find_build_dir() .. "/",
+							completion = "file",
+						})
+					end,
+					cwd = get_project_root,
+					stopOnEntry = false,
+					args = {},
+					runInTerminal = false,
+				},
+				{
+					name = "Launch with arguments (LLDB)",
+					type = "lldb",
+					request = "launch",
+					program = function()
+						return vim.fn.input({
+							prompt = "Path to executable: ",
+							default = find_build_dir() .. "/",
+							completion = "file",
+						})
+					end,
+					args = function()
+						local args_string = vim.fn.input("Arguments: ")
+						return vim.split(args_string, " +")
+					end,
 					cwd = get_project_root,
 					stopAtBeginningOfMainSubprogram = false,
 				},
@@ -143,32 +169,6 @@ return {
 					type = "gdb",
 					request = "attach",
 					processId = require("dap.utils").pick_process,
-				},
-				{
-					name = "Launch (LLDB) - Auto-detect",
-					type = "lldb",
-					request = "launch",
-					program = find_executable,
-					cwd = get_project_root,
-					stopOnEntry = false,
-					args = {},
-					runInTerminal = false,
-				},
-				{
-					name = "Launch (LLDB) - Manual",
-					type = "lldb",
-					request = "launch",
-					program = function()
-						return vim.fn.input({
-							prompt = "Path to executable: ",
-							default = find_build_dir() .. "/",
-							completion = "file",
-						})
-					end,
-					cwd = get_project_root,
-					stopOnEntry = false,
-					args = {},
-					runInTerminal = false,
 				},
 			}
 

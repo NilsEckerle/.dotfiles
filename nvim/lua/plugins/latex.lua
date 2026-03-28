@@ -10,13 +10,13 @@ return {
 		-- Set up compiler options with build directory
 		vim.g.vimtex_compiler_latexmk = {
 			aux_dir = "build",
-			out_dir = "build", -- change to build
+			out_dir = "build",
 			callback = 1,
 			continuous = 1,
 			executable = "latexmk",
 			options = {
 				"-pdf",
-				"-bibtex", -- Aktiviert bibtex/biber
+				"-bibtex",
 				"-verbose",
 				"-file-line-error",
 				"-synctex=1",
@@ -44,23 +44,45 @@ return {
 					end,
 				})
 
-				-- Keymappings
-				vim.api.nvim_buf_set_keymap(
-					0,
-					"n",
-					"<Leader>ll",
-					":VimtexCompile<CR>",
-					{ noremap = true, silent = true }
-				)
-				vim.api.nvim_buf_set_keymap(0, "n", "<Leader>lv", ":VimtexView<CR>", { noremap = true, silent = true })
-				vim.api.nvim_buf_set_keymap(0, "n", "<Leader>lc", ":VimtexClean<CR>", { noremap = true, silent = true })
-				vim.api.nvim_buf_set_keymap(
-					0,
-					"n",
-					"<Leader>le",
-					":!tex4ebook %<CR>",
-					{ noremap = true, silent = true }
-				)
+				-- Auto-update Zathura view when cursor moves (only if viewer is running)
+				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+					buffer = 0,
+					callback = function()
+						-- Check if VimTeX viewer is running
+						if vim.b.vimtex and vim.b.vimtex.viewer and vim.b.vimtex.viewer.xwin_id then
+							-- Stop the timer if it's already running
+							if timer_running then
+								view_timer:stop()
+							end
+
+							-- Start a new timer (500ms delay to avoid too frequent updates)
+							timer_running = true
+							view_timer:start(
+								3000,
+								0,
+								vim.schedule_wrap(function()
+									timer_running = false
+									-- Get current window address before calling VimtexView
+									local current_window =
+										vim.fn.system("hyprctl activewindow -j | jq -r '.address'"):gsub("%s+", "")
+									vim.cmd("silent! VimtexView")
+									-- Refocus nvim window after a short delay
+									vim.defer_fn(function()
+										vim.fn.system("hyprctl dispatch focuswindow address:" .. current_window)
+									end, 50)
+								end)
+							)
+						end
+					end,
+				})
+
+				-- Setup which-key group for LaTeX
+				local status_ok, which_key = pcall(require, "which-key")
+				if status_ok then
+					which_key.add({
+						{ "<localleader>l", group = "LaTeX", buffer = 0 },
+					})
+				end
 			end,
 		})
 	end,

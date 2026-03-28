@@ -72,6 +72,7 @@ button:hover {
 #custom-mail,
 #custom-uxplay,
 #custom-nightlight,
+#custom-idleinhibit,
 #scratchpad {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -119,6 +120,7 @@ button:hover {
 
 #custom-nightlight,
 #custom-uxplay,
+#custom-idleinhibit,
 #custom-mail {
     color: @overlay1;
     border-bottom: 2px solid @overlay1;
@@ -126,6 +128,7 @@ button:hover {
 
 #custom-nightlight:hover,
 #custom-uxplay:hover,
+#custom-idleinhibit:hover,
 #custom-mail:hover {
     background: inherit;
     border-top: 2px solid @mauve;

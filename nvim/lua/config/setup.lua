@@ -15,8 +15,8 @@ opt.listchars = {
 	trail = "-",
 	-- 	space = '·',
 	-- 	eol = '¬',
-	-- 	extends = '❯',
-	-- 	precedes = '❮',
+	extends = "❯",
+	precedes = "❮",
 	-- 	nbsp = '⦸'
 }
 
@@ -74,5 +74,13 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = "*.h",
 	callback = function()
 		vim.bo.filetype = "c"
+	end,
+})
+
+-- Set .tcss files to be recognized as css
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.tcss",
+	callback = function()
+		vim.bo.filetype = "css"
 	end,
 })
