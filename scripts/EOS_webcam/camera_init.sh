@@ -110,7 +110,9 @@ setup_virtual_camera() {
 	ls -la /dev/video* 2>/dev/null || print_warning "No video devices found"
 
 	# Run the command in background and save PID to file
-	nohup gphoto2 --stdout --capture-movie --quiet 2>/dev/null | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video$video_nr -loglevel error -hide_banner 2>/dev/null &
+nohup gphoto2 --stdout --capture-movie --quiet 2>/dev/null | \
+  ffmpeg -i - -vf scale=1280:720 -pix_fmt yuv420p -f v4l2 /dev/video$video_nr \
+  -loglevel error -hide_banner 2>/dev/null &
 	echo $! > ~/.camera_process.pid
 
 	return 0
@@ -141,7 +143,7 @@ main() {
 	print_status ""
 	print_status "You can now:"
 	print_status "  1. Use the virtual camera in applications like Zoom, OBS, etc."
-	print_status "  2. Test with VLC: vlc v4l2:///dev/video$video_nr"
+	print_status "  2. Test with: ffplay -f v4l2 /dev/video$video_nr"
 }
 
 main
