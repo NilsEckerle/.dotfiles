@@ -98,7 +98,7 @@
     "exec": "~/.config/hypr/scripts/get-nightlight-state-icon.sh",
     "interval": 2,
     "on-click": "~/.config/hypr/scripts/toggle-nightlight.sh",
-    "on-click-right": "~/.config/hypr/scripts/toggle-nightlight.sh"
+    "on-click-right": "~/.config/hypr/scripts/toggle-grayscale.sh"
   },
   "custom/idleinhibit": {
       "format": "{}",
