@@ -41,8 +41,8 @@ return {
 				preselect = cmp.PreselectMode.Item, -- Preselect first item
 				-- Your preferred keybindings
 				mapping = cmp.mapping.preset.insert({
-					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+					["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+					["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 					["<C-h>"] = cmp.mapping.confirm({ select = true }),
 					-- ["<C-Space>"] = cmp.mapping.complete(),
@@ -102,8 +102,8 @@ return {
 			-- Command line completion with same behavior
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline({
-					["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
-					["<C-p>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+					["<C-j>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+					["<C-k>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
 					["<C-y>"] = { c = cmp.mapping.confirm({ select = true }) },
 				}),
 				completion = {
@@ -119,8 +119,8 @@ return {
 			-- Search completion with same behavior
 			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmp.mapping.preset.cmdline({
-					["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
-					["<C-p>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+					["<C-j>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+					["<C-k>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
 					["<C-y>"] = { c = cmp.mapping.confirm({ select = true }) },
 				}),
 				completion = {

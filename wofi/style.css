@@ -29,26 +29,28 @@
 /* Window */
 window {
   margin: 0px;
-  padding: 5px;
+  padding:2px;
   border: none; /* Let Hyprland handle the border */
-  border-radius: 5px;
+  border-radius:2px;
   background-color: @bg0_soft;
+  width: 60%;
+  height: 60%;
 }
 
 /* Inner Box */
 #inner-box {
-  margin: 5px;
-  padding: 5px;
+  margin:2px;
+  padding:2px;
   border: none;
   background-color: @bg0_soft;
 }
 
 /* Outer Box */
 #outer-box {
-  margin: 5px;
-  padding: 5px;
+  margin:2px;
+  padding:2px;
   border: 1px solid @gray;
-  border-radius: 5px;
+  border-radius:2px;
   background-color: @bg0_soft;
 }
 
@@ -62,10 +64,10 @@ window {
 
 /* Input */
 #input {
-  margin: 5px 5px;
+  margin:2px2px;
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius:2px;
   color: @fg1;
   background-color: @bg1;
 }
@@ -81,14 +83,14 @@ window {
 
 /* Text */
 #text {
-  margin: 5px;
+  margin:2px;
   border: none;
   color: @fg1;
 }
 
 #entry {
   background-color: @bg0_soft;
-  /* border-radius: 5px; */
+  /* border-radius:2px; */
   border: none;
   margin: 0px;
   padding-left: 2px;

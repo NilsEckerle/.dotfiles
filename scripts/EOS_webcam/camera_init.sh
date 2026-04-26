@@ -92,12 +92,12 @@ setup_virtual_camera() {
 	print_status "Setting up virtual camera..."
 
 	# Find available video device number
-	video_nr=0
+	video_nr=10
 
 	print_status "Using video device: /dev/video$video_nr"
 
 	# Load v4l2loopback module
-	if sudo modprobe v4l2loopback card_label="Virtual Camera" video_nr="$video_nr"; then
+	if sudo modprobe v4l2loopback card_label="Virtual Camera" video_nr="$video_nr" exclusive_caps=1; then
 		print_status "v4l2loopback module loaded successfully"
 		print_status "Virtual camera device created: /dev/video$video_nr"
 	else

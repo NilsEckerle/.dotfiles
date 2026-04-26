@@ -1,5 +1,19 @@
 local opt = vim.opt
 
+local v = vim.version()
+if v.major > 0 or v.minor >= 12 then
+	require("vim._core.ui2").enable({
+		enable = true,
+		msg = {
+			target = "cmd",
+			pager = { height = 0.5 },
+			dialog = { height = 0.5 },
+			cmd = { height = 0.5 },
+			msg = { height = 0.5, timeout = 4500 },
+		},
+	})
+end
+
 -- Leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
@@ -52,7 +66,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight wen yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 

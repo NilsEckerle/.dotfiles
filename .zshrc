@@ -75,7 +75,7 @@ alias gc='git commit'
 alias gp='git pull'
 alias gP='git push'
 alias gf='git fetch'
-alias go='git switch'
+# alias go='git switch'
 alias gamend='git commit --amend'
 alias lg='lazygit'
 alias gitclip='(echo "# Git Commit Analysis
@@ -107,6 +107,18 @@ alias llm=~/scripts/ollama-prompt.sh
 #useful
 alias ltxtemplate='latex_template.sh'
 alias kb=hyprland-switch-kb-map.sh
+ytdl() {
+  yt-dlp \
+    --extract-audio \
+    --audio-format opus \
+    --audio-quality 0 \
+    --embed-thumbnail \
+    --embed-metadata \
+    --parse-metadata "%(title)s:%(meta_title)s" \
+    --parse-metadata "%(uploader)s:%(meta_artist)s" \
+    --output "%(playlist_index)02d - %(title)s.%(ext)s" \
+    "$@"
+}
 
 #git enhanced
 alias gl='git log --oneline --graph --decorate -10'
