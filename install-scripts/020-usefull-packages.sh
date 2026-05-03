@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES_DIR=$(./get-dotfiles-dir.sh)
+DOTFILES_DIR=$(sh ~/.dotfiles/install-scripts/get-dotfiles-dir.sh)
 
 set -e  # Exit on any error
 
@@ -37,12 +37,14 @@ system_PACKAGES=(
   firefox
   cronie
   alacritty
+  topgrade-bin
 )
 
 SYMLINKS=(
     "kitty:$HOME/.config/kitty"
     "alacritty:$HOME/.config/alacritty"
     "feh:$HOME/.config/feh"
+    "topgrade.toml:$HOME/.config/topgrade.toml"
   )
 
 # Function to install packages via system
@@ -114,7 +116,7 @@ create_symlinks() {
 }
 
 main() {
-  install_system_packages
+  # install_system_packages
   create_symlinks
 }
 
