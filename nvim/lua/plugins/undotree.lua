@@ -1,1 +1,6 @@
-vim.pack.add("nvim.undotree")
+return {
+	"mbbill/undotree",
+	keys = {
+		{ "<leader>u", vim.cmd.UndotreeToggle, desc = "Undotree Toggle" },
+	},
+}
