@@ -5,7 +5,9 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio", "clock", "custom/mail", "custom/uxplay", "custom/idleinhibit", "custom/nightlight", "tray" ],
+  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio",
+                     "clock", "custom/mail", "custom/uxplay", "custom/idleinhibit",
+                     "custom/nightlight", "tray" ],
 
   // Modules configuration
   "battery": {
