@@ -17,6 +17,17 @@ mkdir -p "$(dirname "$LOG_FILE")" || { error "Cannot create log dir"; exit 1; }
 
 log "Starting Kindle highlights export"
 
+make_id() {
+  local text="$1" datetime="$2"
+  printf '%s|%s' "$text" "$datetime" | sha256sum | cut -c1-16
+}
+
+# Returns 0 (true) if a note with this id already exists anywhere under $OBSIDIAN_OUT
+id_exists() {
+  local id="$1"
+  grep -rlq "^id: $id" "$OBSIDIAN_OUT" 2>/dev/null
+}
+
 extract_title() {
   local lua_file="$1"
   local title
@@ -97,11 +108,16 @@ while IFS= read -r lua_file; do
   fi
 
   for i in "${!texts[@]}"; do
+    id=$(make_id "${texts[$i]}" "${datetimes[$i]}")
+
+    # Skip if a note with this id already exists anywhere (even if renamed)
+    if id_exists "$id"; then
+      continue
+    fi
+
     safe_dt=$(echo "${datetimes[$i]}" | tr ' :' '_')
     safe_text=$(echo "${texts[$i]}" | awk '{for(i=1;i<=5&&i<=NF;i++) printf "%s%s",$i,(i<5&&i<NF?" ":""); print ""}' | sed 's/[*"\\/<>:|?]//g' | tr ' ' '_')
     out_file="$book_dir/${safe_dt}_${safe_text}.md"
-
-    [[ -f "$out_file" ]] && continue
 
     if ! cat > "$out_file" << EOF
 ---
@@ -111,6 +127,7 @@ tags:
   - kindle-highlights
   - fleeting
 type: literatur
+id: $id
 date: ${datetimes[$i]}
 page: ${pages[$i]}
 up: 
