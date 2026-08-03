@@ -9,8 +9,17 @@ function repo_tmux {
   fi
 
   # Find the repository path
-  repo_path=$(find "${dirs_to_find_in[@]}" -name .git -type d -prune -maxdepth 5 |
-    sed 's/\/.git$//' |
+  repo_path=$( {
+      find "${dirs_to_find_in[@]}" -maxdepth 5 -name .git -type d -prune -print 2>/dev/null |
+        sed 's/\/\.git$//'
+      # bare repos: HEAD + objects/ + refs/ at the top level
+      find "${dirs_to_find_in[@]}" -maxdepth 5 -name HEAD -type f -printf '%h\n' 2>/dev/null |
+        while read -r d; do
+          case "$d" in */.git | */.git/*) continue ;; esac
+          [ -d "$d/objects" ] && [ -d "$d/refs" ] && echo "$d"
+        done
+    } | sort -u |
+    awk '{ for (p in kept) if (index($0, p "/") == 1) next; kept[$0]; print }' |
     awk -F'/' '{print $NF "\t" $0}' |
     fzf --with-nth=1 --delimiter="\t" $filter_params --select-1 |
     cut -f2)
