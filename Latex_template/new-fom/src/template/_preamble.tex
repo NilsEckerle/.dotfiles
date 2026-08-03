@@ -1,0 +1,87 @@
+%------------------------------------------------------------------------------
+% Minimal-Template im FOM-Stil, Tectonic-kompatibel
+% Bauen:  tectonic -X build
+%------------------------------------------------------------------------------
+\documentclass[%
+  a4paper, 11pt, oneside,
+  BCOR=1cm,
+  cleardoublepage=plain,
+  fleqn,
+  numbers=noenddot,
+  headings=normal,
+  bibliography=totocnumbered,
+  listof=numbered,
+  ngerman,
+  headsepline=0.08em,
+]{scrbook}
+
+%--- Basis --------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage[german]{datenumber}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[hyperref,cmyk,dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{scrlayer-scrpage}
+% \usepackage[printonlyused]{acronym}
+
+%--- Schriften (der "Look": Times, Helvetica, Bera Mono) ----------------------
+\usepackage{textcomp}
+\usepackage{mathptmx}
+\usepackage[scaled=0.9]{helvet}
+\renewcommand{\bfdefault}{b}
+\usepackage[scaled=0.9]{beramono}
+\usepackage{microtype}
+\linespread{1.10}
+
+%--- Ueberschriften und Captions ----------------------------------------------
+\setkomafont{sectioning}{\sffamily\bfseries}
+\addtokomafont{caption}{\normalfont\normalcolor\small}
+\addtokomafont{captionlabel}{\small\bfseries}
+\usepackage[format=hang, justification=RaggedRight,
+            position=below, width=.9\textwidth]{caption}
+
+%--- Kopf-/Fußzeilen ----------------------------------------------------------
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ohead[]{\headmark}
+\ofoot[\pagemark]{\pagemark}
+
+%--- Literatur: klassisches BibTeX (in Tectonic eingebaut) ---------------------
+% Stil und .bib-Datei werden in _postamble.tex gesetzt.
+\usepackage{xurl}
+
+%--- Hyperref -----------------------------------------------------------------
+\usepackage[colorlinks=true, linkcolor=black!70, urlcolor=blue,
+            bookmarksnumbered=true, breaklinks, plainpages=false]{hyperref}
+
+%--- Metadaten ----------------------------------------------------------------
+\newcommand{\daAutor}{Nils Eckerle}
+\newcommand{\daTitel}{Ein interessantes Thema}
+\newcommand{\daStudiengang}{Bachelor Informatik}
+\newcommand{\daGutachter}{Prof. Dr. Gutachter Name}
+\newcommand{\daDate}{dd.mm.YYYY}
+\newcommand{\daOrt}{Musterstadt}
+\newcommand{\daMatrikelnummer}{123456}
+\hypersetup{pdftitle={\daTitel}, pdfauthor={\daAutor}}
+
+\begin{document}
+\frontmatter
+
+%--- Titelseite ---------------------------------------------------------------
+\input{template/_title.tex}
+\input{chapters/Abstract.tex}
+\input{chapters/_vorwort.tex}
+
+\cleardoublepage
+\pdfbookmark{\contentsname}{Inhaltsverzeichnis}
+\tableofcontents
+\listoffigures
+\listoftables
+\input{chapters/abkuerzungen.tex}
+% \input{chapters/_Sperrvermerk.tex}
+
+\mainmatter

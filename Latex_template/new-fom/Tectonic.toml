@@ -1,0 +1,12 @@
+[doc]
+name = "fom-template_by-nils-eckerle"
+bundle = "https://relay.fullyjustified.net/default_bundle.tar"
+
+[[output]]
+name = "default"
+type = "pdf"
+inputs = [
+    "template/_preamble.tex",
+    "index.tex",
+    "template/_postamble.tex",
+]
