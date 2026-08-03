@@ -29,10 +29,10 @@
     "on-click": "firefox --new-window \"https://calendar.proton.me/\""
   },
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
+    "format": "{icon} {volume}%",
     "format-muted": "",
     "format-icons": {
-      "default": ["", "", " "]
+      "default": ["󰕿", "󰖀", "󰕾"]
     },
     "on-click": "kitty pulsemixer",
     "on-click-right": "kitty sh -c 'tmux new-session rmpc'"
@@ -53,13 +53,17 @@
     // }
   },
   "cpu": {
-    "format": "\uf2db  {usage}%",
-    "tooltip": false,
+    "format": "CPU:{usage}%",
+    "tooltip": true,
+    "tooltip-format": "CPU ussage in percent",
+    "class": "cpu",
     "on-click": "kitty htop -s PERCENT_CPU"
   },
   "memory": {
-    "format": "\uf538  {}%",
-    "tooltip": false,
+    "format": "RAM:{}%",
+    "tooltip": true,
+    "tooltip-format": "RAM ussage in percent",
+    "class": "memory",
     "on-click": "kitty htop -s PERCENT_MEM"
   },
   "keyboard-status": {
@@ -87,8 +91,10 @@
     "signal": 8
   },
   "custom/gpu": {
-    "format": "󰭰   {}%",
-    "tooltip": false,
+    "format": "GPU:{}%",
+    "tooltip": true,
+    "class": "custom_gpu",
+    "tooltip-format": "GPU ussage in percent",
     "exec": "~/scripts/gpu_ussage.sh",
     "interval": 2,
     "on-click": "kitty radeontop -b 3"

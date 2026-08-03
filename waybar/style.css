@@ -58,10 +58,6 @@ button:hover {
 #pulseaudio,
 #clock,
 #battery,
-#cpu,
-#custom-gpu,
-#memory,
-#disk,
 #temperature,
 #backlight,
 #wireplumber,
@@ -73,6 +69,10 @@ button:hover {
 #custom-uxplay,
 #custom-nightlight,
 #custom-idleinhibit,
+#cpu,
+#custom-gpu,
+#memory,
+#disk,
 #scratchpad {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -83,7 +83,6 @@ button:hover {
 }
 
 #clock {
-    color: @overlay1;
     border-bottom: 2px solid @overlay1;
 }
 
@@ -99,7 +98,6 @@ button:hover {
 }
 
 #pulseaudio {
-    color: @overlay1;
     border-bottom: 2px solid @overlay1;
 }
 
@@ -110,11 +108,15 @@ button:hover {
 }
 
 #network {
-    color: @overlay1;
     border-bottom: 2px solid @overlay1;
 }
 
-#memory {
+#clock,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#custom-gpu {
     color: @overlay1;
 }
 
