@@ -10,6 +10,12 @@ export EDITOR=nvim
 #################################
 # Base PATH additions
 export PATH="$PATH:$HOME/.local/share/bob/nvim-bin"
+# .net
+export PATH="$PATH:/home/nils/.dotnet/tools"
+# go
+export PATH=$PATH:/usr/lib/qt6/bin
+# qt6
+export PATH=$PATH:$HOME/go/bin
 # export PATH="$PATH:$HOME/.dotfiles/scripts/latex-utils"
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/scripts"
@@ -37,7 +43,7 @@ zstyle ':vcs_info:git:*' formats '%F{yellow}[%b]%f %F{green}%a%f'
 zstyle ':vcs_info:*' enable git
 
 # Custom prompt with Git information
-PROMPT='%F{1}%m%f|%F{6}%n%f %F{45}%~%f%b %F{yellow}${vcs_info_msg_0_}%f ${GIT_REMOTE_STATUS}
+PROMPT='%F{1}%m%f|%F{6}%n%f %F{45}%3~%f%b %F{yellow}${vcs_info_msg_0_}%f ${GIT_REMOTE_STATUS}
 %F{1} > %f'
 
 # ----- Zoxide (Smart Directory Navigation) ----- #
@@ -51,8 +57,12 @@ function cd() {
   fi
 }
 
+# ----- Git Tools ----- #
+#########################
+eval "$(wtp shell-init zsh)"
+
 # ----- Aliases ----- #
-######################
+#######################
 # File Management
 alias ll='ls -la'
 alias todo='nvim ~/Documents/.todo.md'
@@ -100,9 +110,49 @@ git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
 **Git Status, Diff and Untracked**:" && echo "" && gs && git --no-pager diff && git_changes.sh)'
-alias gitclipai='gitclip | llm --no-prompt'
+alias gitclipai='gitclip | wl-copy'
 alias gitclipweb='gitclip | wl-copy -t text/plain && xdg-open https://claude.ai/new > /dev/null 2>&1'
-alias llm=~/scripts/ollama-prompt.sh
+context() {
+  tree -L 3 -I 'build|.git|node_modules'
+
+  # Markdown: nur Headings (README etc.)
+  for f in $(find . -maxdepth 2 -iname 'readme*.md'); do
+    echo "\n=== $f ==="
+    grep -E '^#{1,3} ' "$f"
+  done
+
+  # C/C++: nur Header-Dateien, daraus Klassen/Structs/Funktionsdeklarationen
+  for f in $(find . -maxdepth 3 -name '*.h' -o -name '*.hpp' | head -20); do
+    echo "\n=== $f ==="
+    grep -E '^\s*(class|struct|namespace|enum)\s|^\s*[A-Za-z_].*\(.*\)\s*(const)?\s*;' "$f" | head -30
+  done
+
+  # Go: nur Signaturen (func/type), keine Bodies
+  for f in $(find . -maxdepth 3 -name '*.go' ! -name '*_test.go' | head -15); do
+    echo "\n=== $f ==="
+    grep -E '^(func|type)\s+[A-Z]' "$f" | head -15
+  done
+
+  # LaTeX: nur Struktur (chapter/section/label/caption), keine Bodies
+  for f in $(find . -maxdepth 3 -name '*.tex' | head -15); do
+    echo "\n=== $f ==="
+    grep -E '\\\\(chapter|section|subsection|subsubsection|label|caption)\{' "$f" | head -20
+  done
+}
+
+ai() {
+  {
+    context
+    echo "\nFrage: $*"
+    echo "Hinweis: Antworte auf die Frage. Wenn dir Kontext fehlt, nenne konkret, welche Datei oder welchen Abschnitt du sehen musst."
+  } | docker exec -i ollama ollama run qwen2.5-coder:14b
+}
+
+goose() {
+  local here="$PWD"
+  (cd ~/Documents/local-ai-setup && \
+   docker compose run --rm -v "$here:/work:ro" -w /work goose "$@")
+}
 
 #useful
 alias ltxtemplate='latex_template.sh'
@@ -137,6 +187,9 @@ alias helpman='selected_command=$(man -k . | awk "{split(\$0, a, \"(\"); print a
 alias env_create="python3 -m venv .env"
 alias act="source .env/bin/activate"
 
+# kagari
+alias kagaridoc="ssh nils@kagari 'cd ~/docs && make' && scp nils@kagari:~/docs/kagari-server-doc.html /tmp/ && librewolf /tmp/kagari-server-doc.html"
+
 #eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -161,5 +214,4 @@ export PATH="$PATH:/home/nils/.local/bin"
 [[ -f /home/nils/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/nils/.config/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
-export PATH="$PATH:/home/nils/.dotnet/tools"
-export PATH=$PATH:/usr/lib/qt6/bin
+alias rss=newsboat
