@@ -5,7 +5,7 @@
 
   "modules-left": [ "hyprland/workspaces" ],
   "modules-center": [],
-  "modules-right": [ "cpu", "memory", "custom/gpu", "battery", "pulseaudio",
+  "modules-right": [ "cpu", "memory", "custom/gpu", "custom/vram", "battery", "pulseaudio",
                      "clock", "custom/mail", "custom/uxplay", "custom/idleinhibit",
                      "custom/nightlight", "tray" ],
 
@@ -29,7 +29,7 @@
     "on-click": "firefox --new-window \"https://calendar.proton.me/\""
   },
   "pulseaudio": {
-    "format": "{icon} {volume}%",
+    "format": "{icon}{volume}%",
     "format-muted": "",
     "format-icons": {
       "default": ["󰕿", "󰖀", "󰕾"]
@@ -96,6 +96,15 @@
     "class": "custom_gpu",
     "tooltip-format": "GPU ussage in percent",
     "exec": "~/scripts/gpu_ussage.sh",
+    "interval": 2,
+    "on-click": "kitty radeontop -b 3"
+  },
+  "custom/vram": {
+    "format": "VRAM:{}%",
+    "tooltip": true,
+    "class": "custom_vram",
+    "tooltip-format": "VRAM ussage in percent",
+    "exec": "~/scripts/vram_ussage.sh",
     "interval": 2,
     "on-click": "kitty radeontop -b 3"
   },

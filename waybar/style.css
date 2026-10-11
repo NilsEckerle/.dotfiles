@@ -71,6 +71,7 @@ button:hover {
 #custom-idleinhibit,
 #cpu,
 #custom-gpu,
+#custom-vram,
 #memory,
 #disk,
 #scratchpad {
@@ -116,6 +117,7 @@ button:hover {
 #network,
 #cpu,
 #memory,
+#custom-vram,
 #custom-gpu {
     color: @overlay1;
 }
