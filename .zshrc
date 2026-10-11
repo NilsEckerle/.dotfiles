@@ -61,9 +61,16 @@ function cd() {
 #########################
 eval "$(wtp shell-init zsh)"
 
+# ----- Local ai ----- #
+########################
+source /home/nils/Documents/local-ai-setup/goose.sh
+
 # ----- Aliases ----- #
 #######################
 # File Management
+alias ls='ls -Fh --color=always'
+alias du='du -h'
+alias df='df -h'
 alias ll='ls -la'
 alias todo='nvim ~/Documents/.todo.md'
 alias fr="$HOME/scripts/switch_repo.sh"
@@ -88,6 +95,7 @@ alias gf='git fetch'
 # alias go='git switch'
 alias gamend='git commit --amend'
 alias lg='lazygit'
+alias gitcontext='(git status && git --no-pager log --oneline -10 && git --no-pager diff && git_changes.sh) 2>&1'
 alias gitclip='(echo "# Git Commit Analysis
 
 **Task**: Create focused, atomic commits commands for the terminal.
@@ -95,7 +103,8 @@ alias gitclip='(echo "# Git Commit Analysis
 **Requirements**:
 - Each commit should address ONE specific change (atomic commits)
 - Group related changes logically (e.g., feature additions, bug fixes, refactoring, documentation)
-- Use conventional commit format: type(scope): description
+- Use the pressent commit format in the git log.
+- If no format is pressent, use conventional commit format: type(scope): description
 - Keep commit messages concise but descriptive (50 chars max for subject)
 
 **Output Format**:
@@ -109,7 +118,7 @@ git add src/auth.js src/middleware/auth.js
 git commit -m \"feat(auth): add JWT token validation\"
 \`\`\`
 
-**Git Status, Diff and Untracked**:" && echo "" && gs && git --no-pager diff && git_changes.sh)'
+**Git Status, Diff and Untracked**:" && echo "" && gitcontext)'
 alias gitclipai='gitclip | wl-copy'
 alias gitclipweb='gitclip | wl-copy -t text/plain && xdg-open https://claude.ai/new > /dev/null 2>&1'
 context() {
@@ -140,18 +149,38 @@ context() {
   done
 }
 
-ai() {
-  {
-    context
-    echo "\nFrage: $*"
-    echo "Hinweis: Antworte auf die Frage. Wenn dir Kontext fehlt, nenne konkret, welche Datei oder welchen Abschnitt du sehen musst."
-  } | docker exec -i ollama ollama run qwen2.5-coder:14b
-}
+watch-adoc() {
+  local adoc_file="$1"
+  if [[ -z "$adoc_file" || ! -f "$adoc_file" ]]; then
+    echo "usage: watch-adoc <file.adoc>"
+    return 1
+  fi
 
-goose() {
-  local here="$PWD"
-  (cd ~/Documents/local-ai-setup && \
-   docker compose run --rm -v "$here:/work:ro" -w /work goose "$@")
+  local html_file="${adoc_file:r}.html"   # foo.adoc -> foo.html
+  local dir="${adoc_file:h}"
+  local server_pid watcher_pid
+
+  cleanup() {
+    kill "$server_pid" "$watcher_pid" 2>/dev/null
+    wait "$server_pid" "$watcher_pid" 2>/dev/null
+    echo "\nstopped watching $adoc_file"
+    return 0
+  }
+  trap cleanup INT TERM
+
+  asciidoctor "$adoc_file"   # initial build
+
+  live-server "$dir" --open="${html_file:t}" --watch="$html_file" --port=0 >/dev/null 2>&1 &
+  server_pid=$!
+
+  ( while fswatch -1 "$adoc_file" >/dev/null; do
+      asciidoctor "$adoc_file"
+    done ) &
+  watcher_pid=$!
+
+  echo "watching $adoc_file -> $html_file (Ctrl+C to stop)"
+  wait "$watcher_pid"
+  trap - INT TERM
 }
 
 #useful
